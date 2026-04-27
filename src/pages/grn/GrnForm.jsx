@@ -19,7 +19,13 @@ const GrnForm = () => {
   const [suppliers, setSuppliers] = useState([]);
   const [items, setItems] = useState([]);
   const [locations, setLocations] = useState([]);
+const [supplierSearch, setSupplierSearch] = useState("");
+const [showSupplierDropdown, setShowSupplierDropdown] = useState(false);
+const [itemSearch, setItemSearch] = useState("");
+const [showItemDropdown, setShowItemDropdown] = useState(false);
 
+const [locationSearch, setLocationSearch] = useState("");
+const [showLocationDropdown, setShowLocationDropdown] = useState(false);
   const [header, setHeader] = useState({
     date: "",
     supplier_id: "",
@@ -201,6 +207,16 @@ const handleSave = async () => {
     setLoading(false);
   }
 };
+const filteredSuppliers = suppliers.filter(s =>
+  s.name.toLowerCase().includes(supplierSearch.toLowerCase())
+);
+const filteredItems = items.filter(i =>
+  i.name.toLowerCase().includes(itemSearch.toLowerCase())
+);
+
+const filteredLocations = locations.filter(l =>
+  l.name.toLowerCase().includes(locationSearch.toLowerCase())
+);
   return (
    <div className="order-ui-container">
 
@@ -244,18 +260,51 @@ const handleSave = async () => {
       {/* SUPPLIER */}
       <div className="order-ui-group">
         <label>Supplier *</label>
-        <select
-          value={header.supplier_id}
-          onChange={e => setHeader({ ...header, supplier_id: e.target.value })}
-        >
-          <option value="">Select Supplier</option>
+       <div className="custom-dropdown">
+ <div
+  className="dropdown-display"
+  onClick={() => setShowSupplierDropdown(!showSupplierDropdown)}
+>
+  {header.supplier_id
+    ? suppliers.find(s => s.id == header.supplier_id)?.name
+    : ""}
 
-          {suppliers.map(s => (
-            <option key={s.id} value={s.id}>
+  <span className="arrow">▼</span>
+</div>
+
+  {showSupplierDropdown && (
+    <div className="dropdown-box">
+      <input
+        type="text"
+        placeholder="Search supplier..."
+        value={supplierSearch}
+        autoFocus
+        onChange={(e) => setSupplierSearch(e.target.value)}
+        className="dropdown-search"
+      />
+
+      <div className="dropdown-options">
+        {filteredSuppliers.length > 0 ? (
+          filteredSuppliers.map(s => (
+            <div
+              key={s.id}
+              className="dropdown-option"
+              onClick={() => {
+                setHeader({ ...header, supplier_id: s.id });
+                setShowSupplierDropdown(false);
+                setSupplierSearch("");
+              }}
+            >
               {s.name}
-            </option>
-          ))}
-        </select>
+            </div>
+          ))
+        ) : (
+          <div className="no-results">No results found</div>
+        )}
+      </div>
+    </div>
+  )}
+</div>
       </div>
 
       {/* REMARKS */}
@@ -299,15 +348,46 @@ const handleSave = async () => {
               {details.map((d, i) => (
                 <tr key={i}>
                   <td>
-                    <select
-                      value={d.item_id}
-                      onChange={e => handleItemChange(i, e.target.value)}
-                    >
-                      <option value="">Item</option>
-                      {items.map(it => (
-                        <option key={it.id} value={it.id}>{it.name}</option>
-                      ))}
-                    </select>
+                  <div className="custom-dropdown">
+  <div
+    className="dropdown-display"
+    onClick={() => setShowItemDropdown(!showItemDropdown)}
+  >
+    {d.item_id
+      ? items.find(it => it.id == d.item_id)?.name
+      : ""}
+
+    <span className="arrow">▼</span>
+  </div>
+
+  {showItemDropdown && (
+    <div className="dropdown-box">
+      <input
+        type="text"
+        placeholder="Search item..."
+        value={itemSearch}
+        onChange={(e) => setItemSearch(e.target.value)}
+        className="dropdown-search"
+      />
+
+      <div className="dropdown-options">
+        {filteredItems.map(it => (
+          <div
+            key={it.id}
+            className="dropdown-option"
+            onClick={() => {
+              handleItemChange(i, it.id);
+              setShowItemDropdown(false);
+              setItemSearch("");
+            }}
+          >
+            {it.name}
+          </div>
+        ))}
+      </div>
+    </div>
+  )}
+</div>
                   </td>
 
                   <td>
@@ -333,15 +413,46 @@ const handleSave = async () => {
                   </td>
 
                   <td>
-                    <select
-                      value={d.location_id}
-                      onChange={e => handleChange(i, "location_id", e.target.value)}
-                    >
-                      <option value="">Location</option>
-                      {locations.map(l => (
-                        <option key={l.id} value={l.id}>{l.name}</option>
-                      ))}
-                    </select>
+                    <div className="custom-dropdown">
+  <div
+    className="dropdown-display"
+    onClick={() => setShowLocationDropdown(!showLocationDropdown)}
+  >
+    {d.location_id
+      ? locations.find(l => l.id == d.location_id)?.name
+      : ""}
+
+    <span className="arrow">▼</span>
+  </div>
+
+  {showLocationDropdown && (
+    <div className="dropdown-box">
+      <input
+        type="text"
+        placeholder="Search location..."
+        value={locationSearch}
+        onChange={(e) => setLocationSearch(e.target.value)}
+        className="dropdown-search"
+      />
+
+      <div className="dropdown-options">
+        {filteredLocations.map(l => (
+          <div
+            key={l.id}
+            className="dropdown-option"
+            onClick={() => {
+              handleChange(i, "location_id", l.id);
+              setShowLocationDropdown(false);
+              setLocationSearch("");
+            }}
+          >
+            {l.name}
+          </div>
+        ))}
+      </div>
+    </div>
+  )}
+</div>
                   </td>
 
                   <td>
