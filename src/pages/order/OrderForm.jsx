@@ -24,6 +24,17 @@ const navigate = useNavigate();
   const [locations, setLocations] = useState([]);
   const [brands, setBrands] = useState([]);
 const location = useLocation();
+const [customerSearch, setCustomerSearch] = useState("");
+const [activeCustomer, setActiveCustomer] = useState(false);
+
+const [itemSearch, setItemSearch] = useState("");
+const [activeItemIndex, setActiveItemIndex] = useState(null);
+
+const [locationSearch, setLocationSearch] = useState("");
+const [activeLocationIndex, setActiveLocationIndex] = useState(null);
+
+const [brandSearch, setBrandSearch] = useState("");
+const [activeBrandIndex, setActiveBrandIndex] = useState(null);
 const isView = new URLSearchParams(location.search).get("view") === "true";
   const [header, setHeader] = useState({
     date: "",
@@ -204,7 +215,32 @@ const formattedItems = validItems.map(d => ({
     alert("Error ❌");
   }
 };
-  
+  const filteredCustomers = customers.filter(c =>
+  c.name.toLowerCase().includes(customerSearch.toLowerCase())
+);
+
+const filteredItems = items.filter(i =>
+  i.name.toLowerCase().includes(itemSearch.toLowerCase())
+);
+
+const filteredLocations = locations.filter(l =>
+  l.name.toLowerCase().includes(locationSearch.toLowerCase())
+);
+
+const filteredBrands = brands.filter(b =>
+  b.name.toLowerCase().includes(brandSearch.toLowerCase())
+);
+const handleItemChange = (i, value) => {
+  const item = items.find(x => x.id == value);
+
+  const updated = [...details];
+  updated[i].item_id = value;
+
+  // 🔥 AUTO LOCATION
+  updated[i].location_id = item?.location_id || "";
+
+  setDetails(updated);
+};
   return (
     <div className="order-ui-container">
 
@@ -245,18 +281,46 @@ const formattedItems = validItems.map(d => ({
 
           <div className="order-ui-group">
             <label>Customer *</label>
-         <select
-  value={header.customer_id}
-  onChange={e => setHeader({ ...header, customer_id: e.target.value })}
->
-  <option value="">Select Customer</option>
+       <div className="custom-dropdown">
+  <div
+    className="dropdown-display"
+    onClick={() => setActiveCustomer(!activeCustomer)}
+  >
+    {header.customer_id
+      ? customers.find(c => c.id == header.customer_id)?.name
+      : ""}
 
-  {customers.map(c => (
-    <option key={c.id} value={c.id}>
-      {c.name}
-    </option>
-  ))}
-</select>
+    <span className="arrow">▼</span>
+  </div>
+
+  {activeCustomer && (
+    <div className="dropdown-box">
+      <input
+        type="text"
+        placeholder="Search customer..."
+        value={customerSearch}
+        onChange={(e) => setCustomerSearch(e.target.value)}
+        className="dropdown-search"
+      />
+
+      <div className="dropdown-options">
+        {filteredCustomers.map(c => (
+          <div
+            key={c.id}
+            className="dropdown-option"
+            onClick={() => {
+              setHeader({ ...header, customer_id: c.id });
+              setActiveCustomer(false);
+              setCustomerSearch("");
+            }}
+          >
+            {c.name}
+          </div>
+        ))}
+      </div>
+    </div>
+  )}
+</div>
           </div>
 
           <div className="order-ui-group">
@@ -287,15 +351,48 @@ const formattedItems = validItems.map(d => ({
     <div className="order-ui-item-card" key={i}>
 
       <label>Item</label>
-      <select
-        value={d.item_id || ""}
-        onChange={e => handleDetailChange(i, "item_id", e.target.value)}
-      >
-        <option value="">Item</option>
-        {items.map(it => (
-          <option key={it.id} value={it.id}>{it.name}</option>
+     <div className="custom-dropdown">
+  <div
+    className="dropdown-display"
+    onClick={() =>
+      setActiveItemIndex(activeItemIndex === i ? null : i)
+    }
+  >
+    {d.item_id
+      ? items.find(it => it.id == d.item_id)?.name
+      : ""}
+
+    <span className="arrow">▼</span>
+  </div>
+
+  {activeItemIndex === i && (
+    <div className="dropdown-box">
+      <input
+        type="text"
+        placeholder="Search item..."
+        value={itemSearch}
+        onChange={(e) => setItemSearch(e.target.value)}
+        className="dropdown-search"
+      />
+
+      <div className="dropdown-options">
+        {filteredItems.map(it => (
+          <div
+            key={it.id}
+            className="dropdown-option"
+            onClick={() => {
+              handleItemChange(i, it.id);   // 🔥 auto location
+              setActiveItemIndex(null);
+              setItemSearch("");
+            }}
+          >
+            {it.name}
+          </div>
         ))}
-      </select>
+      </div>
+    </div>
+  )}
+</div>
 
       <label>Qty</label>
       <input
@@ -317,26 +414,92 @@ const formattedItems = validItems.map(d => ({
       />
 
       <label>Location</label>
-      <select
-        value={d.location_id || ""}
-        onChange={e => handleDetailChange(i, "location_id", e.target.value)}
-      >
-        <option value="">Location</option>
-        {locations.map(l => (
-          <option key={l.id} value={l.id}>{l.name}</option>
+      <div className="custom-dropdown">
+  <div
+    className="dropdown-display"
+    onClick={() =>
+      setActiveLocationIndex(activeLocationIndex === i ? null : i)
+    }
+  >
+    {d.location_id
+      ? locations.find(l => l.id == d.location_id)?.name
+      : ""}
+
+    <span className="arrow">▼</span>
+  </div>
+
+  {activeLocationIndex === i && (
+    <div className="dropdown-box">
+      <input
+        type="text"
+        placeholder="Search location..."
+        value={locationSearch}
+        onChange={(e) => setLocationSearch(e.target.value)}
+        className="dropdown-search"
+      />
+
+      <div className="dropdown-options">
+        {filteredLocations.map(l => (
+          <div
+            key={l.id}
+            className="dropdown-option"
+            onClick={() => {
+              handleDetailChange(i, "location_id", l.id);
+              setActiveLocationIndex(null);
+              setLocationSearch("");
+            }}
+          >
+            {l.name}
+          </div>
         ))}
-      </select>
+      </div>
+    </div>
+  )}
+</div>
 
       <label>Brand</label>
-      <select
-        value={d.brand_id || ""}
-        onChange={e => handleDetailChange(i, "brand_id", e.target.value)}
-      >
-        <option value="">Brand</option>
-        {brands.map(b => (
-          <option key={b.id} value={b.id}>{b.name}</option>
+     <div className="custom-dropdown">
+  <div
+    className="dropdown-display"
+    onClick={() =>
+      setActiveBrandIndex(activeBrandIndex === i ? null : i)
+    }
+  >
+    {d.brand_id
+      ? brands.find(b => b.id == d.brand_id)?.name
+      : ""}
+
+    <span className="arrow">▼</span>
+  </div>
+
+  {activeBrandIndex === i && (
+    <div className="dropdown-box">
+      <input
+        type="text"
+        placeholder="Search brand..."
+        value={brandSearch}
+        onChange={(e) => setBrandSearch(e.target.value)}
+        className="dropdown-search"
+      />
+
+      <div className="dropdown-options">
+        {filteredBrands.map(b => (
+          <div
+            key={b.id}
+            className="dropdown-option"
+            onClick={() => {
+              handleDetailChange(i, "brand_id", b.id);
+              setActiveBrandIndex(null);
+              setBrandSearch("");
+            }}
+          >
+            {b.name}
+          </div>
         ))}
-      </select>
+      </div>
+    </div>
+  )}
+</div>
 
       <label>Remark</label>
       <input
@@ -381,15 +544,48 @@ const formattedItems = validItems.map(d => ({
   {details.map((d, i) => (
     <tr key={i}>
       <td>
-        <select
-          value={d.item_id || ""}
-          onChange={e => handleDetailChange(i, "item_id", e.target.value)}
-        >
-          <option value="">Item</option>
-          {items.map(it => (
-            <option key={it.id} value={it.id}>{it.name}</option>
-          ))}
-        </select>
+       <div className="custom-dropdown">
+  <div
+    className="dropdown-display"
+    onClick={() =>
+      setActiveItemIndex(activeItemIndex === i ? null : i)
+    }
+  >
+    {d.item_id
+      ? items.find(it => it.id == d.item_id)?.name
+      : ""}
+
+    <span className="arrow">▼</span>
+  </div>
+
+  {activeItemIndex === i && (
+    <div className="dropdown-box">
+      <input
+        type="text"
+        placeholder="Search item..."
+        value={itemSearch}
+        onChange={(e) => setItemSearch(e.target.value)}
+        className="dropdown-search"
+      />
+
+      <div className="dropdown-options">
+        {filteredItems.map(it => (
+          <div
+            key={it.id}
+            className="dropdown-option"
+            onClick={() => {
+              handleItemChange(i, it.id); // 🔥 auto location
+              setActiveItemIndex(null);
+              setItemSearch("");
+            }}
+          >
+            {it.name}
+          </div>
+        ))}
+      </div>
+    </div>
+  )}
+</div>
       </td>
 
       <td>
@@ -415,27 +611,93 @@ const formattedItems = validItems.map(d => ({
       </td>
 
       <td>
-        <select
-          value={d.location_id || ""}
-          onChange={e => handleDetailChange(i, "location_id", e.target.value)}
-        >
-          <option value="">Location</option>
-          {locations.map(l => (
-            <option key={l.id} value={l.id}>{l.name}</option>
-          ))}
-        </select>
+       <div className="custom-dropdown">
+  <div
+    className="dropdown-display"
+    onClick={() =>
+      setActiveLocationIndex(activeLocationIndex === i ? null : i)
+    }
+  >
+    {d.location_id
+      ? locations.find(l => l.id == d.location_id)?.name
+      : ""}
+
+    <span className="arrow">▼</span>
+  </div>
+
+  {activeLocationIndex === i && (
+    <div className="dropdown-box">
+      <input
+        type="text"
+        placeholder="Search location..."
+        value={locationSearch}
+        onChange={(e) => setLocationSearch(e.target.value)}
+        className="dropdown-search"
+      />
+
+      <div className="dropdown-options">
+        {filteredLocations.map(l => (
+          <div
+            key={l.id}
+            className="dropdown-option"
+            onClick={() => {
+              handleDetailChange(i, "location_id", l.id);
+              setActiveLocationIndex(null);
+              setLocationSearch("");
+            }}
+          >
+            {l.name}
+          </div>
+        ))}
+      </div>
+    </div>
+  )}
+</div>
       </td>
 
       <td>
-        <select
-          value={d.brand_id || ""}
-          onChange={e => handleDetailChange(i, "brand_id", e.target.value)}
-        >
-          <option value="">Brand</option>
-          {brands.map(b => (
-            <option key={b.id} value={b.id}>{b.name}</option>
-          ))}
-        </select>
+       <div className="custom-dropdown">
+  <div
+    className="dropdown-display"
+    onClick={() =>
+      setActiveBrandIndex(activeBrandIndex === i ? null : i)
+    }
+  >
+    {d.brand_id
+      ? brands.find(b => b.id == d.brand_id)?.name
+      : ""}
+
+    <span className="arrow">▼</span>
+  </div>
+
+  {activeBrandIndex === i && (
+    <div className="dropdown-box">
+      <input
+        type="text"
+        placeholder="Search brand..."
+        value={brandSearch}
+        onChange={(e) => setBrandSearch(e.target.value)}
+        className="dropdown-search"
+      />
+
+      <div className="dropdown-options">
+        {filteredBrands.map(b => (
+          <div
+            key={b.id}
+            className="dropdown-option"
+            onClick={() => {
+              handleDetailChange(i, "brand_id", b.id);
+              setActiveBrandIndex(null);
+              setBrandSearch("");
+            }}
+          >
+            {b.name}
+          </div>
+        ))}
+      </div>
+    </div>
+  )}
+</div>
       </td>
 
       <td>
