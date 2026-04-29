@@ -725,8 +725,8 @@ const handleItemChange = (i, value) => {
 
         {!isView && (
   <button className="order-ui-save-btn" onClick={handleSave}>
-    Save Order
-  </button>
+  {id ? "Update Order" : "Save Order"}
+</button>
 )}
       </div>
     </div>

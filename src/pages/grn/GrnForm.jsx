@@ -617,9 +617,9 @@ const filteredLocations = locations.filter(l =>
   ))}
 </div>
 
-        <button className="grn-ui-save-btn" onClick={handleSave}>
-          Save GRN
-        </button>
+       <button className="order-ui-save-btn" onClick={handleSave}>
+  {id ? "Update Order" : "Save Order"}
+</button>
 
       </div>
     </div>

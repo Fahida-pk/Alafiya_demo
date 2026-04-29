@@ -113,8 +113,19 @@ background: linear-gradient(
   border: none;
   padding: 7px 12px;
   border-radius: 6px;
+  gap: 2px;
 }
-
+.erp-filter-actions {
+  display: flex;
+  gap: 10px;
+  justify-content: flex-end;
+  margin-left: auto; /* 👉 extra push right */
+}
+.erp-actions {
+  display: flex;
+  gap: 15px;
+  align-items: center;
+}
 .erp-clear {
   background: #ef4444;
   color: #fff;
@@ -222,11 +233,7 @@ background: linear-gradient(
 .erp-delete {
   padding: 6px 12px;   /* 👈 little more width */
 }
-.erp-actions {
-  display: flex;
-  gap: 12px;
-  align-items: center;
-}
+
 .erp-table tbody {
   display: table-row-group !important;
 }

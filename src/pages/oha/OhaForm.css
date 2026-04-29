@@ -6,7 +6,23 @@
   background: #f5f7fb;
   width: 75%;
 }
+.oha-ui-header h2 svg {
+  font-size: 25px;
+  margin-left: 8px;
+  vertical-align: middle;
+  color: #7b5cff;
+}
+.no-results {
+  padding: 10px;
+  text-align: center;
+  color: #999;
+  font-size: 13px;
 
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+}
 /* ================= CARD ================= */
 .oha-ui-card {
   background: #fff;
@@ -15,7 +31,9 @@
   margin-bottom: 20px;
   box-shadow: 0 4px 12px rgba(0,0,0,0.05);
 }
-
+.oha-ui-header h2 svg {
+  margin-right: 8px;
+}
 /* ================= HEADER ================= */
 .oha-ui-header {
   display: flex;
@@ -41,7 +59,9 @@
 .oha-ui-back-btn:hover {
   background: #f1f5f9;
 }
-
+.oha-ui-mobile {
+  display: none;
+}
 /* ================= GRID ================= */
 .oha-ui-grid {
   display: grid;
@@ -235,5 +255,50 @@
 
   .oha-ui-table {
     display: none;
+  }
+}
+@media (max-width: 768px) {
+
+  .oha-ui-table-wrapper {
+    display: none;
+  }
+
+  .oha-ui-mobile {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+  }
+
+}
+.no-results {
+  padding: 10px;
+  text-align: center;
+  color: #999;
+  font-size: 13px;
+}
+.oha-ui-header h2 svg {
+  font-size: 25px;
+  margin-left: 8px;
+  vertical-align: middle;
+  color: #7b5cff;
+}
+@media (max-width: 768px) {
+  .oha-ui-header {
+    display: flex;
+    flex-direction: row;      /* keep same line */
+    justify-content: space-between;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .oha-ui-header h2 {
+    font-size: 12px;
+    white-space: nowrap;     /* prevent break */
+  }
+
+  .oha-ui-add-btn {
+    padding: 6px 12px;
+    font-size: 12px;
+    white-space: nowrap;     /* keep button in one line */
   }
 }

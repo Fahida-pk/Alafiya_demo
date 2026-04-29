@@ -1,7 +1,10 @@
 import { useState, useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { FaTrash } from "react-icons/fa";
-import { MdInventory } from "react-icons/md";
+import { MdSearchOff } from "react-icons/md";
+import { MdUndo } from "react-icons/md";
+import { FaUndo } from "react-icons/fa";
+import { MdAssignmentReturn } from "react-icons/md";
 import "./OhaForm.css";
 
 const OHA_API = "https://zyntaweb.com/demoalafiya/api/oha_header.php";
@@ -20,7 +23,7 @@ const OhaForm = () => {
   const [items, setItems] = useState([]);
   const [locations, setLocations] = useState([]);
   const [reasons, setReasons] = useState([]);
-
+const [loading, setLoading] = useState(false);
   const [header, setHeader] = useState({
     date: "",
     customer_id: "",
@@ -104,30 +107,97 @@ const OhaForm = () => {
   };
 
   // ================= SAVE =================
-  const handleSave = async () => {
-    const validItems = details.filter(d => d.item_id && d.quantity);
-    if (!validItems.length) return alert("Add items");
+ const handleSave = async () => {
+  if (loading) return;
+
+  try {
+    setLoading(true);
+
+    // ✅ VALIDATION
+    const validItems = details.filter(
+      d => d.item_id && Number(d.quantity) > 0
+    );
+
+    if (validItems.length === 0) {
+      alert("Please add at least one item ❗");
+      setLoading(false); // 🔥 FIX
+      return;
+    }
 
     const method = id ? "PUT" : "POST";
 
+    // ================= HEADER =================
     const res = await fetch(OHA_API, {
       method,
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ ...header, id })
+      body: JSON.stringify({
+        ...header,
+        id
+      })
     });
 
-    const data = await res.json();
-    const ohaId = id || data.id;
+    let headerRes = {};
+    const headerText = await res.text();
 
-    await fetch(DETAILS_API, {
-      method: "PUT",
+    try {
+      headerRes = headerText ? JSON.parse(headerText) : {};
+    } catch {
+      alert("Header JSON error ❌");
+      setLoading(false);
+      return;
+    }
+
+    const ohaId = id ? id : headerRes.id;
+
+    if (!ohaId) {
+      alert("Header failed ❌");
+      setLoading(false);
+      return;
+    }
+
+    // ================= DETAILS =================
+    const detailsMethod = id ? "PUT" : "POST";
+
+    const detailsRes = await fetch(DETAILS_API, {
+      method: detailsMethod,
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ oha_id: ohaId, items: validItems })
+      body: JSON.stringify({
+        oha_id: ohaId,
+        items: validItems.map(d => ({
+          ...d,
+          expiry: d.expiry || null // 🔥 FIX
+        }))
+      })
     });
 
-    alert("OHA Saved ✅");
+    let detailsData = {};
+    const text = await detailsRes.text();
+
+    try {
+      detailsData = text ? JSON.parse(text) : {};
+    } catch {
+      alert("Details JSON error ❌");
+      setLoading(false);
+      return;
+    }
+
+    if (detailsData.status !== "success") {
+      alert(detailsData.message || "Failed to save items ❌");
+      setLoading(false);
+      return;
+    }
+
+    alert(id ? "OHA Updated ✅" : "OHA Saved ✅");
+
     navigate("/oha-list");
-  };
+
+  } catch (err) {
+    console.error(err);
+    alert("Error saving OHA ❌");
+  } finally {
+    setLoading(false);
+  }
+};
 
   // ================= FILTER =================
   const filterData = (list) =>
@@ -143,7 +213,7 @@ return (
     <div className="oha-ui-card">
 
       <div className="oha-ui-header">
-        <h2><MdInventory /> OHA</h2>
+        <h2><FaUndo /> OHA</h2>
 
         <button
           className="oha-ui-back-btn"
@@ -163,44 +233,59 @@ return (
           onChange={e => setHeader({ ...header, date: e.target.value })}
         />
 
-        {/* CUSTOMER */}
-        <div className="custom-dropdown">
-          <div
-            className="dropdown-display"
-            onClick={() => setActiveDropdown("customer")}
-          >
-            {header.customer_id
-              ? customers.find(c => c.id == header.customer_id)?.name
-              : "Select Customer"}
-            <span className="arrow">▼</span>
+       {/* CUSTOMER */}
+<div className="custom-dropdown">
+  <div
+    className="dropdown-display"
+    onClick={() => setActiveDropdown("customer")}
+  >
+    {header.customer_id
+      ? customers.find(c => c.id == header.customer_id)?.name
+      : "Select Customer"}
+    <span className="arrow">▼</span>
+  </div>
+
+  {activeDropdown === "customer" && (
+    <div className="dropdown-box">
+
+      {/* 🔥 SEARCH */}
+      <input
+        placeholder="Search..."
+        value={searchText}
+        onChange={e => setSearchText(e.target.value)}
+      />
+
+      <div className="dropdown-options">
+
+        {filterData(customers).length > 0 ? (
+
+          filterData(customers).map(c => (
+            <div
+              key={c.id}
+              className="dropdown-option"
+              onClick={() => {
+                setHeader({ ...header, customer_id: c.id });
+                setActiveDropdown(null);
+                setSearchText("");
+              }}
+            >
+              {c.name}
+            </div>
+          ))
+
+        ) : (
+
+          <div className="no-results">
+            <MdSearchOff size={18} />
+            No customer found
           </div>
 
-          {activeDropdown === "customer" && (
-            <div className="dropdown-box">
-              <input
-                placeholder="Search..."
-                value={searchText}
-                onChange={e => setSearchText(e.target.value)}
-              />
-              <div className="dropdown-options">
-                {filterData(customers).map(c => (
-                  <div
-                    key={c.id}
-                    className="dropdown-option"
-                    onClick={() => {
-                      setHeader({ ...header, customer_id: c.id });
-                      setActiveDropdown(null);
-                      setSearchText("");
-                    }}
-                  >
-                    {c.name}
-                  </div>
-                ))}
-              </div>
-            </div>
-          )}
-        </div>
+        )}
 
+      </div>
+    </div>
+  )}
+</div>
         <input
           placeholder="Remarks"
           value={header.remarks}
@@ -213,8 +298,7 @@ return (
     <div className="oha-ui-card">
 
       <div className="oha-ui-header">
-        <h2><MdInventory /> OHA Details</h2>
-
+<h2><MdAssignmentReturn /> OHA Details</h2>
         <button className="oha-ui-add-btn" onClick={addRow}>
           + Add Item
         </button>
@@ -231,7 +315,7 @@ return (
     <th>Batch</th>
     <th>Expiry</th>
     <th>Location</th>
-    <th>Reason</th>
+    <th>Return Reason</th>
     <th>Action</th>
     <th>Remark</th>
     <th></th>
@@ -263,20 +347,33 @@ return (
                 onChange={e => setSearchText(e.target.value)}
               />
               <div className="dropdown-options">
-                {filterData(items).map(it => (
-                  <div
-                    key={it.id}
-                    className="dropdown-option"
-                    onClick={() => {
-                      handleItemChange(i, it.id);
-                      setActiveDropdown(null);
-                      setSearchText("");
-                    }}
-                  >
-                    {it.name}
-                  </div>
-                ))}
-              </div>
+
+  {filterData(items).length > 0 ? (
+
+    filterData(items).map(it => (
+      <div
+        key={it.id}
+        className="dropdown-option"
+        onClick={() => {
+          handleItemChange(i, it.id);
+          setActiveDropdown(null);
+          setSearchText("");
+        }}
+      >
+        {it.name}
+      </div>
+    ))
+
+  ) : (
+
+    <div className="no-results">
+      <MdSearchOff size={18} />
+      No item found
+    </div>
+
+  )}
+
+</div>
             </div>
           )}
         </div>
@@ -398,12 +495,201 @@ return (
   ))}
 </tbody>
         </table>
+</div>
+
+{/* ================= MOBILE VIEW ================= */}
+<div className="oha-ui-mobile">
+  {details.map((d, i) => (
+
+    <div key={i} className="oha-ui-item-card">
+
+      {/* ITEM */}
+      <div className="oha-field">
+        <label>Item</label>
+
+        <div className="custom-dropdown">
+          <div
+            className="dropdown-display"
+            onClick={() => setActiveDropdown("item" + i)}
+          >
+            {d.item_id
+              ? items.find(it => it.id == d.item_id)?.name
+              : "Select Item"}
+          </div>
+
+          {activeDropdown === "item" + i && (
+            <div className="dropdown-box">
+
+              {/* 🔥 SEARCH */}
+              <input
+                placeholder="Search item..."
+                value={searchText}
+                onChange={e => setSearchText(e.target.value)}
+              />
+
+              <div className="dropdown-options">
+                {filterData(items).length > 0 ? (
+                  filterData(items).map(it => (
+                    <div
+                      key={it.id}
+                      className="dropdown-option"
+                      onClick={() => {
+                        handleItemChange(i, it.id);
+                        setActiveDropdown(null);
+                        setSearchText("");
+                      }}
+                    >
+                      {it.name}
+                    </div>
+                  ))
+                ) : (
+                  <div className="no-results">
+                    No item found
+                  </div>
+                )}
+              </div>
+
+            </div>
+          )}
+        </div>
       </div>
 
-      <button className="oha-ui-save-btn" onClick={handleSave}>
-        Save OHA
+      {/* QTY */}
+      <div className="oha-field">
+        <label>Qty</label>
+        <input
+          value={d.quantity}
+          onChange={e => handleChange(i, "quantity", e.target.value)}
+        />
+      </div>
+
+      {/* BATCH */}
+      <div className="oha-field">
+        <label>Batch</label>
+        <input
+          value={d.batch}
+          onChange={e => handleChange(i, "batch", e.target.value)}
+        />
+      </div>
+
+      {/* EXPIRY */}
+      <div className="oha-field">
+        <label>Expiry</label>
+        <input
+          type="date"
+          value={d.expiry}
+          onChange={e => handleChange(i, "expiry", e.target.value)}
+        />
+      </div>
+
+      {/* LOCATION */}
+      <div className="oha-field">
+        <label>Location</label>
+
+        <div className="custom-dropdown">
+          <div
+            className="dropdown-display"
+            onClick={() => setActiveDropdown("loc" + i)}
+          >
+            {d.location_id
+              ? locations.find(l => l.id == d.location_id)?.name
+              : "Select Location"}
+          </div>
+
+          {activeDropdown === "loc" + i && (
+            <div className="dropdown-box">
+
+              {/* 🔥 SEARCH */}
+              <input
+                placeholder="Search location..."
+                value={searchText}
+                onChange={e => setSearchText(e.target.value)}
+              />
+
+              <div className="dropdown-options">
+                {filterData(locations).length > 0 ? (
+                  filterData(locations).map(l => (
+                    <div
+                      key={l.id}
+                      className="dropdown-option"
+                      onClick={() => {
+                        handleChange(i, "location_id", l.id);
+                        setActiveDropdown(null);
+                        setSearchText("");
+                      }}
+                    >
+                      {l.name}
+                    </div>
+                  ))
+                ) : (
+                  <div className="no-results">
+                    No location found
+                  </div>
+                )}
+              </div>
+
+            </div>
+          )}
+        </div>
+      </div>
+
+      {/* REASON */}
+      <div className="oha-field">
+        <label>Reason</label>
+        <select
+          value={d.return_reason_code_id}
+          onChange={e => handleChange(i, "return_reason_code_id", e.target.value)}
+        >
+          <option value="">Select</option>
+          {reasons.map(r => (
+            <option key={r.id} value={r.id}>{r.code}</option>
+          ))}
+        </select>
+      </div>
+
+      {/* ACTION */}
+      <div className="oha-field">
+        <label>Action</label>
+        <select
+          value={d.action}
+          onChange={e => handleChange(i, "action", e.target.value)}
+        >
+          <option value="">Select</option>
+          <option value="TO_STOCK">To Stock</option>
+          <option value="NOT_TO_STOCK">Not To Stock</option>
+        </select>
+      </div>
+
+      {/* REMARK */}
+      <div className="oha-field">
+        <label>Remark</label>
+        <input
+          value={d.remarks}
+          onChange={e => handleChange(i, "remarks", e.target.value)}
+        />
+      </div>
+
+      {/* DELETE */}
+      <button
+        className="oha-ui-delete-btn"
+        onClick={() => deleteRow(i)}
+      >
+        Delete
       </button>
 
+    </div>
+
+  ))}
+</div>
+<button
+  className="oha-ui-save-btn"
+  onClick={handleSave}
+  disabled={loading}
+>
+  {loading
+    ? (id ? "Updating..." : "Saving...")
+    : (id ? "Update" : "Save")}
+</button>
     </div>
   </div>
 );

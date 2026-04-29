@@ -11,6 +11,9 @@ import { MdReceiptLong } from "react-icons/md";
 import { MdShoppingCart } from "react-icons/md";
 import { MdAltRoute } from "react-icons/md";
 import { MdAssignmentTurnedIn } from "react-icons/md";
+import { FaExchangeAlt } from "react-icons/fa";
+import { MdKeyboardReturn } from "react-icons/md";
+import { FaUndo } from "react-icons/fa";
 import { FaRoad, FaWarehouse, FaFileImport, FaCartPlus, FaClipboardList } from "react-icons/fa";
 import { MdPayments, MdExplore } from "react-icons/md";
 import {
@@ -172,10 +175,10 @@ const [inventoryOpen, setInventoryOpen] = useState(false);
       <FaClipboardList />
       <span>Daily Picking</span>
     </Link>
-<Link to="/oha-list" onClick={() => setMobileOpen(false)}>
-  <FaFileImport />
-  <span>OHA</span>
-</Link>
+    <Link to="/oha-list" onClick={() => setMobileOpen(false)}>
+      <FaExchangeAlt />
+      <span>OHA</span>
+    </Link>
   </div>
 )}
 {/* ================= REPORT ================= */}
