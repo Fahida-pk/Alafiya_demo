@@ -105,25 +105,34 @@ const [loading, setLoading] = useState(false);
   };
 
   // ================= AUTO LOCATION =================
-  const handleItemChange = (i, value) => {
-    const item = items.find(x => x.id == value);
+ const handleItemChange = (i, value) => {
+  const item = items.find(x => x.id == value);
 
-    const updated = [...details];
-    updated[i].item_id = value;
-    updated[i].location_id = item?.location_id || "";
+  const updated = [...details];
+  updated[i].item_id = Number(value);   // 🔥 IMPORTANT FIX
+  updated[i].location_id = item?.location_id || "";
 
-    setDetails(updated);
-  };
-
+  setDetails(updated);
+};
   // ================= DELETE ROW =================
   const deleteRow = (index) => {
-  if (details.length === 1) {
-    alert("At least one item required ❗");
-    return;
-  }
+  const updated = details.filter((_, i) => i !== index);
 
-  setDetails(details.filter((_, i) => i !== index));
-  alert("Item deleted 🗑️");
+  // If all rows deleted → keep empty row (no alert)
+  if (updated.length === 0) {
+    setDetails([
+      {
+        item_id: "",
+        qty: "",
+        batch: "",
+        expiry: "",
+        location_id: "",
+        remark: ""
+      }
+    ]);
+  } else {
+    setDetails(updated);
+  }
 };
   // ================= SAVE =================
 const handleSave = async () => {
@@ -132,8 +141,18 @@ const handleSave = async () => {
   try {
     setLoading(true);
 
-    // ✅ VALIDATION
-    const validItems = details.filter(d => d.item_id && d.qty);
+    const validItems = details
+      .map(d => ({
+        item_id: Number(d.item_id),
+        qty: Number(d.qty),
+        batch: d.batch || "",
+        expiry: d.expiry || null,
+        location_id: Number(d.location_id),
+        remark: d.remark || ""
+      }))
+      .filter(d => d.item_id && d.qty > 0);
+
+    console.log("VALID ITEMS:", validItems);
 
     if (validItems.length === 0) {
       alert("Please add at least one item ❗");
@@ -142,37 +161,26 @@ const handleSave = async () => {
 
     const method = id ? "PUT" : "POST";
 
-    // ✅ SAVE HEADER
-    const res = await fetch(GRN_API, {
+    // ================= HEADER =================
+    const headerRes = await fetch(GRN_API, {
       method,
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        ...header,
-        id
-      })
+      body: JSON.stringify({ ...header, id })
     });
 
-    // 🔥 SAFE JSON
-    let headerRes = {};
-    const headerText = await res.text();
+    const headerData = await headerRes.json();
+    const grnId = id ? id : headerData.id;
 
-    try {
-      headerRes = headerText ? JSON.parse(headerText) : {};
-    } catch {
-      alert("Header JSON error ❌");
-      return;
-    }
-
-    const grnId = id ? id : headerRes.id;
+    console.log("GRN ID:", grnId);
 
     if (!grnId) {
       alert("Header failed ❌");
       return;
     }
 
-    // ✅ SAVE DETAILS (same as ORDER)
+    // ================= DETAILS =================
     const detailsRes = await fetch(DETAILS_API, {
-      method: "PUT",
+      method: id ? "PUT" : "POST",   // 🔥 CRITICAL FIX
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
         grn_id: grnId,
@@ -180,16 +188,8 @@ const handleSave = async () => {
       })
     });
 
-    // 🔥 SAFE JSON
-    let detailsData = {};
-    const text = await detailsRes.text();
-
-    try {
-      detailsData = text ? JSON.parse(text) : {};
-    } catch {
-      alert("Details JSON error ❌");
-      return;
-    }
+    const detailsData = await detailsRes.json();
+    console.log("DETAILS:", detailsData);
 
     if (detailsData.status !== "success") {
       alert("Failed to save items ❌");
