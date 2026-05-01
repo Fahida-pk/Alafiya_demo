@@ -85,41 +85,35 @@ const DailyPicking = () => {
   };
 
   // ✅ SAVE
-  const handleSave = async () => {
+ const handleSave = async () => {
 
-    for (let d of data) {
-      let status_id = 1;
-      if (d.status === "Completed") status_id = 3;
-      if (d.status === "Pending") status_id = 2;
-
-      await fetch(UPDATE_API, {
-        method: "PUT",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          id: d.id,
-          picking_qty: d.picking_qty || 0,
-          status_id: status_id,
-          remark: d.remark || ""
-        })
-      });
-    }
-
-    const orderIds = [...new Set(data.map(d => d.order_id))];
-
-    for (let id of orderIds) {
-      await fetch("https://zyntaweb.com/demoalafiya/api/order_header.php", {
-        method: "PUT",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          id: id,
-          picking_done: 1
-        })
-      });
-    }
-
-    alert("Daily picking saved successfully");
+  const payload = {
+    order_id: data[0]?.order_id,
+    items: data.map(d => ({
+      id: d.id,
+      picking_qty: Number(d.picking_qty || 0)
+    }))
   };
 
+  console.log("PAYLOAD:", payload); // 🔥 debug
+
+  const res = await fetch(API, { // ✅ daily_picking.php
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json"
+    },
+    body: JSON.stringify(payload)
+  });
+
+  const result = await res.json();
+  console.log("RESULT:", result);
+
+  if (result.status === "saved") {
+    alert("Daily picking saved successfully ✅");
+  } else {
+    alert("Error ❌");
+  }
+};
   const handlePrint = () => window.print();
 
   return (
