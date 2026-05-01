@@ -55,7 +55,28 @@
   border-radius: 6px;
   cursor: pointer;
 }
+.batch-modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0,0,0,0.5);
+  z-index: 9999;
 
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.batch-modal-box {
+  background: white;
+  width: 95%;
+  max-height: 80vh;
+  overflow-y: auto;
+  border-radius: 10px;
+  padding: 10px;
+}
 .oha-ui-back-btn:hover {
   background: #f1f5f9;
 }

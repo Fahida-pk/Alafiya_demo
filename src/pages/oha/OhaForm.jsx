@@ -24,6 +24,9 @@ const OhaForm = () => {
   const [locations, setLocations] = useState([]);
   const [reasons, setReasons] = useState([]);
 const [loading, setLoading] = useState(false);
+const [batchList, setBatchList] = useState([]);
+const [showBatchModal, setShowBatchModal] = useState(false);
+const [selectedRowIndex, setSelectedRowIndex] = useState(null);
   const [header, setHeader] = useState({
     date: "",
     customer_id: "",
@@ -380,28 +383,46 @@ return (
 
       {/* QTY */}
       <td>
-        <input
-          value={d.quantity}
-          onChange={e => handleChange(i, "quantity", e.target.value)}
-        />
+       
+          <input
+  value={d.quantity || ""}
+  onChange={(e) => {
+    handleChange(i, "quantity", e.target.value);
+  }}
+
+  onBlur={async () => {
+    const value = details[i].quantity;
+
+    if (!value || value <= 0) return;
+
+    if (!details[i].item_id) {
+      alert("Select item first ❗");
+      return;
+    }
+
+   const res = await fetch(
+  `https://zyntaweb.com/demoalafiya/api/order_batches.php?item_id=${details[i].item_id}&customer_id=${header.customer_id}`
+);
+
+    const data = await res.json();
+    const batches = Array.isArray(data) ? data : data.data || [];
+
+    setBatchList(batches);
+    setSelectedRowIndex(i);
+    setShowBatchModal(true);
+  }}
+/>
+        
       </td>
 
       {/* BATCH */}
-      <td>
-        <input
-          value={d.batch}
-          onChange={e => handleChange(i, "batch", e.target.value)}
-        />
-      </td>
+     <td>
+  <input value={d.batch || ""} readOnly />
+</td>
 
-      {/* EXPIRY */}
-      <td>
-        <input
-          type="date"
-          value={d.expiry}
-          onChange={e => handleChange(i, "expiry", e.target.value)}
-        />
-      </td>
+<td>
+  <input type="date" value={d.expiry || ""} readOnly />
+</td>
 
       {/* LOCATION */}
       <td>
@@ -495,7 +516,50 @@ return (
 </tbody>
         </table>
 </div>
+{showBatchModal && (
+  <div className="batch-modal-overlay">
+    <div className="batch-modal-box">
 
+      <h3>Select Batch</h3>
+
+      <div className="batch-table">
+        <div className="batch-header">
+          <div>Batch</div>
+          <div>Expiry</div>
+          <div>Stock</div>
+        </div>
+
+        {batchList.map((b, index) => (
+          <div
+            key={index}
+            className="batch-row-item"
+            onClick={() => {
+
+              if (details[selectedRowIndex].quantity > (b.available_qty || b.qty)) {
+                alert("Stock not enough ❗");
+                return;
+              }
+
+              const updated = [...details];
+
+              updated[selectedRowIndex].batch = b.batch;
+              updated[selectedRowIndex].expiry = b.expiry_date || b.expiry;
+
+              setDetails(updated);
+              setShowBatchModal(false);
+            }}
+          >
+            <div>{b.batch}</div>
+            <div>{b.expiry_date || b.expiry}</div>
+            <div>{b.available_qty || b.qty}</div>
+          </div>
+        ))}
+      </div>
+
+      <button onClick={() => setShowBatchModal(false)}>Close</button>
+    </div>
+  </div>
+)}
 {/* ================= MOBILE VIEW ================= */}
 <div className="oha-ui-mobile">
   {details.map((d, i) => (
@@ -556,19 +620,40 @@ return (
       {/* QTY */}
       <div className="oha-field">
         <label>Qty</label>
-        <input
-          value={d.quantity}
-          onChange={e => handleChange(i, "quantity", e.target.value)}
-        />
+       <input
+  value={d.quantity || ""}
+  onChange={(e) => {
+    handleChange(i, "quantity", e.target.value);
+  }}
+
+  onBlur={async () => {
+    const value = details[i].quantity;
+
+    if (!value || value <= 0) return;
+
+    if (!details[i].item_id) {
+      alert("Select item first ❗");
+      return;
+    }
+
+    const res = await fetch(
+  `https://zyntaweb.com/demoalafiya/api/order_batches.php?item_id=${details[i].item_id}&customer_id=${header.customer_id}`
+);
+
+    const data = await res.json();
+    const batches = Array.isArray(data) ? data : data.data || [];
+
+    setBatchList(batches);
+    setSelectedRowIndex(i);
+    setShowBatchModal(true);
+  }}
+/>
       </div>
 
       {/* BATCH */}
       <div className="oha-field">
         <label>Batch</label>
-        <input
-          value={d.batch}
-          onChange={e => handleChange(i, "batch", e.target.value)}
-        />
+       <input value={d.batch || ""} readOnly />
       </div>
 
       {/* EXPIRY */}
@@ -576,7 +661,7 @@ return (
         <label>Expiry</label>
         <input
           type="date"
-          value={d.expiry}
+          value={d.expiry || ""}
           onChange={e => handleChange(i, "expiry", e.target.value)}
         />
       </div>
