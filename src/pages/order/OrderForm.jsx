@@ -414,10 +414,11 @@ setBatchList(batches);
 <label>Qty</label>
 <input
   value={d.qty || ""}
-  onChange={async (e) => {
-    const value = e.target.value;
-
-    handleDetailChange(i, "qty", value);
+  onChange={(e) => {
+    handleDetailChange(i, "qty", e.target.value);
+  }}
+  onBlur={async () => {
+    const value = details[i].qty;
 
     if (!value || value <= 0) return;
 
@@ -425,23 +426,6 @@ setBatchList(batches);
       alert("Select item first ❗");
       return;
     }
-
-    // 🔥 ALWAYS fetch (even in edit)
-    const res = await fetch(
-      `https://zyntaweb.com/demoalafiya/api/stock_batches.php?item_id=${details[i].item_id}`
-    );
-
-    const data = await res.json();
-    const batches = Array.isArray(data) ? data : data.data || [];
-
-    setBatchList(batches);
-    setSelectedRowIndex(i);
-    setShowBatchModal(true);
-  }}
-
-  // ✅ ADD THIS (VERY IMPORTANT 🔥)
-  onFocus={async () => {
-    if (!details[i].item_id) return;
 
     const res = await fetch(
       `https://zyntaweb.com/demoalafiya/api/stock_batches.php?item_id=${details[i].item_id}`
@@ -648,12 +632,16 @@ setBatchList(batches);
 
  <input
   value={d.qty || ""}
-  onChange={async (e) => {
+
+  onChange={(e) => {
     const value = e.target.value;
-
     handleDetailChange(i, "qty", value);
+  }}
 
-    // ✅ ONLY AFTER USER TYPES
+  onBlur={async () => {
+    const value = details[i].qty;
+
+    // ✅ only after typing finished
     if (!value || value <= 0) return;
 
     if (!details[i].item_id) {
@@ -672,9 +660,7 @@ setBatchList(batches);
     setSelectedRowIndex(i);
     setShowBatchModal(true);
   }}
-
-  />
-
+/>
 </td>
 <td>
   <input value={d.batch || ""} readOnly />
