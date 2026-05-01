@@ -646,31 +646,33 @@ setBatchList(batches);
 
 <td style={{ position: "relative" }}>
 
-  <input
-    value={d.qty || ""}
+ <input
+  value={d.qty || ""}
   onChange={async (e) => {
-  const value = e.target.value;
-  handleDetailChange(i, "qty", value);
+    const value = e.target.value;
 
-  if (!value || value <= 0) return;
-  if (showBatchModal) return;
+    handleDetailChange(i, "qty", value);
 
-  if (!details[i].item_id) {
-    alert("Select item first ❗");
-    return;
-  }
+    // ✅ ONLY AFTER USER TYPES
+    if (!value || value <= 0) return;
 
-  const res = await fetch(
-    `https://zyntaweb.com/demoalafiya/api/stock_batches.php?item_id=${details[i].item_id}`
-  );
+    if (!details[i].item_id) {
+      alert("Select item first ❗");
+      return;
+    }
 
-  const data = await res.json();
-  const batches = Array.isArray(data) ? data : data.data || [];
+    const res = await fetch(
+      `https://zyntaweb.com/demoalafiya/api/stock_batches.php?item_id=${details[i].item_id}`
+    );
 
-  setBatchList(batches);
-  setSelectedRowIndex(i);
-  setShowBatchModal(true);
-}}
+    const data = await res.json();
+    const batches = Array.isArray(data) ? data : data.data || [];
+
+    setBatchList(batches);
+    setSelectedRowIndex(i);
+    setShowBatchModal(true);
+  }}
+
   />
 
 </td>
