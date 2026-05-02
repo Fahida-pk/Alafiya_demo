@@ -22,10 +22,9 @@ const GrnForm = () => {
 const [supplierSearch, setSupplierSearch] = useState("");
 const [showSupplierDropdown, setShowSupplierDropdown] = useState(false);
 const [itemSearch, setItemSearch] = useState("");
-const [showItemDropdown, setShowItemDropdown] = useState(false);
-
+const [openItemIndex, setOpenItemIndex] = useState(null);
+const [openLocationIndex, setOpenLocationIndex] = useState(null);
 const [locationSearch, setLocationSearch] = useState("");
-const [showLocationDropdown, setShowLocationDropdown] = useState(false);
   const [header, setHeader] = useState({
     date: "",
     supplier_id: "",
@@ -141,16 +140,21 @@ const handleSave = async () => {
   try {
     setLoading(true);
 
-    const validItems = details
-      .map(d => ({
-        item_id: Number(d.item_id),
-        qty: Number(d.qty),
-        batch: d.batch || "",
-        expiry: d.expiry || null,
-        location_id: Number(d.location_id),
-        remark: d.remark || ""
-      }))
-      .filter(d => d.item_id && d.qty > 0);
+   const validItems = details
+  .map(d => {
+    const qty = parseFloat(d.qty);
+
+    return {
+      item_id: Number(d.item_id),
+      qty: qty,
+      unit: d.qty.replace(/[0-9.]/g, "").trim(), // ✅ optional
+      batch: d.batch || "",
+      expiry: d.expiry || null,
+      location_id: Number(d.location_id),
+      remark: d.remark || ""
+    };
+  })
+  .filter(d => d.item_id && d.qty > 0);
 
     console.log("VALID ITEMS:", validItems);
 
@@ -351,8 +355,9 @@ const filteredLocations = locations.filter(l =>
                   <div className="custom-dropdown">
   <div
     className="dropdown-display"
-    onClick={() => setShowItemDropdown(!showItemDropdown)}
-  >
+onClick={() =>
+  setOpenItemIndex(openItemIndex === i ? null : i)
+}  >
     {d.item_id
       ? items.find(it => it.id == d.item_id)?.name
       : ""}
@@ -360,7 +365,7 @@ const filteredLocations = locations.filter(l =>
     <span className="arrow">▼</span>
   </div>
 
-  {showItemDropdown && (
+{openItemIndex === i && (
     <div className="dropdown-box">
       <input
         type="text"
@@ -377,7 +382,7 @@ const filteredLocations = locations.filter(l =>
             className="dropdown-option"
             onClick={() => {
               handleItemChange(i, it.id);
-              setShowItemDropdown(false);
+              setOpenItemIndex(null);
               setItemSearch("");
             }}
           >
@@ -416,8 +421,9 @@ const filteredLocations = locations.filter(l =>
                     <div className="custom-dropdown">
   <div
     className="dropdown-display"
-    onClick={() => setShowLocationDropdown(!showLocationDropdown)}
-  >
+onClick={() =>
+  setOpenLocationIndex(openLocationIndex === i ? null : i)
+}>
     {d.location_id
       ? locations.find(l => l.id == d.location_id)?.name
       : ""}
@@ -425,7 +431,7 @@ const filteredLocations = locations.filter(l =>
     <span className="arrow">▼</span>
   </div>
 
-  {showLocationDropdown && (
+ {openLocationIndex === i && (
     <div className="dropdown-box">
       <input
         type="text"
@@ -442,7 +448,7 @@ const filteredLocations = locations.filter(l =>
             className="dropdown-option"
             onClick={() => {
               handleChange(i, "location_id", l.id);
-              setShowLocationDropdown(false);
+              setOpenLocationIndex(null);
               setLocationSearch("");
             }}
           >
@@ -483,7 +489,9 @@ const filteredLocations = locations.filter(l =>
        <div className="custom-dropdown">
   <div
     className="dropdown-display"
-    onClick={() => setShowItemDropdown(!showItemDropdown)}
+    onClick={() =>
+  setOpenItemIndex(openItemIndex === i ? null : i)
+}
   >
     {d.item_id
       ? items.find(it => it.id == d.item_id)?.name
@@ -492,8 +500,7 @@ const filteredLocations = locations.filter(l =>
     <span className="arrow">▼</span>
   </div>
 
-  {showItemDropdown && (
-    <div className="dropdown-box">
+{openItemIndex === i && (    <div className="dropdown-box">
       <input
         type="text"
         placeholder="Search item..."
@@ -509,7 +516,7 @@ const filteredLocations = locations.filter(l =>
             className="dropdown-option"
             onClick={() => {
               handleItemChange(i, it.id);
-              setShowItemDropdown(false);
+              setOpenItemIndex(null);
               setItemSearch("");
             }}
           >
@@ -555,7 +562,9 @@ const filteredLocations = locations.filter(l =>
       <div className="custom-dropdown">
   <div
     className="dropdown-display"
-    onClick={() => setShowLocationDropdown(!showLocationDropdown)}
+    onClick={() =>
+  setOpenLocationIndex(openLocationIndex === i ? null : i)
+}
   >
     {d.location_id
       ? locations.find(l => l.id == d.location_id)?.name
@@ -564,7 +573,7 @@ const filteredLocations = locations.filter(l =>
     <span className="arrow">▼</span>
   </div>
 
-  {showLocationDropdown && (
+  {openLocationIndex === i && (
     <div className="dropdown-box">
       <input
         type="text"
@@ -582,7 +591,7 @@ const filteredLocations = locations.filter(l =>
               className="dropdown-option"
               onClick={() => {
                 handleChange(i, "location_id", l.id);
-                setShowLocationDropdown(false);
+              setOpenLocationIndex(null);
                 setLocationSearch("");
               }}
             >

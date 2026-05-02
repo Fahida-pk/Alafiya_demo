@@ -130,27 +130,15 @@ const addRow = () => {
   };
 
 const handleSave = async () => {
+
+  if (loading) return; // 🚫 prevent multiple click
+
   try {
+    setLoading(true); // 🔒 lock button
 
-    // ✅ VALIDATION
-// 🔥 FILTER ONLY VALID ITEMS
-const validItems = details.filter(d => d.item_id && d.qty);
+    // 🔥 FILTER ONLY VALID ITEMS
+    const validItems = details.filter(d => d.item_id && d.qty);
 
-if (validItems.length === 0) {
-  alert("Please enter at least one item ❗");
-  return;
-}
-
-// 🔥 MAP AFTER FILTER
-const formattedItems = validItems.map(d => ({
-  item_id: d.item_id,
-  qty: d.qty,
-  batch: d.batch || "",
-  expiry: d.expiry || null,
-  location_id: d.location_id || null,
-  brand_id: d.brand_id || null,
-  remark: d.remark || ""
-}));
     if (validItems.length === 0) {
       alert("Please enter at least one item ❗");
       return;
@@ -187,14 +175,12 @@ const formattedItems = validItems.map(d => ({
 
     // 🔥 AFTER SAVE RESET FORM
     if (!id) {
-      // clear header
       setHeader({
         date: "",
         customer_id: "",
         remarks: ""
       });
 
-      // reset details (1 empty row)
       setDetails([
         {
           item_id: "",
@@ -216,6 +202,8 @@ const formattedItems = validItems.map(d => ({
   } catch (err) {
     console.error(err);
     alert("Error ❌");
+  } finally {
+    setLoading(false); // 🔓 unlock button
   }
 };
   const filteredCustomers = customers.filter(c =>
@@ -783,8 +771,12 @@ const handleItemChange = async (i, value) => {
         </div>
 
         {!isView && (
-  <button className="order-ui-save-btn" onClick={handleSave}>
-  {id ? "Update Order" : "Save Order"}
+ <button
+  className="order-ui-save-btn"
+  onClick={handleSave}
+  disabled={loading}
+>
+  {loading ? "Saving..." : id ? "Update Order" : "Save Order"}
 </button>
 )}
  {/* ✅ ONLY ONE MODAL HERE */}
