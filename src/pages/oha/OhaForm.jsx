@@ -107,7 +107,27 @@ const [selectedRowIndex, setSelectedRowIndex] = useState(null);
   const deleteRow = (i) => {
     setDetails(details.filter((_, index) => index !== i));
   };
+const fetchBatch = async (i, qty) => {
+  if (!qty || qty <= 0) return;
+  if (!header.customer_id) return;
+  if (!details[i].item_id) return;
 
+  const res = await fetch(
+    `https://zyntaweb.com/demoalafiya/api/order_batches.php?item_id=${details[i].item_id}&customer_id=${header.customer_id}`
+  );
+
+  const data = await res.json();
+  const batches = Array.isArray(data) ? data : data.data || [];
+
+  if (batches.length === 0) {
+    alert("No batch found ❗");
+    return;
+  }
+
+  setBatchList(batches);
+  setSelectedRowIndex(i);
+  setShowBatchModal(true);
+};
   // ================= SAVE =================
  const handleSave = async () => {
   if (loading) return;
@@ -286,10 +306,19 @@ return (
               key={c.id}
               className="dropdown-option"
               onClick={() => {
-                setHeader({ ...header, customer_id: c.id });
-                setActiveDropdown(null);
-                setSearchText("");
-              }}
+  const updatedHeader = { ...header, customer_id: c.id };
+  setHeader(updatedHeader);
+
+  setActiveDropdown(null);
+  setSearchText("");
+
+  // 🔥 IMPORTANT: batch auto load
+  details.forEach((d, index) => {
+    if (d.quantity && d.item_id) {
+      fetchBatch(index, d.quantity);
+    }
+  });
+}}
             >
               {c.name}
             </div>
@@ -410,27 +439,39 @@ return (
     handleChange(i, "quantity", e.target.value);
   }}
 
-  onBlur={async () => {
-    const value = details[i].quantity;
+ onBlur={async (e) => {
+  const value = e.target.value;   // 🔥 FIX
 
-    if (!value || value <= 0) return;
+  if (!value || value <= 0) return;
 
-    if (!details[i].item_id) {
-      alert("Select item first ❗");
-      return;
-    }
+  if (!header.customer_id) {
+    alert("Select customer first ❗");
+    return;
+  }
 
-   const res = await fetch(
-  `https://zyntaweb.com/demoalafiya/api/order_batches.php?item_id=${details[i].item_id}&customer_id=${header.customer_id}`
-);
+  if (!details[i].item_id) {
+    alert("Select item first ❗");
+    return;
+  }
 
-    const data = await res.json();
-    const batches = Array.isArray(data) ? data : data.data || [];
+  const res = await fetch(
+    `https://zyntaweb.com/demoalafiya/api/order_batches.php?item_id=${details[i].item_id}&customer_id=${header.customer_id}`
+  );
 
-    setBatchList(batches);
-    setSelectedRowIndex(i);
-    setShowBatchModal(true);
-  }}
+  const data = await res.json();
+  const batches = Array.isArray(data) ? data : data.data || [];
+
+  console.log("BATCH:", batches); // 🔥 DEBUG
+
+  if (batches.length === 0) {
+    alert("No batch found ❗");
+    return;
+  }
+
+  setBatchList(batches);
+  setSelectedRowIndex(i);
+  setShowBatchModal(true);
+}}
 />
         
       </td>
@@ -646,27 +687,39 @@ return (
     handleChange(i, "quantity", e.target.value);
   }}
 
-  onBlur={async () => {
-    const value = details[i].quantity;
+  onBlur={async (e) => {
+  const value = e.target.value;   // 🔥 FIX
 
-    if (!value || value <= 0) return;
+  if (!value || value <= 0) return;
 
-    if (!details[i].item_id) {
-      alert("Select item first ❗");
-      return;
-    }
+  if (!header.customer_id) {
+    alert("Select customer first ❗");
+    return;
+  }
 
-    const res = await fetch(
-  `https://zyntaweb.com/demoalafiya/api/order_batches.php?item_id=${details[i].item_id}&customer_id=${header.customer_id}`
-);
+  if (!details[i].item_id) {
+    alert("Select item first ❗");
+    return;
+  }
 
-    const data = await res.json();
-    const batches = Array.isArray(data) ? data : data.data || [];
+  const res = await fetch(
+    `https://zyntaweb.com/demoalafiya/api/order_batches.php?item_id=${details[i].item_id}&customer_id=${header.customer_id}`
+  );
 
-    setBatchList(batches);
-    setSelectedRowIndex(i);
-    setShowBatchModal(true);
-  }}
+  const data = await res.json();
+  const batches = Array.isArray(data) ? data : data.data || [];
+
+  console.log("BATCH:", batches); // 🔥 DEBUG
+
+  if (batches.length === 0) {
+    alert("No batch found ❗");
+    return;
+  }
+
+  setBatchList(batches);
+  setSelectedRowIndex(i);
+  setShowBatchModal(true);
+}}
 />
       </div>
 
