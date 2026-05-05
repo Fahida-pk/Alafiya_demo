@@ -79,6 +79,10 @@
   flex-direction: column;
   gap: 6px;
 }
+.sidebar-icon {
+  font-size: 30px;
+  margin-right: 5px;
+}
 
 .submenu a {
   display: flex;

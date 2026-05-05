@@ -6,16 +6,24 @@ import { FaChartBar, FaChartPie, FaFileInvoice } from "react-icons/fa";
 import { FaBuilding } from "react-icons/fa";
 import { FaMapMarkerAlt  } from "react-icons/fa";
 import { FaTags } from "react-icons/fa";      // Brands
+import { FiCornerUpLeft } from "react-icons/fi";
+import { BiArrowBack } from "react-icons/bi";
 import { FaTruckLoading } from "react-icons/fa"; // Suppliers
 import { MdReceiptLong } from "react-icons/md";
+import { TbPackage } from "react-icons/tb";
 import { MdShoppingCart } from "react-icons/md";
 import { MdAltRoute } from "react-icons/md";
 import { MdAssignmentTurnedIn } from "react-icons/md";
+import { HiOutlineDocumentReport } from "react-icons/hi";
 import { FaExchangeAlt } from "react-icons/fa";
 import { MdKeyboardReturn } from "react-icons/md";
+import { AiOutlineFileSearch } from "react-icons/ai";
 import { FaUndo } from "react-icons/fa";
 import { FaRoad, FaWarehouse, FaFileImport, FaCartPlus, FaClipboardList } from "react-icons/fa";
 import { MdPayments, MdExplore } from "react-icons/md";
+
+import { MdAssessment } from "react-icons/md";   // ⭐ BEST (report analytics look)
+
 import {
   FaClipboardCheck,
   FaMapMarkedAlt,
@@ -179,7 +187,9 @@ const [inventoryOpen, setInventoryOpen] = useState(false);
       <FaExchangeAlt />
       <span>OHA</span>
     </Link>
+    
   </div>
+  
 )}
 {/* ================= REPORT ================= */}
 {/* ================= REPORT ================= */}
@@ -198,10 +208,19 @@ const [inventoryOpen, setInventoryOpen] = useState(false);
     
 
     <Link to="/driver-report" onClick={() => setMobileOpen(false)}>
-      <FaChartBar />
+  <FaChartBar className="sidebar-icon" />
       <span>Driver Report</span>
     </Link>
 
+    <Link to="/grn-report" onClick={() => setMobileOpen(false)}>
+      <HiOutlineDocumentReport className="sidebar-icon" />
+      <span>GRN Report</span>
+    </Link>
+    <Link to="/oha-report" onClick={() => setMobileOpen(false)}>
+    
+      <FiCornerUpLeft className="sidebar-icon" />
+      <span>OHA Report</span>
+    </Link>
   </div>
 )}
 
