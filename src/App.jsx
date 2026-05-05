@@ -25,6 +25,8 @@ import OhaForm from "./pages/oha/OhaForm";
 import OhaList from "./pages/oha/OhaList";
 import GRNReport from "./pages/grn/GRNReport";
 import  OHAReport from "./pages/oha/OHAReport";
+import  CurrentStockReport from "./pages/stock/CurrentStockReport";
+
 function App() {
   return (
     <BrowserRouter>
@@ -62,6 +64,7 @@ function App() {
 <Route path="/oha-list" element={<OhaList />} />
 <Route path="/grn-report" element={<GRNReport />} />
 <Route path="/oha-report" element={<OHAReport />} />
+<Route path="/current-stock-report" element={<CurrentStockReport />} />
 
         </Route>
 

@@ -221,6 +221,10 @@ const [inventoryOpen, setInventoryOpen] = useState(false);
       <FiCornerUpLeft className="sidebar-icon" />
       <span>OHA Report</span>
     </Link>
+    <Link to="/current-stock-report" onClick={() => setMobileOpen(false)}>
+  <MdAssessment className="sidebar-icon" />
+      <span>Current Stock Report</span>
+    </Link>
   </div>
 )}
 
