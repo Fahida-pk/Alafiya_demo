@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import TopNavbar from "../dashboard/TopNavbar";
 import "../oha/OHAReport.css";
 import { MdKeyboardReturn } from "react-icons/md";
-
+import { HiOutlineArchiveBox } from "react-icons/hi2";
 const API = "https://zyntaweb.com/demoalafiya/api/current_stock_report.php";
 const ITEM_API = "https://zyntaweb.com/demoalafiya/api/items.php";
 const COMPANY_API = "https://zyntaweb.com/demoalafiya/api/company.php";
@@ -74,7 +74,7 @@ const CurrentStockReport = () => {
       <div className="oha-card-container">
 
         <h3 className="oha-title">
-          <MdKeyboardReturn style={{ color: "#4e73df" }} />
+          < HiOutlineArchiveBox style={{ color: "#4e73df" }} />
           CURRENT STOCK REPORT
         </h3>
 
@@ -185,7 +185,7 @@ const CurrentStockReport = () => {
         ) : hasSearched ? (
 
           <div className="oha-no-data">
-            <MdKeyboardReturn className="oha-no-data-icon" /> No data found
+            < HiOutlineArchiveBox className="oha-no-data-icon" /> No data found
           </div>
 
         ) : null}

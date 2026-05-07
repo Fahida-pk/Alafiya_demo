@@ -21,7 +21,8 @@ import { AiOutlineFileSearch } from "react-icons/ai";
 import { FaUndo } from "react-icons/fa";
 import { FaRoad, FaWarehouse, FaFileImport, FaCartPlus, FaClipboardList } from "react-icons/fa";
 import { MdPayments, MdExplore } from "react-icons/md";
-
+import { FaMoneyCheckAlt } from "react-icons/fa";
+import { MdAccountBalanceWallet } from "react-icons/md";
 import { MdAssessment } from "react-icons/md";   // ⭐ BEST (report analytics look)
 
 import {
@@ -190,6 +191,35 @@ const [inventoryOpen, setInventoryOpen] = useState(false);
     
   </div>
   
+)}
+{/* ================= ACCOUNTS ================= */}
+
+<div
+  className="menu-item"
+  onClick={() =>
+    setOpenMenu(openMenu === "accounts" ? null : "accounts")
+  }
+>
+  <MdAccountBalanceWallet />
+  <span>Accounts</span>
+
+  <FaChevronDown
+    className={openMenu === "accounts" ? "rotate" : ""}
+  />
+</div>
+
+{openMenu === "accounts" && (
+  <div className="submenu">
+
+    <Link
+      to="/daily-settlement"
+      onClick={() => setMobileOpen(false)}
+    >
+      <FaMoneyCheckAlt />
+      <span>Daily Settlement</span>
+    </Link>
+
+  </div>
 )}
 {/* ================= REPORT ================= */}
 {/* ================= REPORT ================= */}

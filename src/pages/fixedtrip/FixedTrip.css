@@ -166,6 +166,7 @@
   width: 42px;
   border-radius: 8px;
   cursor: pointer;
+  
 }
 
 /* ================= TABLE (DESKTOP) ================= */
@@ -259,6 +260,7 @@ td:nth-child(5) {
   align-items: center;
   gap: 12px;
   margin-top: 20px;
+  
 }
 
 /* ================= MESSAGE BOX ================= */

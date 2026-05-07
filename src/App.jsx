@@ -27,7 +27,7 @@ import OhaList from "./pages/oha/OhaList";
 import GRNReport from "./pages/grn/GRNReport";
 import OHAReport from "./pages/oha/OHAReport";
 import CurrentStockReport from "./pages/stock/CurrentStockReport";
-
+import DailySettlement from "./pages/daily_settlement/DailySettlement";
 import ProtectedRoute from "./pages/login/ProtectedRoute";
 
 function App() {
@@ -68,6 +68,7 @@ function App() {
           <Route path="/grn-form" element={<GrnForm />} />
           <Route path="/grn-list" element={<GrnList />} />
           <Route path="/daily-picking" element={<DailyPicking />} />
+          <Route path="/daily-settlement" element={<DailySettlement />} />
           <Route path="/oha-form/:id" element={<OhaForm />} />
           <Route path="/oha-form" element={<OhaForm />} />
           <Route path="/oha-list" element={<OhaList />} />
