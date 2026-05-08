@@ -225,31 +225,29 @@ const totalPages = Math.ceil(
         <div className="settlement-search-box">
 
           <FaSearch className="settlement-search-icon" />
+<input
+  type="search"
+  placeholder="Search Daily Settlement..."
+  value={search}
+  onChange={(e) => {
+    setSearch(e.target.value);
+    setCurrentPage(1);
+  }}
+  className="settlement-search-input"
+/>
 
-          <input
-            type="text"
-            name="settlement_search"
-            placeholder="Search Settlement..."
-            value={search}
-            onChange={(e) => {
-              setSearch(e.target.value);
-              setCurrentPage(1);
-            }}
-            className="settlement-search-input"
-          />
-
-          {search && (
-            <button
-              type="button"
-              className="settlement-clear-btn"
-              onClick={() => {
-                setSearch("");
-                setCurrentPage(1);
-              }}
-            >
-              ✕
-            </button>
-          )}
+{search && (
+  <button
+    type="button"
+    className="settlement-clear-btn"
+    onClick={() => {
+      setSearch("");
+      setCurrentPage(1);
+    }}
+  >
+    ✕
+  </button>
+)}
 
         </div>
 
