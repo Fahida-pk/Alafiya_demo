@@ -37,8 +37,16 @@ const TopNavbar = () => {
     if (path === "/oha-list") return "OHA";
 
 
-    // ===== REPORT =====
-    if (path === "/driver-report") return "Driver Report";
+// ===== ACCOUNTS =====
+if (path === "/daily-settlement") return "Daily Settlement";
+if (path === "/expense") return "Expense Entry";
+if (path === "/bank-deposit") return "Bank Deposit";
+
+// ===== REPORT =====
+if (path === "/driver-report") return "Driver Report";
+if (path === "/grn-report") return "GRN Report";
+if (path === "/oha-report") return "OHA Report";
+if (path === "/current-stock-report") return "Current Stock Report";
 
     // ===== ADMIN =====
     if (path === "/users") return "User";
