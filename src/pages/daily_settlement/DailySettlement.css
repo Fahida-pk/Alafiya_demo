@@ -716,3 +716,425 @@
   }
 
 }
+/* ================= SAMSUNG S8+ ================= */
+/* ================= SAMSUNG S8+ ================= */
+
+@media screen and (max-width: 370px) {
+
+  html,
+  body {
+    width: 100%;
+    overflow-x: hidden;
+  }
+
+  * {
+    box-sizing: border-box;
+  }
+
+  /* ================= TOPBAR ================= */
+
+  .top-navbar {
+    margin-left: 0 !important;
+
+    width: 100% !important;
+    max-width: 100%;
+
+    position: fixed;
+    top: 0;
+    left: 0;
+
+    z-index: 1000;
+  }
+
+  /* ================= PAGE ================= */
+
+  .settlement-page {
+    width: 100%;
+    max-width: 100%;
+
+    overflow-x: hidden;
+
+    padding: 10px;
+    padding-top: 72px;
+
+    background: #f4f7fb;
+  }
+
+  /* ================= CARD ================= */
+
+  .settlement-list-card {
+    width: 100%;
+    max-width: 100%;
+
+    padding: 12px;
+
+    overflow: hidden;
+
+    border-radius: 14px;
+
+    background: transparent;
+    box-shadow: none;
+  }
+
+  /* ================= HEADER ================= */
+
+  .settlement-card-header {
+    width: 100%;
+    margin-bottom: 14px;
+  }
+
+  .settlement-card-header h3 {
+    font-size: 18px;
+    gap: 6px;
+  }
+
+  .settlement-heading-icon {
+    font-size: 22px;
+  }
+
+  /* ================= ADD BUTTON ================= */
+
+  .add-settlement-top {
+    width: 60%;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    height: 46px;
+
+    padding: 10px 14px;
+
+    font-size: 14px;
+    font-weight: 700;
+
+    border-radius: 12px;
+  }
+
+  /* ================= TOOLBAR ================= */
+
+  .settlement-toolbar {
+    width: 100%;
+
+    display: flex;
+    flex-direction: column;
+
+    gap: 10px;
+  }
+
+  /* ================= SEARCH ================= */
+
+  .settlement-search-wrapper {
+    width: 100%;
+  }
+
+  .settlement-search-box {
+    position: relative;
+
+    width: 100%;
+    max-width: 100%;
+  }
+
+  .settlement-search-input {
+    width: 100% !important;
+    max-width: 100%;
+
+    height: 44px;
+
+    padding-left: 38px;
+    padding-right: 38px;
+
+    font-size: 13px;
+
+    border-radius: 12px;
+  }
+
+  .settlement-search-icon {
+    position: absolute;
+
+    left: 12px;
+    top: 50%;
+
+    transform: translateY(-50%);
+
+    font-size: 13px;
+  }
+
+  .settlement-clear-btn {
+    position: absolute;
+
+    right: 12px;
+    top: 50%;
+
+    transform: translateY(-50%);
+
+    font-size: 13px;
+
+    border: none;
+    background: transparent;
+
+    cursor: pointer;
+  }
+
+  /* ================= FILTER ================= */
+
+  .settlement-filter-box {
+  width: 100%;
+
+  display: flex;
+  flex-direction: row;
+
+  align-items: center;
+
+  gap: 8px;
+}
+
+.settlement-filter-select,
+.settlement-filter-btn {
+  flex: 1;
+
+  width: 50%;
+
+  max-width: 50%;
+}
+
+  .settlement-filter-select,
+  .settlement-filter-btn {
+    width: 100%;
+    max-width: 100%;
+
+    height: 44px;
+
+    font-size: 14px;
+    font-weight: 600;
+
+    padding: 0 12px;
+
+    border-radius: 12px;
+  }
+
+  /* ================= FILTER PANEL ================= */
+
+  .settlement-filter-panel {
+    width: 100%;
+
+    padding: 12px;
+
+    border-radius: 14px;
+  }
+
+  .settlement-filter-grid {
+    grid-template-columns: 1fr;
+
+    gap: 12px;
+  }
+
+  .settlement-filter-group label {
+    font-size: 13px;
+  }
+
+  .settlement-filter-group input {
+    width: 100%;
+
+    height: 42px;
+
+    font-size: 13px;
+  }
+
+  .settlement-filter-actions {
+  width: 100%;
+
+  display: flex;
+  flex-direction: row;
+
+  align-items: center;
+
+  gap: 8px;
+}
+
+.settlement-apply-btn,
+.settlement-clear-filter-btn {
+  flex: 1;
+
+  width: 50%;
+  max-width: 50%;
+
+  height: 42px;
+
+  font-size: 14px;
+  font-weight: 700;
+
+  border-radius: 10px;
+}
+  /* ================= TABLE ================= */
+
+  .settlement-table-wrapper {
+    width: 100%;
+    max-width: 100%;
+
+    overflow: hidden;
+
+    border: none;
+
+    background: transparent;
+  }
+
+  .settlement-table {
+    width: 100%;
+    min-width: 100%;
+  }
+
+  .settlement-table thead {
+    display: none;
+  }
+
+  .settlement-table,
+  .settlement-table tbody,
+  .settlement-table tr {
+    width: 100%;
+    display: block;
+  }
+
+  .settlement-table td {
+    width: 100%;
+  }
+
+  .settlement-table tbody tr {
+    background: #ffffff;
+
+    margin-bottom: 14px;
+
+    padding: 12px;
+
+    border-radius: 14px;
+
+    border: 1px solid #e5e7eb;
+
+    box-shadow: 0 4px 10px rgba(0,0,0,0.06);
+  }
+
+  .settlement-table tbody td {
+    display: flex;
+
+    align-items: flex-start;
+    justify-content: space-between;
+
+    gap: 10px;
+
+    width: 100%;
+
+    padding: 10px 0;
+
+    border: none;
+
+    font-size: 12px;
+
+    word-break: break-word;
+  }
+
+  .settlement-table tbody td::before {
+    content: attr(data-label);
+
+    min-width: 120px;
+
+    font-size: 12px;
+
+    font-weight: 700;
+
+    color: #4b5563;
+  }
+
+  .settlement-table td:last-child {
+    display: flex;
+
+    justify-content: flex-end;
+
+    gap: 8px;
+  }
+
+  /* ================= ACTION BUTTONS ================= */
+
+  .settlement_edit-btn,
+  .settlement_delete-btn {
+    min-width: 34px;
+    min-height: 34px;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    font-size: 12px;
+
+    border-radius: 8px;
+  }
+
+  /* ================= NO DATA ================= */
+
+  .settlement-no-data {
+    min-height: 90px;
+
+    font-size: 13px;
+
+    text-align: center;
+  }
+
+  /* ================= PAGINATION ================= */
+
+  .settlement-pagination {
+    width: 100%;
+
+    display: flex;
+
+    gap: 8px;
+  }
+
+  .page-btn {
+    flex: 1;
+
+    height: 44px;
+
+    font-size: 14px;
+    font-weight: 700;
+
+    border-radius: 10px;
+  }
+
+  .page-number {
+    display: none;
+  }
+
+  /* ================= MODAL ================= */
+
+  .settlement_modal-box {
+    width: 95%;
+
+    padding: 14px;
+
+    border-radius: 14px;
+  }
+
+  .settlement_modal-body {
+    gap: 10px;
+  }
+
+  .settlement_modal-body label {
+    font-size: 13px;
+  }
+
+  .settlement_modal-body input,
+  .settlement_modal-body select {
+    height: 42px;
+
+    font-size: 13px;
+  }
+
+  .settlement_save-btn {
+    width: 100%;
+
+    height: 44px;
+
+    font-size: 14px;
+    font-weight: 700;
+  }
+
+}
