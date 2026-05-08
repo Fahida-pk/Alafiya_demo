@@ -14,7 +14,10 @@ const DailySettlement = () => {
 const [search, setSearch] = useState("");
   const [isEdit, setIsEdit] = useState(false);
 const [currentPage, setCurrentPage] = useState(1);
-
+const [showFilters, setShowFilters] = useState(false);
+const [filterSlno, setFilterSlno] = useState("");
+const [filterReceiptNo, setFilterReceiptNo] = useState("");
+const [filterDate, setFilterDate] = useState("");
 const rowsPerPage = 5;
   const [message, setMessage] = useState("");
   const [messageType, setMessageType] = useState("");
@@ -101,12 +104,35 @@ const rowsPerPage = 5;
   };
   /* ================= SEARCH FILTER ================= */
 
-const filteredData = data.filter((item) =>
-  Object.values(item)
-    .join(" ")
-    .toLowerCase()
-    .includes(search.toLowerCase())
-);
+const filteredData = data.filter((item) => {
+
+  const matchesSearch =
+    Object.values(item)
+      .join(" ")
+      .toLowerCase()
+      .includes(search.toLowerCase());
+
+  const matchesSlno =
+    filterSlno === "" ||
+    item.slno
+      ?.toLowerCase()
+      .includes(filterSlno.toLowerCase());
+
+  const matchesReceipt =
+    filterReceiptNo === "" ||
+    item.last_payment_receipt_no
+      ?.toString()
+      .includes(filterReceiptNo);
+const matchesDate =
+  filterDate === "" ||
+  item.settlement_date === filterDate;
+  return (
+    matchesSearch &&
+    matchesSlno &&
+    matchesReceipt &&
+    matchesDate
+  );
+});
 /* ================= PAGINATION ================= */
 
 const indexOfLastRow = currentPage * rowsPerPage;
@@ -225,19 +251,98 @@ const totalPages = Math.ceil(
 
     <div className="daily-filter-box">
 
-      <select className="daily-filter-select">
-        <option>10 per page</option>
-        <option>25 per page</option>
-        <option>50 per page</option>
-      </select>
+  <select className="daily-filter-select">
+    <option>10 per page</option>
+    <option>25 per page</option>
+    <option>50 per page</option>
+  </select>
 
-      <button className="daily-filter-btn">
-        ⏳ Filters
-      </button>
+  <button
+    className="daily-filter-btn"
+    onClick={() => setShowFilters(!showFilters)}
+  >
+    ⏳ Filters
+  </button>
+
+</div>
+
+</div>
+
+{/* FILTER PANEL */}
+
+{showFilters && (
+
+  <div className="daily-filter-panel">
+
+    <div className="daily-filter-grid">
+
+      <div className="daily-filter-group">
+        <label>SLNO</label>
+
+        <input
+          type="text"
+          placeholder="Enter SLNO"
+          value={filterSlno}
+          onChange={(e) =>
+            setFilterSlno(e.target.value)
+          }
+        />
+      </div>
+<div className="daily-filter-group">
+
+  <label>Settlement Date</label>
+
+  <input
+    type="date"
+    value={filterDate}
+    onChange={(e) =>
+      setFilterDate(e.target.value)
+    }
+  />
+
+</div>
+      <div className="daily-filter-group">
+        <label>Last Payment Receipt No</label>
+
+        <input
+          type="text"
+          placeholder="Enter Receipt No"
+          value={filterReceiptNo}
+          onChange={(e) =>
+            setFilterReceiptNo(e.target.value)
+          }
+        />
+      </div>
+
+      <div className="daily-filter-actions">
+
+        <button
+          className="daily-apply-btn"
+          onClick={() => setCurrentPage(1)}
+        >
+          Apply
+        </button>
+
+        <button
+          className="daily-clear-filter-btn"
+          onClick={() => {
+            setFilterSlno("");
+            setFilterReceiptNo("");
+            setFilterDate("");
+            setCurrentPage(1);
+          }}
+        >
+          Clear
+        </button>
+
+      </div>
 
     </div>
 
   </div>
+
+)}
+
 
   {/* TABLE */}
   <div className="daily-table-wrapper">
@@ -332,7 +437,7 @@ const totalPages = Math.ceil(
        <FaSearch className="bank-no-icon" />
  
        <p>  <HiOutlineClipboardDocumentList className="daily-heading-icon" />
-  DAILY SETTLEMENT</p>
+  No DAILY SETTLEMENT Found</p>
 
      </div>
  

@@ -365,7 +365,86 @@
   background: linear-gradient(to right, #2563eb, #7c3aed);
 }
 
+/* ================= FILTER PANEL ================= */
 
+.daily-filter-panel {
+  background: #f9fafb;
+
+  border: 1px solid #e5e7eb;
+  border-radius: 14px;
+
+  padding: 18px;
+
+  margin-bottom: 18px;
+}
+
+.daily-filter-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+
+  gap: 16px;
+  align-items: end;
+}
+
+.daily-filter-group {
+  display: flex;
+  flex-direction: column;
+}
+
+.daily-filter-group label {
+  font-size: 14px;
+  font-weight: 600;
+
+  margin-bottom: 6px;
+  color: #374151;
+}
+
+.daily-filter-group input {
+  height: 44px;
+
+  border: 1px solid #d1d5db;
+  border-radius: 10px;
+
+  padding: 0 12px;
+  outline: none;
+}
+
+.daily-filter-actions {
+  display: flex;
+  gap: 10px;
+}
+
+.daily-apply-btn {
+  height: 44px;
+
+  padding: 0 18px;
+
+  border: none;
+  border-radius: 10px;
+
+  background: linear-gradient(to right,#6d28d9,#8b5cf6);
+
+  color: #fff;
+  font-weight: 600;
+
+  cursor: pointer;
+}
+
+.daily-clear-filter-btn {
+  height: 44px;
+
+  padding: 0 18px;
+
+  border: none;
+  border-radius: 10px;
+
+  background: #ef4444;
+
+  color: #fff;
+  font-weight: 600;
+
+  cursor: pointer;
+}
 /* ================= PAGINATION ================= */
 
 .daily-pagination {
@@ -447,21 +526,20 @@
     margin-bottom: 14px;
   }
 
-  .daily-card-header h3 {
-    display: flex;
-    align-items: center;
+ .daily-card-header h3 {
+  display: flex;
+  align-items: center;
+  gap: 6px;
 
-    flex-shrink: 1;
+  width: 100%;
 
-    min-width: 0;
-    max-width: 135px;
+  font-size: 16px;
+  font-weight: 700;
 
-    font-size: 14px;
+  white-space: nowrap;
 
-    overflow: hidden;
-    white-space: nowrap;
-    text-overflow: ellipsis;
-  }
+  color: #111827;
+}
 
   /* ================= SEARCH ================= */
 
@@ -704,6 +782,22 @@
 
   .daily-filter-select,
   .daily-filter-btn {
+    flex: 1;
+  }
+
+}
+@media (max-width: 576px) {
+
+  .daily-filter-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .daily-filter-actions {
+    width: 100%;
+  }
+
+  .daily-apply-btn,
+  .daily-clear-filter-btn {
     flex: 1;
   }
 
