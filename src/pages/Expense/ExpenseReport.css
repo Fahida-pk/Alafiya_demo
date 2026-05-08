@@ -1,0 +1,350 @@
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  overflow-x: hidden;
+}
+
+/* PAGE */
+.expense-report-page {
+  padding: 20px;
+  background: #f4f7fb;
+  min-height: 100vh;
+}
+
+/* CARD */
+.expense-report-card {
+  background: #ffffff;
+  padding: 15px;
+  border-radius: 12px;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
+  width: 100%;
+  max-width: 1100px;
+  margin: auto;
+}
+
+/* TITLE */
+.expense-report-title {
+  font-size: 22px;
+  font-weight: 600;
+  margin-bottom: 20px;
+
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+/* FILTER */
+.expense-report-filter-section {
+  display: flex;
+  gap: 25px;
+  flex-wrap: wrap;
+  margin-bottom: 25px;
+  align-items: flex-end;
+}
+
+.expense-report-filter-group {
+  display: flex;
+  flex-direction: column;
+  font-size: 15px;
+  font-weight: 500;
+  min-width: 180px;
+}
+
+.expense-report-filter-group label {
+  margin-bottom: 4px;
+}
+
+.expense-report-filter-group input,
+.expense-report-filter-group select {
+  padding: 10px 12px;
+  border-radius: 8px;
+  border: 1px solid #dcdfe6;
+  font-size: 15px;
+  min-width: 180px;
+  background: #fff;
+}
+
+/* DROPDOWN */
+.expense-report-select-wrapper {
+  position: relative;
+  width: 220px;
+}
+
+.expense-report-select-wrapper label {
+  display: block;
+  margin-bottom: 4px;
+  font-size: 15px;
+  font-weight: 500;
+}
+
+/* DISPLAY */
+.expense-report-select-display {
+  padding: 10px 12px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  background: #fff;
+  cursor: pointer;
+
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  min-height: 42px;
+}
+
+/* DROPDOWN BOX */
+.expense-report-dropdown-box {
+  position: absolute;
+  width: 100%;
+  background: #fff;
+  border: 1px solid #e5e7eb;
+  border-radius: 8px;
+  margin-top: 6px;
+  z-index: 1000;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
+}
+
+/* SEARCH */
+.expense-report-search-box {
+  display: flex;
+  align-items: center;
+  padding: 8px;
+  border-bottom: 1px solid #eee;
+}
+
+.expense-report-search-input {
+  width: 100%;
+  border: none;
+  outline: none;
+  font-size: 14px;
+}
+
+/* OPTIONS */
+.expense-report-options {
+  max-height: 200px;
+  overflow-y: auto;
+}
+
+.expense-report-option {
+  padding: 10px;
+  cursor: pointer;
+  font-size: 14px;
+}
+
+.expense-report-option:hover {
+  background: #f3f4f6;
+}
+
+.expense-report-no-results {
+  padding: 10px;
+  text-align: center;
+  color: #111010;
+}
+
+/* BUTTON */
+.expense-report-btn {
+  padding: 8px 14px;
+  border-radius: 15px;
+  border: none;
+  cursor: pointer;
+  font-weight: 600;
+  font-size: large;
+  color: #fff;
+
+  align-self: flex-end;
+}
+
+.expense-report-btn.generate {
+  background: linear-gradient(
+    to right,
+    #4e73df,
+    #6f42c1
+  );
+}
+
+.expense-report-btn.print {
+  background: linear-gradient(
+    to left,
+    #4e73df,
+    #6f42c1
+  );
+}
+
+/* TABLE */
+.expense-report-table {
+  width: 100%;
+  border-collapse: collapse;
+  table-layout: fixed;
+}
+
+.expense-report-table th,
+.expense-report-table td {
+  padding: 10px;
+  border: 1px solid #e5e7eb;
+  text-align: left;
+}
+
+.expense-report-table th {
+  background: #f3f4f6;
+  font-weight: 600;
+}
+
+/* COLUMN WIDTH */
+.expense-report-table th:nth-child(1),
+.expense-report-table td:nth-child(1) {
+  width: 35%;
+}
+
+.expense-report-table th:nth-child(2),
+.expense-report-table td:nth-child(2) {
+  width: 40%;
+}
+
+.expense-report-table th:nth-child(3),
+.expense-report-table td:nth-child(3) {
+  width: 25%;
+}
+
+/* NO DATA */
+.expense-report-no-data {
+  text-align: center;
+  padding: 50px;
+  color: #020202;
+  font-size: 20px;
+}
+
+.expense-report-no-data-icon {
+  color: #4e73df;
+  font-size: 22px;
+  margin-right: 6px;
+}
+
+/* PRINT HEADER */
+.expense-report-print-header {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.expense-report-print-header h2 {
+  margin: 0;
+  font-size: 22px;
+  font-weight: bold;
+}
+
+.expense-report-print-header p {
+  margin: 2px 0;
+  font-size: 14px;
+}
+
+/* HIDE PRINT */
+.print-only {
+  display: none;
+}
+
+/* ================= MOBILE ================= */
+@media (max-width: 768px) {
+
+  .expense-report-page {
+    padding: 10px;
+  }
+
+  .expense-report-card {
+    padding: 15px;
+  }
+
+  .expense-report-filter-section {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 15px;
+  }
+
+  .expense-report-filter-group,
+  .expense-report-btn,
+  .expense-report-select-wrapper {
+    width: 100%;
+  }
+
+  .expense-report-filter-group input,
+  .expense-report-select-display,
+  .expense-report-dropdown-box {
+    width: 100%;
+  }
+
+  .expense-report-btn {
+    padding: 12px;
+    font-size: 16px;
+  }
+
+  .expense-report-table {
+    table-layout: auto !important;
+  }
+
+  .expense-report-table th,
+  .expense-report-table td {
+    width: auto !important;
+    white-space: normal !important;
+  }
+
+  .expense-report-table td::before {
+    content: attr(data-label);
+    font-weight: bold;
+    display: block;
+    margin-bottom: 4px;
+    color: #555;
+  }
+}
+
+/* ================= PRINT ================= */
+@media print {
+
+  @page {
+    size: A4 landscape;
+    margin: 8mm;
+  }
+
+  * {
+    box-shadow: none !important;
+  }
+
+  body {
+    background: #fff;
+  }
+
+  .no-print,
+  .expense-report-filter-section,
+  .expense-report-title {
+    display: none !important;
+  }
+
+  .expense-report-page,
+  .expense-report-card {
+    width: 100% !important;
+    max-width: 100% !important;
+    margin: 0 auto !important;
+    padding: 0 !important;
+  }
+
+  .print-only {
+    display: block !important;
+  }
+
+  .expense-report-table {
+    width: 100% !important;
+    border-collapse: collapse !important;
+    table-layout: auto !important;
+  }
+
+  .expense-report-table th,
+  .expense-report-table td {
+    border: 1px solid #000 !important;
+    padding: 4px 6px !important;
+    font-size: 11px !important;
+  }
+
+  .expense-report-table th {
+    background: #f3f4f6 !important;
+  }
+}

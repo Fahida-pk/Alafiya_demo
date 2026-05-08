@@ -5,10 +5,10 @@ import { FaUserShield, FaUsers } from "react-icons/fa";
 import { FaChartBar, FaChartPie, FaFileInvoice } from "react-icons/fa";
 import { FaBuilding } from "react-icons/fa";
 import { FaMapMarkerAlt  } from "react-icons/fa";
-import { FaTags } from "react-icons/fa";      // Brands
+import { FaTags,FaChartLine } from "react-icons/fa";      // Brands
 import { FiCornerUpLeft } from "react-icons/fi";
 import { BiArrowBack } from "react-icons/bi";
-import { FaTruckLoading } from "react-icons/fa"; // Suppliers
+import { FaTruckLoading} from "react-icons/fa"; // Suppliers
 import { MdReceiptLong } from "react-icons/md";
 import { TbPackage } from "react-icons/tb";
 import { MdShoppingCart } from "react-icons/md";
@@ -21,9 +21,9 @@ import { AiOutlineFileSearch } from "react-icons/ai";
 import { FaUndo } from "react-icons/fa";
 import { FaRoad, FaWarehouse, FaFileImport, FaCartPlus, FaClipboardList } from "react-icons/fa";
 import { MdPayments, MdExplore } from "react-icons/md";
-import { FaMoneyCheckAlt } from "react-icons/fa";
+import { FaMoneyCheckAlt,FaMoneyBillWave } from "react-icons/fa";
 import { MdAccountBalanceWallet } from "react-icons/md";
-import { MdAssessment } from "react-icons/md";   // ⭐ BEST (report analytics look)
+import { MdAssessment} from "react-icons/md";   // ⭐ BEST (report analytics look)
 
 import {
   FaClipboardCheck,
@@ -224,7 +224,8 @@ const [inventoryOpen, setInventoryOpen] = useState(false);
   to="/expense"
   onClick={() => setMobileOpen(false)}
 >
-<FaFileInvoiceDollar />  <span>Expense Entry</span>
+  <FaMoneyBillWave />
+  <span>Expense Entry</span>
 </Link>
 <Link
   to="/bank-deposit"
@@ -269,6 +270,13 @@ const [inventoryOpen, setInventoryOpen] = useState(false);
   <MdAssessment className="sidebar-icon" />
       <span>Current Stock Report</span>
     </Link>
+    <Link
+  to="/expense-report"
+  onClick={() => setMobileOpen(false)}
+>
+  <FaChartLine className="sidebar-icon" />
+  <span>Expense Report</span>
+</Link>
   </div>
 )}
 
