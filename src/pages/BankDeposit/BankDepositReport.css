@@ -354,7 +354,7 @@ body {
 
   .bank-report-table th:nth-child(1),
   .bank-report-table td:nth-child(1) {
-    width: 12% !important;
+    width:15% !important;
     text-align: center !important;
   }
 
@@ -367,15 +367,13 @@ body {
   .bank-report-table th:nth-child(3),
   .bank-report-table td:nth-child(3) {
     width: 50% !important;
-    text-align: left !important;
-    padding-left: 8px !important;
+    text-align: center !important;
   }
 
   .bank-report-table th:nth-child(4),
   .bank-report-table td:nth-child(4) {
-    width: 20% !important;
-    text-align: right !important;
-    padding-right: 8px !important;
+    width: 40% !important;
+    text-align: center !important;
   }
 
   /* CELLS */
