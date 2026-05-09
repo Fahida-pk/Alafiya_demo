@@ -24,7 +24,9 @@ import { MdPayments, MdExplore } from "react-icons/md";
 import { FaMoneyCheckAlt,FaMoneyBillWave } from "react-icons/fa";
 import { MdAccountBalanceWallet } from "react-icons/md";
 import { MdAssessment} from "react-icons/md";   // ⭐ BEST (report analytics look)
-
+import { RiBankFill } from "react-icons/ri";
+import { BsBank2 } from "react-icons/bs";
+import { MdAccountBalance } from "react-icons/md";
 import {
   FaClipboardCheck,
   FaUniversity,
@@ -276,6 +278,13 @@ const [inventoryOpen, setInventoryOpen] = useState(false);
 >
   <FaChartLine className="sidebar-icon" />
   <span>Expense Report</span>
+</Link>
+<Link
+  to="/bank-deposit-report"
+  onClick={() => setMobileOpen(false)}
+>
+  <BsBank2 className="sidebar-icon" />
+  <span>Bank Deposit Report</span>
 </Link>
   </div>
 )}

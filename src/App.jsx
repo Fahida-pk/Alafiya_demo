@@ -31,6 +31,7 @@ import DailySettlement from "./pages/daily_settlement/DailySettlement";
 import ProtectedRoute from "./pages/login/ProtectedRoute";
 import Expense  from "./pages/Expense/expense";
 import ExpenseReport from "./pages/Expense/ExpenseReport";
+import BankDepositReport from  "./pages/BankDeposit/BankDepositReport";
 
 import BankDeposit from  "./pages/BankDeposit/BankDeposit";
 function App() {
@@ -79,6 +80,8 @@ function App() {
           <Route path="/oha-list" element={<OhaList />} />
           <Route path="/grn-report" element={<GRNReport />} />
           <Route path="/oha-report" element={<OHAReport />} />
+          <Route path="/bank-deposit-report" element={<BankDepositReport />} />
+
           <Route path="/expense-report" element={<ExpenseReport />} />
           <Route
             path="/current-stock-report"
