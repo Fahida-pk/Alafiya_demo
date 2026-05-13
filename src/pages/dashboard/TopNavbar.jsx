@@ -47,6 +47,8 @@ if (path === "/driver-report") return "Driver Report";
 if (path === "/grn-report") return "GRN Report";
 if (path === "/oha-report") return "OHA Report";
 if (path === "/current-stock-report") return "Current Stock Report";
+if (path === "/expense-report") return "Expense Report";
+if (path === "/bank-deposit-report") return "Bank Deposit Report";
 
     // ===== ADMIN =====
     if (path === "/users") return "User";
