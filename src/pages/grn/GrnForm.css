@@ -1,11 +1,41 @@
 /* CONTAINER */
-.grn-ui-container {
-   height: 100vh;
-  overflow-y: auto;
+/* ================= PAGE ================= */
+
+.grn-ui-container{
+
+  margin-left: 260px;
+
+  width: calc(100% - 260px);
+
+  min-height: 100vh;
+
   padding: 20px;
-  background: #f5f7fb;
-  width:100%;
+
+  background: #f4f7fb;
+
+  box-sizing: border-box;
+
+  overflow-x: hidden;
 }
+
+/* ================= CARD ================= */
+
+.grn-ui-card{
+
+  background: #fff;
+
+  border-radius: 14px;
+
+  padding: 20px;
+
+  margin-bottom: 20px;
+
+  box-shadow: 0 8px 20px rgba(0,0,0,0.08);
+}
+
+/* ================= MOBILE ================= */
+
+
 .grn-ui-header h2 svg {
   color: #7b5cff;   /* purple */
 }/* GRN */
@@ -134,15 +164,7 @@
   background: #f1f5f9;
 }
 /* CARD */
-.grn-ui-card {
-  background: #fff;
-  border-radius: 10px;
-  padding: 25px;
-  margin-bottom: 20px;
-    height: 500px;   /* 👈 scroll area bigger */
 
-  box-shadow: 0 2px 8px rgba(0,0,0,0.05);
-}
 
 /* HEADER */
 .grn-ui-header {
@@ -210,9 +232,13 @@ background: linear-gradient(
   padding: 14px;      /* bigger spacing */
 }
 .grn-ui-table {
-  min-width: 1000px;   /* 👈 increase table size */
+   min-width: 100%;   /* 👈 increase table size */
   width: max-content;  /* ✅ allow expansion */
-    min-height: 350px;   /* 👈 increase table size */
+      min-height: 50vh;   /* 👈 increase table size */
+  border-collapse: collapse;
+  table-layout: fixed;
+  width: 200%;
+  height: 500%;
 
 }
 .grn-ui-table-wrapper::-webkit-scrollbar {

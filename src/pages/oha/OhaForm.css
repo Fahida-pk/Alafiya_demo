@@ -4,7 +4,7 @@
   overflow-y: auto;
   padding: 20px;
   background: #f5f7fb;
-  width: 75%;
+  width: 100%;
 }
 .oha-ui-header h2 svg {
   font-size: 25px;
@@ -127,10 +127,13 @@
 }
 
 .oha-ui-table {
-  min-width: 1200px;
-  width: max-content;
+  min-width: 100%;   /* 👈 increase table size */
+  width: max-content;  /* ✅ allow expansion */
+      min-height: 50vh;   /* 👈 increase table size */
   border-collapse: collapse;
-      min-height: 350px;   /* 👈 increase table size */
+  table-layout: fixed;
+  width: 200%;
+  height: 500%;
 
 }
 

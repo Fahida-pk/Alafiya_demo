@@ -117,9 +117,11 @@ const DailyPicking = () => {
   const handlePrint = () => window.print();
 
   return (
-    <div className="dp-pro-container">
+    
+        <div className="daily-picking-page">
 
       <div className="no-print">
+
         <TopNavbar />
       </div>
 
@@ -129,7 +131,7 @@ const DailyPicking = () => {
         <h3 className="dp-pro-title no-print">Daily Picking</h3>
 
         {/* FILTER */}
-        <div className="no-print" style={{ marginBottom: "15px" }}>
+        <div className="dp-filter-section no-print">
           <input
             type="date"
             value={date}
@@ -215,8 +217,7 @@ const DailyPicking = () => {
     <option>Pending</option>
   </select>
 </td><td>
-  <span className="print-only">{d.remark}</span>
-  <input className="no-print" value={d.remark || ""} readOnly />
+  {d.remark || "-"}
 </td>
               </tr>
             );
@@ -242,7 +243,7 @@ const DailyPicking = () => {
 
 </div>
       </div>
-    </div>
+      </div>
   );
 };
 

@@ -2,11 +2,10 @@
 
 /* CONTAINER */
 .order-ui-container {
-  height: 100vh;
-  overflow-y: auto;
+  height: 1000vh;
   padding: 20px;
   background: #f5f7fb;
-  width:79%;
+  width:100%;
 }
 /* TOP BAR */
 .order-ui-topbar {
@@ -234,10 +233,13 @@ background: linear-gradient(
   padding: 14px;      /* bigger spacing */
 }
 .order-ui-table {
-  min-width: 1200px;   /* 👈 increase table size */
+  min-width: 100%;   /* 👈 increase table size */
   width: max-content;  /* ✅ allow expansion */
-      min-height: 350px;   /* 👈 increase table size */
-
+      min-height: 50vh;   /* 👈 increase table size */
+  border-collapse: collapse;
+  table-layout: fixed;
+  width: 200%;
+  height: 500%;
 }
 .order-ui-table-wrapper::-webkit-scrollbar {
   width: 6px;
