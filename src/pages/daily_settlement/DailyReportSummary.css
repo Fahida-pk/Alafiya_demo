@@ -287,10 +287,14 @@ body {
 
 /* ================= PRINT ================= */
 
+/* ================= PRINT ================= */
+
+/* ================= DAILY SUMMARY PRINT ================= */
+
 @media print {
 
   @page {
-    size: A4 landscape;
+    size: A4 portrait;
     margin: 12mm;
   }
 
@@ -302,7 +306,11 @@ body {
     overflow: visible !important;
   }
 
-  /* ================= HIDE ================= */
+  * {
+    box-shadow: none !important;
+  }
+
+  /* ================= HIDE SCREEN ================= */
 
   .no-print,
   .dailyreport-filter-section,
@@ -310,11 +318,12 @@ body {
     display: none !important;
   }
 
-  /* ================= REMOVE CARD ================= */
+  /* ================= REMOVE CARD STYLE ================= */
 
   .dailyreport-page,
   .dailyreport-card,
   .dailyreport-print-section {
+
     width: 100% !important;
     max-width: 100% !important;
 
@@ -324,43 +333,57 @@ body {
     background: #fff !important;
 
     border: none !important;
-    box-shadow: none !important;
     border-radius: 0 !important;
+    box-shadow: none !important;
   }
 
-  /* ================= PRINT HEADER ================= */
+  /* ================= HEADER ================= */
 
   .dailyreport-print-only {
+
     display: block !important;
+
     text-align: center !important;
-    margin-bottom: 10px !important;
+
+    margin-bottom: 16px !important;
   }
 
   .dailyreport-print-only h2 {
+
     margin: 0 !important;
-    font-size: 18px !important;
+
+    font-size: 24px !important;
+
     font-weight: bold !important;
   }
 
   .dailyreport-print-only h3 {
-    margin: 4px 0 !important;
-    font-size: 15px !important;
+
+    margin: 6px 0 !important;
+
+    font-size: 20px !important;
+
     font-weight: bold !important;
   }
 
   .dailyreport-print-only p {
-    margin: 0 !important;
-    font-size: 10px !important;
+
+    margin: 2px 0 !important;
+
+    font-size: 12px !important;
   }
 
   /* ================= TABLE ================= */
 
   .dailyreportsummary-table {
+
     width: 100% !important;
 
     border-collapse: collapse !important;
 
     table-layout: fixed !important;
+
+    display: table !important;
   }
 
   .dailyreportsummary-table thead {
@@ -372,7 +395,9 @@ body {
   }
 
   .dailyreportsummary-table tr {
+
     display: table-row !important;
+
     page-break-inside: avoid !important;
   }
 
@@ -383,39 +408,104 @@ body {
 
     border: 1px solid #000 !important;
 
-    padding: 4px !important;
+    padding: 6px !important;
 
-    font-size: 10px !important;
+    font-size: 12px !important;
+
+    line-height: 1.3 !important;
 
     text-align: center !important;
 
-    white-space: nowrap !important;
+    vertical-align: middle !important;
+
+    white-space: normal !important;
+
+    word-break: break-word !important;
   }
 
   .dailyreportsummary-table th {
+
+    background: #f3f4f6 !important;
+
     font-weight: bold !important;
-    background: #fff !important;
   }
 
   /* ================= REMOVE MOBILE LABEL ================= */
 
   .dailyreportsummary-table td::before {
+
     display: none !important;
+
     content: none !important;
+  }
+
+  /* ================= COLUMN WIDTH ================= */
+
+  .dailyreportsummary-table th:nth-child(1),
+  .dailyreportsummary-table td:nth-child(1) {
+    width: 10% !important;
+  }
+
+  .dailyreportsummary-table th:nth-child(2),
+  .dailyreportsummary-table td:nth-child(2) {
+    width: 18% !important;
+  }
+
+  .dailyreportsummary-table th:nth-child(3),
+  .dailyreportsummary-table td:nth-child(3) {
+    width: 14% !important;
+  }
+
+  .dailyreportsummary-table th:nth-child(4),
+  .dailyreportsummary-table td:nth-child(4) {
+    width: 14% !important;
+  }
+
+  .dailyreportsummary-table th:nth-child(5),
+  .dailyreportsummary-table td:nth-child(5) {
+    width: 14% !important;
+  }
+
+  .dailyreportsummary-table th:nth-child(6),
+  .dailyreportsummary-table td:nth-child(6) {
+    width: 14% !important;
+  }
+
+  .dailyreportsummary-table th:nth-child(7),
+  .dailyreportsummary-table td:nth-child(7) {
+    width: 16% !important;
+  }
+
+  /* ================= CASH ================= */
+
+  .dailyreport-cash-cell {
+    color: green !important;
+    font-weight: bold !important;
   }
 
   /* ================= TOTAL ================= */
 
   .dailyreport-total-row td {
+
     border: 1px solid #000 !important;
-    background: #fff !important;
+
+    background: #fafafa !important;
+
     font-weight: bold !important;
   }
 
   .dailyreport-total-single {
+
+    width: 100% !important;
+
+    display: table-cell !important;
+
     text-align: right !important;
-    padding-right: 12px !important;
-    font-size: 12px !important;
+
+    padding-right: 16px !important;
+
+    font-size: 20px !important;
+
     font-weight: bold !important;
   }
 }
