@@ -663,17 +663,27 @@ return (
               }
 
               const updated = [...details];
+updated[selectedRowIndex].batch = b.batch;
 
-              updated[selectedRowIndex].batch = b.batch;
-              updated[selectedRowIndex].expiry = b.expiry_date || b.expiry;
+updated[selectedRowIndex].expiry =
+  b.expiry_date || "";
 
-              setDetails(updated);
-              setShowBatchModal(false);
+// ✅ PICKING QTY
+updated[selectedRowIndex].quantity =
+  b.picking_qty || 0;
+
+// ✅ LOCATION
+updated[selectedRowIndex].location_id =
+  b.location_id || "";
+
+setDetails(updated);
+setShowBatchModal(false);
+            
             }}
           >
             <div>{b.batch}</div>
             <div>{b.expiry_date || b.expiry}</div>
-            <div>{b.available_qty || b.qty}</div>
+         <div>{b.picking_qty}</div>
           </div>
         ))}
       </div>

@@ -625,25 +625,26 @@ const handleItemChange = async (i, value) => {
   }}
 
   onBlur={async () => {
-    const value = details[i].qty;
+  const value = details[i].qty;
 
-    // ✅ only after typing finished
-    if (!value || value <= 0) return;
+  if (!value || value <= 0) return;
 
-    if (!details[i].item_id) {
-      alert("Select item first ❗");
-      return;
-    }
+  if (!details[i].item_id) {
+    alert("Select item first ❗");
+    return;
+  }
 
-    const res = await fetch(`https://zyntaweb.com/demoalafiya/api/stock_batches.php?item_id=${details[i].item_id}`)
+  const res = await fetch(
+    `https://zyntaweb.com/demoalafiya/api/stock_batches.php?item_id=${details[i].item_id}`
+  );
 
-    const data = await res.json();
-    const batches = Array.isArray(data) ? data : data.data || [];
+  const data = await res.json();
+  const batches = Array.isArray(data) ? data : data.data || [];
 
-    setBatchList(batches);
-    setSelectedRowIndex(i);
-    setShowBatchModal(true);
-  }}
+  setBatchList(batches);
+  setSelectedRowIndex(i);
+  setShowBatchModal(true);
+}}
 />
 </td>
 <td>
