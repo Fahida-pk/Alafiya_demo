@@ -243,9 +243,45 @@ const handleItemChange = async (i, value) => {
     ? data
     : data.data || data.batches || [];
 
-  setBatchList(batches);
-  setBatchPopup(batches);
-  setActiveBatchIndex(i);
+  ;
+  // 🔥 CURRENT FORM USED QTY CALCULATE
+const updatedBatches = batches.map(batch => {
+
+  let usedQty = 0;
+
+ details.forEach((row, index) => {
+
+  // 🔥 ignore current editing row
+  if (
+    index === i ||
+    row.id === details[i].id
+  ) {
+    return;
+  }
+
+  if (
+    row.item_id == d.item_id &&
+    row.batch === batch.batch
+  ) {
+    usedQty += parseInt(row.qty || 0);
+  }
+});
+
+  return {
+    ...batch,
+
+    // 🔥 subtract current form qty
+    available_qty:
+      parseInt(batch.available_qty || batch.qty || 0) - usedQty
+  };
+});
+
+// 🔥 hide zero stock batches
+const filteredBatches = updatedBatches.filter(
+  b => b.available_qty > 0
+);
+
+setBatchList(filteredBatches);
 };
   return (
     <div className="order-ui-container">
@@ -420,9 +456,40 @@ const handleItemChange = async (i, value) => {
     const data = await res.json();
     const batches = Array.isArray(data) ? data : data.data || [];
 
-    setBatchList(batches);
-    setSelectedRowIndex(i);
-    setShowBatchModal(true);
+   // 🔥 CURRENT FORM USED QTY CALCULATE
+const updatedBatches = batches.map(batch => {
+
+  let usedQty = 0;
+
+  details.forEach((row, index) => {
+
+    // current editing row skip
+    if (index === i) return;
+
+    // same batch + same item
+   if (
+  row.item_id == d.item_id &&
+  row.batch === batch.batch
+) {
+      usedQty += parseInt(row.qty || 0);
+    }
+  });
+
+  return {
+    ...batch,
+
+    // 🔥 subtract current form qty
+    available_qty:
+      parseInt(batch.available_qty || batch.qty || 0) - usedQty
+  };
+});
+
+// 🔥 hide zero stock batches
+const filteredBatches = updatedBatches.filter(
+  b => b.available_qty > 0
+);
+
+setBatchList(filteredBatches);
   }}
 />
       <label>Batch</label>
@@ -641,9 +708,47 @@ const handleItemChange = async (i, value) => {
   const data = await res.json();
   const batches = Array.isArray(data) ? data : data.data || [];
 
-  setBatchList(batches);
-  setSelectedRowIndex(i);
-  setShowBatchModal(true);
+ // 🔥 CURRENT FORM USED QTY CALCULATE
+const updatedBatches = batches.map(batch => {
+
+  let usedQty = 0;
+
+  details.forEach((row, index) => {
+
+    if (index === i) return;
+
+    if (
+      row.item_id == d.item_id &&
+      row.batch === batch.batch
+    ) {
+      usedQty += parseInt(row.qty || 0);
+    }
+  });
+
+  return {
+    ...batch,
+
+    available_qty:
+      parseInt(
+        batch.available_qty ??
+        batch.qty ??
+        (batch.quantity_in - batch.quantity_out) ??
+        0
+      ) - usedQty
+  };
+});
+
+const filteredBatches = updatedBatches.filter(
+  b => b.available_qty > 0
+);
+
+console.log(filteredBatches);
+
+setBatchList(filteredBatches);
+
+setSelectedRowIndex(i);
+
+setShowBatchModal(true);
 }}
 />
 </td>

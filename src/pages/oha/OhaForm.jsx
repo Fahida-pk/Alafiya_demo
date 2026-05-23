@@ -36,8 +36,8 @@ const [selectedRowIndex, setSelectedRowIndex] = useState(null);
   const [details, setDetails] = useState([
     {
       item_id: "",
-      quantity: "",
-      batch: "",
+    picking_qty: "",
+    batch: "",
       expiry: "",
       location_id: "",
       return_reason_code_id: "",
@@ -72,8 +72,31 @@ const [selectedRowIndex, setSelectedRowIndex] = useState(null);
         });
 
       fetch(`${DETAILS_API}?oha_id=${id}`)
-        .then(r => r.json())
-        .then(d => setDetails(Array.isArray(d) ? d : []));
+  .then(r => r.json())
+  .then(d => {
+
+    console.log("DETAILS API:", d);
+
+    const formatted = Array.isArray(d)
+      ? d.map(row => ({
+
+          ...row,
+
+          // ✅ IMPORTANT FIX
+          picking_qty:
+            row.picking_qty ??
+            row.qty ??
+            row.quantity ??
+            "",
+
+        }))
+      : [];
+
+    console.log("FORMATTED:", formatted);
+
+    setDetails(formatted);
+
+  });
     } else {
       fetch(OHA_API + "?type=next_number")
         .then(r => r.json())
@@ -84,7 +107,7 @@ const [selectedRowIndex, setSelectedRowIndex] = useState(null);
   // ================= FUNCTIONS =================
   const addRow = () => {
     setDetails([...details, {
-      item_id: "", quantity: "", batch: "",
+item_id: "", picking_qty: "", batch: "",
       expiry: "", location_id: "",
       return_reason_code_id: "", action: "", remarks: ""
     }]);
@@ -132,7 +155,7 @@ const adjustedBatches = batches.map(batch => {
       row.item_id == details[i].item_id &&
       row.batch === batch.batch
     ) {
-      return total + Number(row.quantity || 0);
+      return total + Number(row.picking_qty || 0);
     }
 
     return total;
@@ -166,7 +189,7 @@ setShowBatchModal(true);
     // ✅ VALIDATION
    // ✅ 1. At least one item
 const hasItem = details.some(
-  d => d.item_id && Number(d.quantity) > 0
+  d => d.item_id && Number(d.picking_qty) > 0
 );
 
 if (!hasItem) {
@@ -179,7 +202,7 @@ if (!hasItem) {
 const invalidRow = details.find(
   d =>
     d.item_id &&
-    Number(d.quantity) > 0 &&
+    Number(d.picking_qty)> 0 &&
     (!d.return_reason_code_id || !d.action)
 );
 
@@ -191,7 +214,7 @@ if (invalidRow) {
 
 // ✅ 3. Final items
 const validItems = details.filter(
-  d => d.item_id && Number(d.quantity) > 0
+  d => d.item_id && Number(d.picking_qty) > 0
 );
 
     const method = id ? "PUT" : "POST";
@@ -285,12 +308,7 @@ return (
       <div className="oha-ui-header">
         <h2><FaUndo /> OHA</h2>
 
-        <button
-          className="oha-ui-back-btn"
-          onClick={() => navigate(-1)}
-        >
-          ← Back
-        </button>
+       
       </div>
 
       <div className="oha-ui-grid">
@@ -342,9 +360,9 @@ return (
 
   // 🔥 IMPORTANT: batch auto load
   details.forEach((d, index) => {
-    if (d.quantity && d.item_id) {
-      fetchBatch(index, d.quantity);
-    }
+   if (d.picking_qty && d.item_id) {
+  fetchBatch(index, d.picking_qty);
+}
   });
 }}
             >
@@ -395,8 +413,11 @@ return (
     <th>Expiry</th>
     <th>Location</th>
     <th>Return Reason</th>
-    <th>Action</th>
+        <th>status</th>
+
     <th>Remark</th>
+        <th>Action</th>
+
     <th></th>
   </tr>
 </thead>
@@ -404,137 +425,143 @@ return (
           <tbody>
   {details.map((d, i) => (
     <tr key={i}>
+{/* ITEM */}
+{/* ITEM */}
+<td>
+  <div className="custom-dropdown">
 
-      {/* ITEM */}
-      <td>
-        <div className="custom-dropdown">
-          <div
-            className="dropdown-display"
-            onClick={() => setActiveDropdown("item" + i)}
-          >
-            {d.item_id
-              ? items.find(it => it.id == d.item_id)?.name
-              : "Select Item"}
-            <span className="arrow">▼</span>
-          </div>
+    <div
+      className="dropdown-display"
+      onClick={() => setActiveDropdown("item" + i)}
+    >
+      {d.item_id
+        ? items.find(it => it.id == d.item_id)?.name
+        : "Select Item"}
 
-          {activeDropdown === "item" + i && (
-            <div className="dropdown-box">
-              <input
-                placeholder="Search item..."
-                value={searchText}
-                onChange={e => setSearchText(e.target.value)}
-              />
-              <div className="dropdown-options">
-
-  {filterData(items).length > 0 ? (
-
-    filterData(items).map(it => (
-      <div
-        key={it.id}
-        className="dropdown-option"
-        onClick={() => {
-          handleItemChange(i, it.id);
-          setActiveDropdown(null);
-          setSearchText("");
-        }}
-      >
-        {it.name}
-      </div>
-    ))
-
-  ) : (
-
-    <div className="no-results">
-      <MdSearchOff size={18} />
-      No item found
+      <span className="arrow">▼</span>
     </div>
 
-  )}
+    {activeDropdown === "item" + i && (
+      <div className="dropdown-box">
 
-</div>
+        <input
+          placeholder="Search item..."
+          value={searchText}
+          onChange={(e) => setSearchText(e.target.value)}
+        />
+
+        <div className="dropdown-options">
+
+          {filterData(items).length > 0 ? (
+
+            filterData(items).map((it) => (
+              <div
+                key={it.id}
+                className="dropdown-option"
+                onClick={() => {
+                  handleItemChange(i, it.id);
+                  setActiveDropdown(null);
+                  setSearchText("");
+                }}
+              >
+                {it.name}
+              </div>
+            ))
+
+          ) : (
+
+            <div className="no-results">
+              <MdSearchOff size={18} />
+              No item found
             </div>
-          )}
-        </div>
-      </td>
 
+          )}
+
+        </div>
+      </div>
+    )}
+
+  </div>
+</td>
       {/* QTY */}
       <td>
        
    <input
-  value={d.quantity || ""}
+ value={d.picking_qty || ""}
   onChange={(e) => {
-    handleChange(i, "quantity", e.target.value);
+    handleChange(i, "picking_qty", e.target.value);
   }}
 
-  onBlur={async (e) => {
+  onBlur={async () => {
+const value = details[i].picking_qty;
 
-    const value = e.target.value;
+  if (!value || value <= 0) return;
 
-    if (!value || value <= 0) return;
+  if (!details[i].item_id) {
+    alert("Select item first ❗");
+    return;
+  }
 
-    if (!header.customer_id) {
-      alert("Select customer first ❗");
-      return;
-    }
+  const res = await fetch(
+    `https://zyntaweb.com/demoalafiya/api/order_batches.php?item_id=${details[i].item_id}&customer_id=${header.customer_id}`
+  );
 
-    if (!details[i].item_id) {
-      alert("Select item first ❗");
-      return;
-    }
+const data = await res.json();
 
-    const res = await fetch(
-      `https://zyntaweb.com/demoalafiya/api/order_batches.php?item_id=${details[i].item_id}&customer_id=${header.customer_id}`
+let batches = Array.isArray(data)
+  ? data
+  : data.data || [];
+
+// ✅ REMOVE ALREADY USED STOCK
+batches = batches.map(batch => {
+
+  const alreadyUsed = details
+    .filter((row, idx) =>
+      idx !== i &&
+      row.item_id == details[i].item_id &&
+      row.batch === batch.batch
+    )
+    .reduce(
+      (sum, row) =>
+        sum + Number(row.picking_qty || 0),
+      0
     );
 
-    const data = await res.json();
+  const originalStock = Number(
+    batch.picking_qty ??
+    batch.qty ??
+    batch.available_qty ??
+    (batch.quantity_in - batch.quantity_out) ??
+    0
+  );
 
-    // 🔥 FIX
-    const batches = Array.isArray(data)
-      ? data
-      : data.data || [];
+  return {
+    ...batch,
 
-    // 🔥 SAME BATCH USED QTY REMOVE
-    const adjustedBatches = batches.map(batch => {
+    available_qty:
+      Number(originalStock || 0) -
+      Number(alreadyUsed || 0)
+  };
 
-      const usedQty = details.reduce((total, row, index) => {
+});
 
-        // current row skip
-        if (index === i) return total;
+// ✅ HIDE ZERO STOCK
+batches = batches.filter(
+  b =>
+    Number(
+      b.available_qty ??
+      b.picking_qty ??
+      b.qty ??
+      0
+    ) > 0
+);
+  setBatchList(batches);
 
-        if (
-          row.item_id == details[i].item_id &&
-          row.batch === batch.batch
-        ) {
-          return total + Number(row.quantity || 0);
-        }
+  setSelectedRowIndex(i);
 
-        return total;
+  setShowBatchModal(true);
+}} />
 
-      }, 0);
-
-      return {
-        ...batch,
-        available_qty:
-          Number(batch.available_qty) - usedQty
-      };
-
-    });
-
-    console.log("BATCH DATA:", adjustedBatches);
-
-    if (adjustedBatches.length === 0) {
-      alert("No batch found ❗");
-      return;
-    }
-
-    setBatchList(adjustedBatches);
-    setSelectedRowIndex(i);
-    setShowBatchModal(true);
-
-  }}
-/>
-        
       </td>
 
       {/* BATCH */}
@@ -657,20 +684,22 @@ return (
             className="batch-row-item"
             onClick={() => {
 
-              if (details[selectedRowIndex].quantity > (b.available_qty || b.qty)) {
-                alert("Stock not enough ❗");
-                return;
-              }
+             if (
+               Number(details[selectedRowIndex].picking_qty || 0) >
+               Number(b.available_qty || b.picking_qty || 0)
+             ) {
+               alert("Stock not enough ❗");
+               return;
+             }
 
-              const updated = [...details];
-updated[selectedRowIndex].batch = b.batch;
+             const updated = [...details];
+             updated[selectedRowIndex].batch = b.batch;
 
 updated[selectedRowIndex].expiry =
   b.expiry_date || "";
 
 // ✅ PICKING QTY
-updated[selectedRowIndex].quantity =
-  b.picking_qty || 0;
+
 
 // ✅ LOCATION
 updated[selectedRowIndex].location_id =
@@ -683,7 +712,15 @@ setShowBatchModal(false);
           >
             <div>{b.batch}</div>
             <div>{b.expiry_date || b.expiry}</div>
-         <div>{b.picking_qty}</div>
+        <div>
+  {
+    Number(
+      b.available_qty ??
+      b.picking_qty ??
+      0
+    )
+  }
+</div>
           </div>
         ))}
       </div>
@@ -753,77 +790,82 @@ setShowBatchModal(false);
       <div className="oha-field">
         <label>Qty</label>
        <input
-  value={d.quantity || ""}
-  onChange={(e) => {
-    handleChange(i, "quantity", e.target.value);
-  }}
+          value={d.picking_qty || ""}
+          onChange={(e) => {
+            handleChange(i, "picking_qty", e.target.value);
+          }}
 
-  onBlur={async (e) => {
+ onBlur={async () => {
 
-    const value = e.target.value;
+const value = details[i].picking_qty;
 
-    if (!value || value <= 0) return;
+  if (!value || value <= 0) return;
 
-    if (!header.customer_id) {
-      alert("Select customer first ❗");
-      return;
-    }
+  if (!details[i].item_id) {
+    alert("Select item first ❗");
+    return;
+  }
 
-    if (!details[i].item_id) {
-      alert("Select item first ❗");
-      return;
-    }
+  const res = await fetch(
+    `https://zyntaweb.com/demoalafiya/api/order_batches.php?item_id=${details[i].item_id}&customer_id=${header.customer_id}`
+  );
 
-    const res = await fetch(
-      `https://zyntaweb.com/demoalafiya/api/order_batches.php?item_id=${details[i].item_id}&customer_id=${header.customer_id}`
+  const data = await res.json();
+
+let batches = Array.isArray(data)
+  ? data
+  : data.data || [];
+
+// ✅ REMOVE ALREADY USED STOCK
+batches = batches.map(batch => {
+
+  const alreadyUsed = details
+    .filter((row, idx) =>
+      idx !== i &&
+      row.item_id == details[i].item_id &&
+      row.batch === batch.batch
+    )
+    .reduce(
+      (sum, row) =>
+        sum + Number(row.picking_qty || 0),
+      0
     );
 
-    const data = await res.json();
+  const originalStock = Number(
+    batch.picking_qty ??
+    batch.qty ??
+    batch.available_qty ??
+    (batch.quantity_in - batch.quantity_out) ??
+    0
+  );
 
-    // 🔥 FIX
-    const batches = Array.isArray(data)
-      ? data
-      : data.data || [];
+  return {
+    ...batch,
 
-    // 🔥 SAME BATCH USED QTY REMOVE
-    const adjustedBatches = batches.map(batch => {
+    available_qty:
+      Number(originalStock || 0) -
+      Number(alreadyUsed || 0)
+  };
 
-      const usedQty = details.reduce((total, row, index) => {
+});
 
-        // current row skip
-        if (index === i) return total;
+// ✅ HIDE ZERO STOCK
+batches = batches.filter(
+  b =>
+    Number(
+      b.available_qty ??
+      b.picking_qty ??
+      b.qty ??
+      0
+    ) > 0
+);
 
-        if (
-          row.item_id == details[i].item_id &&
-          row.batch === batch.batch
-        ) {
-          return total + Number(row.quantity || 0);
-        }
+  setBatchList(batches);
 
-        return total;
+  setSelectedRowIndex(i);
 
-      }, 0);
-
-      return {
-        ...batch,
-        available_qty:
-          Number(batch.available_qty) - usedQty
-      };
-
-    });
-
-    console.log("BATCH DATA:", adjustedBatches);
-
-    if (adjustedBatches.length === 0) {
-      alert("No batch found ❗");
-      return;
-    }
-
-    setBatchList(adjustedBatches);
-    setSelectedRowIndex(i);
-    setShowBatchModal(true);
-
-  }}
+  setShowBatchModal(true);
+}}
 />
       </div>
 
@@ -914,10 +956,10 @@ setShowBatchModal(false);
 
       {/* ACTION */}
       <div className="oha-field">
-        <label>Action</label>
+        <label>status</label>
         <select
-          value={d.action}
-          onChange={e => handleChange(i, "action", e.target.value)}
+          value={d.status}
+          onChange={e => handleChange(i, "status", e.target.value)}
         >
           <option value="">Select</option>
           <option value="TO_STOCK">To Stock</option>
