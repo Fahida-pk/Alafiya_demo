@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { FiFilter } from "react-icons/fi";
 import { FaEdit, FaTrash, FaPlus } from "react-icons/fa";
 import TopNavbar from "../dashboard/TopNavbar";
-import OhaForm from "./OhaForm";
+
 import "../order/OrderList.css";
 
 const API = "https://zyntaweb.com/demoalafiya/api/oha_header.php";
@@ -19,7 +19,7 @@ const OhaList = () => {
   const [filterOha, setFilterOha] = useState("");
   const [filterCustomer, setFilterCustomer] = useState("");
   const [filterDate, setFilterDate] = useState("");
-const [showForm, setShowForm] = useState(false);
+
   const navigate = useNavigate();
 
   // ================= LOAD =================
@@ -84,30 +84,13 @@ const [showForm, setShowForm] = useState(false);
       <TopNavbar />
 
       {/* ADD BUTTON */}
-    <button
-  className="erp-add-top"
-  onClick={() => setShowForm(true)}
->
-  <FaPlus /> Add New OHA
-</button>
-{showForm && (
-  <div className="oha-modal-overlay">
-
-    <div className="oha-modal">
-
       <button
-        className="oha-close-btn"
-        onClick={() => setShowForm(false)}
+        className="erp-add-top"
+        onClick={() => navigate("/oha-form")}
       >
-        ✕
+        <FaPlus /> Add New OHA
       </button>
 
-      <OhaForm />
-
-    </div>
-
-  </div>
-)}
       <div className="erp-card">
 
         {/* HEADER */}

@@ -1,43 +1,41 @@
 /* ================= OVERLAY ================= */
+
 .oha-modal-overlay{
   position: fixed;
   inset: 0;
-
-  background: rgba(0,0,0,0.35);
+  background: rgba(0,0,0,0.45);
 
   display: flex;
-
-  justify-content: flex-start;
+  justify-content: center;
   align-items: center;
 
   z-index: 9999;
 
-  padding-left: 260px;  /* 🔥 SIDEBAR SPACE */
-  padding-right: 30px;
+  padding: 20px;
 }
+
 /* ================= MODAL ================= */
 .oha-modal{
-  width: calc(100% - 320px);   /* 🔥 sidebar space */
+  width: 76%;
+  max-width: 1180px;
 
-  max-width: 1250px;
-
-  height: 100vh;
+  height: 92vh;
 
   background: #fff;
 
-  border-radius: 24px;
+  border-radius: 20px;
 
-  padding: 18px 22px;
+  padding: 20px;
 
   display: flex;
   flex-direction: column;
 
   overflow: hidden;
 
-  margin-left: 180px;   /* 🔥 move right */
+  margin-left: 120px;   /* 🔥 RIGHT SIDE MOVE */
 
   box-shadow:
-    0 15px 45px rgba(0,0,0,0.18);
+    0 10px 40px rgba(0,0,0,0.25);
 }
 /* ================= MODAL HEADER ================= */
 
@@ -57,25 +55,15 @@
   font-weight: 700;
 }
 
-.oha-modal{
-  position: relative;
-}
-
 .oha-close-btn{
-  position: absolute;
-
-  top: 20px;
-  right: 25px;
-
   border: none;
   background: transparent;
 
   font-size: 42px;
 
   cursor: pointer;
-
-  z-index: 1000;
 }
+
 /* ================= CONTAINER ================= */
 
 .oha-ui-container{
@@ -204,48 +192,28 @@
 }
 
 /* ================= TABLE WRAPPER ================= */
-/* ================= TABLE WRAPPER ================= */
+
 .oha-ui-table-wrapper{
-  flex: 1;
-
-  height: 650px;       /* 🔥 increased */
-  max-height: 650px;   /* 🔥 increased */
-
-  overflow-y: auto;
-  overflow-x: auto;
+  position: relative;
 
   border: 1px solid #eee;
 
-  border-radius: 14px;
+  border-radius: 12px;
 
-  background: #fff;
+  height: 420px;
 
-  position: relative;
+  overflow-y: auto !important;
+  overflow-x: auto !important;
 }
-.oha-ui-table td{
-  padding: 18px 12px;   /* 🔥 row height increase */
-  border-top: 1px solid #eee;
-}
-.oha-ui-table{
-  overflow: visible;
-}
-
-.oha-ui-table tbody tr,
-.oha-ui-table tbody tr td{
-  overflow: visible;
-}
-
 /* ================= TABLE ================= */
-.custom-dropdown{
-  position: relative;
-}
+
 .oha-ui-table{
   width: 100%;
   min-width: 1050px;   /* 🔥 reduce width */
 
   border-collapse: collapse;
   height:100%;
-    max-height: 100%;
+    max-height: 1500%;
 
 }
 .oha-ui-table th{
@@ -275,7 +243,6 @@
 /* ================= COLUMN WIDTH ================= */
 
 /* ITEM */
-/* ITEM */
 .oha-ui-table th:nth-child(1),
 .oha-ui-table td:nth-child(1){
   width: 220px;
@@ -296,7 +263,7 @@
 /* EXPIRY */
 .oha-ui-table th:nth-child(4),
 .oha-ui-table td:nth-child(4){
-  width: 165px;
+  width: 160px;
 }
 
 /* LOCATION */
@@ -305,22 +272,22 @@
   width: 150px;
 }
 
-/* RETURN */
+/* REASON */
 .oha-ui-table th:nth-child(6),
 .oha-ui-table td:nth-child(6){
-  width: 180px;
+  width: 170px;
 }
 
 /* ACTION */
 .oha-ui-table th:nth-child(7),
 .oha-ui-table td:nth-child(7){
-  width: 150px;
+  width: 110px;
 }
 
 /* REMARK */
 .oha-ui-table th:nth-child(8),
 .oha-ui-table td:nth-child(8){
-  width: 180px;
+  width: 160px;
 }
 /* ================= DELETE BUTTON ================= */
 .oha-ui-container input,
@@ -343,14 +310,45 @@
 
   cursor: pointer;
 }
+.batch-modal-footer{
+  display: flex;
+  justify-content: flex-end;
 
+  margin-top: 20px;
+}
+
+.batch-close-btn{
+  background: linear-gradient(
+    180deg,
+    #8e63e0,
+    #654fc4
+  );
+
+  color: #fff;
+
+  border: none;
+
+  padding: 10px 22px;
+
+  border-radius: 10px;
+
+  font-size: 14px;
+  font-weight: 600;
+
+  cursor: pointer;
+
+  transition: 0.2s;
+}
+
+.batch-close-btn:hover{
+  transform: translateY(-1px);
+  opacity: 0.95;
+  color: black;
+}
 /* ================= SAVE BUTTON ================= */
 
 .oha-ui-save-btn{
-  margin-top: 18px;
-
-  width: 180px;      /* 🔥 FIXED WIDTH */
-  height: 46px;
+  margin-top: 12px;
 
   background: linear-gradient(
     180deg,
@@ -362,148 +360,123 @@
 
   border: none;
 
-  border-radius: 12px;
+  padding: 8px 20px;   /* 🔥 SMALL */
 
-  font-size: 15px;
+  height: 42px;
+
+  border-radius: 8px;
+
+  font-size: 14px;
+
   font-weight: 600;
 
   cursor: pointer;
 
-  align-self: flex-start;   /* 🔥 LEFT SIDE */
+  width: 180px;   /* 🔥 SMALL WIDTH */
 }
-/* ================= CUSTOM DROPDOWN ================= */
+
+/* ================= DROPDOWN ================= */
 
 .custom-dropdown{
   position: relative;
-
-  width: 100%;
-}
-.oha-ui-table td{
-  position: relative;
-
-  overflow: visible;
-}
-.oha-ui-table tbody tr{
-  position: relative;
 }
 
-.oha-ui-table tbody tr td{
-  background: #fff;
-}
-/* DISPLAY */
 .dropdown-display{
-  width: 100%;
-
-  height: 44px;
-
-  border: 1px solid #dcdfe4;
-
-  border-radius: 10px;
-
-  background: #fff;
-
-  padding: 0 14px;
-
   display: flex;
   align-items: center;
-  justify-content: space-between;
 
   cursor: pointer;
 
-  font-size: 15px;
-
-  overflow: hidden;
-
-  white-space: nowrap;
+  position: relative;
 }
+.oha-ui-table-wrapper{
+  position: relative;
 
-/* ARROW */
-.arrow{
-  font-size: 12px;
-
-  margin-left: 10px;
-
-  flex-shrink: 0;
-}
-.oha-ui-table{
-  width: 100%;
-
-  min-width: 1050px;
-
-  border-collapse: collapse;
-}
-/* DROPDOWN BOX */
-.dropdown-box{
-  position: absolute;
-
-  top: calc(100% + 4px);
-
-  left: 0;
-
-  width: 100%;
-  min-width: 260px;
-
-  background: #fff;
-
-  border: 1px solid #dcdfe4;
+  border: 1px solid #eee;
 
   border-radius: 12px;
 
-  box-shadow:
-    0 12px 28px rgba(0,0,0,0.14);
+  max-height: 420px;
+
+  overflow-y: auto;
+  overflow-x: auto;
+}
+.oha-ui-card,
+.oha-ui-card:last-child,
+.oha-ui-container,
+.oha-ui-table,
+.oha-ui-table tbody,
+.oha-ui-table tr,
+.oha-ui-table td{
+  overflow: visible !important;
+}
+.arrow{
+  position: absolute;
+  right: 14px;
+
+  font-size: 12px;
+}
+
+.dropdown-box{
+  position: absolute;
+
+  top: calc(100% + 6px);
+  left: 0;
+
+  min-width: 100%;
+
+  background: #fff;
+
+  border: 1px solid #ddd;
+
+  border-radius: 12px;
 
   z-index: 999999;
 
+  box-shadow: 0 10px 30px rgba(0,0,0,0.18);
+
+  max-height: 70vh;   /* 🔥 FULL HEIGHT */
+
+  display: flex;
+  flex-direction: column;
+
   overflow: hidden;
 }
+.dropdown-options{
+  max-height: 180px;
 
-/* SEARCH */
+  overflow-y: auto;
+}
+.oha-ui-table-wrapper{
+  overflow: visible !important;
+  max-height: none !important;
+  height: 100% !important;
+}
 .dropdown-box input{
-  width: 100%;
-
-  height: 42px;
-
   border: none;
   border-bottom: 1px solid #eee;
 
-  padding: 0 14px;
-
-  outline: none;
-
-  font-size: 14px;
+  border-radius: 0;
 }
 
-/* OPTIONS */
 .dropdown-options{
   max-height: 220px;
 
   overflow-y: auto;
 }
 
-/* OPTION */
 .dropdown-option{
-  padding: 12px 14px;
+  padding: 10px 14px;
 
   cursor: pointer;
-
-  font-size: 14px;
-
-  transition: 0.2s;
 }
 
 .dropdown-option:hover{
-  background: #f3f0ff;
+  background: #f3f4f6;
 }
-
-/* NO RESULTS */
-.no-results{
-  padding: 14px;
-
-  text-align: center;
-
-  color: #888;
-
-  font-size: 14px;
+.custom-dropdown{
+  position: relative;
+  overflow: visible;
 }
 /* ================= NO RESULTS ================= */
 
@@ -579,6 +552,65 @@
     gap: 16px;
 
     overflow-y: auto;
+  }
+.oha-ui-delete-btn{
+  background: #ef4444;
+
+  color: white;
+
+  border: none;
+
+  width: 100%;
+  height: 50px;
+
+  border-radius: 10px;
+
+  cursor: pointer;
+}
+.oha-ui-save-btn{
+background: linear-gradient(
+    180deg,
+    #8e63e0,
+    #654fc4
+  );
+  color: white;
+
+  border: none;
+
+  width: 100%;
+  height: 50px;
+
+  border-radius: 10px;
+
+  cursor: pointer;
+}
+}
+@media(max-width:768px){
+
+  .oha-ui-header{
+    display: flex;
+
+    flex-direction: row;
+
+    justify-content: space-between;
+
+    align-items: center;
+
+    gap: 10px;
+  }
+
+  .oha-ui-header h2{
+    font-size: 22px;
+
+    margin: 0;
+  }
+
+  .oha-ui-add-btn{
+    padding: 8px 14px;
+
+    font-size: 13px;
+
+    white-space: nowrap;
   }
 
 }

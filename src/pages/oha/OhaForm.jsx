@@ -308,7 +308,12 @@ return (
       <div className="oha-ui-header">
         <h2><FaUndo /> OHA</h2>
 
-       
+        <button
+          className="oha-ui-back-btn"
+          onClick={() => navigate(-1)}
+        >
+          ← Back
+        </button>
       </div>
 
       <div className="oha-ui-grid">
@@ -416,7 +421,6 @@ return (
         <th>status</th>
 
     <th>Remark</th>
-        <th>Action</th>
 
     <th></th>
   </tr>
@@ -725,8 +729,14 @@ setShowBatchModal(false);
         ))}
       </div>
 
-      <button onClick={() => setShowBatchModal(false)}>Close</button>
-    </div>
+<div className="batch-modal-footer">
+  <button
+    className="batch-close-btn"
+    onClick={() => setShowBatchModal(false)}
+  >
+    Close
+  </button>
+</div>    </div>
   </div>
 )}
 {/* ================= MOBILE VIEW ================= */}
