@@ -107,16 +107,20 @@
 
 /* ================= TABLE WRAPPER ================= */
 
+/* ================= TABLE WRAPPER ================= */
+
 .order-ui-table-wrapper{
-  position: relative;
+  overflow: visible !important;
 
   border: 1px solid #eee;
   border-radius: 12px;
 
-  height: 420px;
+  background: #fff;
 
-  overflow-x: auto !important;
-  overflow-y: auto !important;
+  position: relative;
+
+  height: auto !important;
+  max-height: none !important;
 }
 
 /* ================= TABLE ================= */
@@ -128,6 +132,84 @@
   border-collapse: collapse;
 
   overflow: visible !important;
+}
+
+.order-ui-table tbody{
+  display: table-row-group !important;
+}
+
+.order-ui-table tr{
+  height: auto !important;
+}
+
+.order-ui-table td{
+  overflow: visible !important;
+  position: relative;
+}
+
+/* ================= DROPDOWN ================= */
+
+.custom-dropdown{
+  position: relative;
+  overflow: visible !important;
+}
+
+/* ================= DROPDOWN DISPLAY ================= */
+
+.grn-dropdown-display{
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  width: 100%;
+  height: 42px;
+
+  padding: 0 14px;
+
+  border: 1px solid #ddd;
+  border-radius: 10px;
+
+  background: #fff;
+
+  cursor: pointer;
+
+  box-sizing: border-box;
+
+  position: relative;
+}
+
+/* ================= DROPDOWN BOX ================= */
+
+.dropdown-box{
+  position: absolute;
+
+  top: calc(100% + 6px);
+  left: 0;
+
+  min-width: 100%;
+
+  background: #fff;
+
+  border: 1px solid #ddd;
+  border-radius: 12px;
+
+  z-index: 999999999 !important;
+
+  box-shadow: 0 10px 30px rgba(0,0,0,0.18);
+
+  max-height: 250px;
+
+  display: flex;
+  flex-direction: column;
+
+  overflow: hidden;
+}
+
+/* ================= OPTIONS ================= */
+
+.dropdown-options{
+  max-height: 220px;
+  overflow-y: auto;
 }
 
 .order-ui-table tbody,
@@ -272,24 +354,10 @@
   overflow: visible !important;
 }
 
-.dropdown-display{
-  display: flex;
-  align-items: center;
 
-  cursor: pointer;
-
-  position: relative;
-}
 
 /* ================= ARROW ================= */
 
-.arrow{
-  position: absolute;
-
-  right: 14px;
-
-  font-size: 12px;
-}
 
 /* ================= DROPDOWN BOX ================= */
 
