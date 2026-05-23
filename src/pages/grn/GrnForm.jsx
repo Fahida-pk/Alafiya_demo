@@ -162,7 +162,20 @@ const handleSave = async () => {
       alert("Please add at least one item ❗");
       return;
     }
+ if (!header.date) {
+      alert("Please select date ❗");
+      return;
+    }
 
+    if (!header.supplier_id) {
+      alert("Please select supplier ❗");
+      return;
+    }
+
+    if (validItems.length === 0) {
+      alert("Please add at least one item ❗");
+      return;
+    }
     const method = id ? "PUT" : "POST";
 
     // ================= HEADER =================
@@ -266,14 +279,14 @@ const filteredLocations = locations.filter(l =>
         <label>Supplier *</label>
        <div className="custom-dropdown">
  <div
-  className="dropdown-display"
+  className="grn-dropdown-display"
   onClick={() => setShowSupplierDropdown(!showSupplierDropdown)}
 >
   {header.supplier_id
     ? suppliers.find(s => s.id == header.supplier_id)?.name
     : ""}
 
-  <span className="arrow">▼</span>
+  <span className="grn-arrow">▼</span>
 </div>
 
   {showSupplierDropdown && (
@@ -354,15 +367,16 @@ const filteredLocations = locations.filter(l =>
                   <td>
                   <div className="custom-dropdown">
   <div
-    className="dropdown-display"
-onClick={() =>
-  setOpenItemIndex(openItemIndex === i ? null : i)
-}  >
+    className="grn-dropdown-display"
+    onClick={() =>
+      setOpenItemIndex(openItemIndex === i ? null : i)
+    }
+  >
     {d.item_id
       ? items.find(it => it.id == d.item_id)?.name
       : ""}
 
-    <span className="arrow">▼</span>
+    <span className="grn-arrow">▼</span>
   </div>
 
 {openItemIndex === i && (
@@ -420,15 +434,16 @@ onClick={() =>
                   <td>
                     <div className="custom-dropdown">
   <div
-    className="dropdown-display"
-onClick={() =>
-  setOpenLocationIndex(openLocationIndex === i ? null : i)
-}>
+    className="grn-dropdown-display"
+    onClick={() =>
+      setOpenLocationIndex(openLocationIndex === i ? null : i)
+    }
+  >
     {d.location_id
       ? locations.find(l => l.id == d.location_id)?.name
       : ""}
 
-    <span className="arrow">▼</span>
+    <span className="grn-arrow">▼</span>
   </div>
 
  {openLocationIndex === i && (
@@ -488,7 +503,7 @@ onClick={() =>
         <label>Item</label>
        <div className="custom-dropdown">
   <div
-    className="dropdown-display"
+    className="grn-dropdown-display"
     onClick={() =>
   setOpenItemIndex(openItemIndex === i ? null : i)
 }
@@ -497,7 +512,7 @@ onClick={() =>
       ? items.find(it => it.id == d.item_id)?.name
       : ""}
 
-    <span className="arrow">▼</span>
+    <span className="grn-arrow">▼</span>
   </div>
 
 {openItemIndex === i && (    <div className="dropdown-box">
@@ -561,7 +576,7 @@ onClick={() =>
         <label>Location</label>
       <div className="custom-dropdown">
   <div
-    className="dropdown-display"
+    className="grn-dropdown-display"
     onClick={() =>
   setOpenLocationIndex(openLocationIndex === i ? null : i)
 }
@@ -570,7 +585,7 @@ onClick={() =>
       ? locations.find(l => l.id == d.location_id)?.name
       : ""}
 
-    <span className="arrow">▼</span>
+    <span className="grn-arrow">▼</span>
   </div>
 
   {openLocationIndex === i && (

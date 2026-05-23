@@ -325,14 +325,14 @@ setBatchList(filteredBatches);
             <label>Customer *</label>
        <div className="custom-dropdown">
   <div
-    className="dropdown-display"
+    className="grn-dropdown-display"
     onClick={() => setActiveCustomer(!activeCustomer)}
   >
     {header.customer_id
       ? customers.find(c => c.id == header.customer_id)?.name
       : ""}
 
-    <span className="arrow">▼</span>
+    <span className="grn-arrow">▼</span>
   </div>
 
   {activeCustomer && (
@@ -395,7 +395,7 @@ setBatchList(filteredBatches);
       <label>Item</label>
      <div className="custom-dropdown">
   <div
-    className="dropdown-display"
+    className="grn-dropdown-display"
     onClick={() =>
       setActiveItemIndex(activeItemIndex === i ? null : i)
     }
@@ -404,7 +404,7 @@ setBatchList(filteredBatches);
       ? items.find(it => it.id == d.item_id)?.name
       : ""}
 
-    <span className="arrow">▼</span>
+    <span className="grn-arrow">▼</span>
   </div>
 
   {activeItemIndex === i && (
@@ -508,7 +508,7 @@ setBatchList(filteredBatches);
       <label>Location</label>
       <div className="custom-dropdown">
   <div
-    className="dropdown-display"
+    className="grn-dropdown-display"
     onClick={() =>
       setActiveLocationIndex(activeLocationIndex === i ? null : i)
     }
@@ -517,7 +517,7 @@ setBatchList(filteredBatches);
       ? locations.find(l => l.id == d.location_id)?.name
       : ""}
 
-    <span className="arrow">▼</span>
+    <span className="grn-arrow">▼</span>
   </div>
 
   {activeLocationIndex === i && (
@@ -552,7 +552,7 @@ setBatchList(filteredBatches);
       <label>Brand</label>
      <div className="custom-dropdown">
   <div
-    className="dropdown-display"
+    className="grn-dropdown-display"
     onClick={() =>
       setActiveBrandIndex(activeBrandIndex === i ? null : i)
     }
@@ -561,7 +561,7 @@ setBatchList(filteredBatches);
       ? brands.find(b => b.id == d.brand_id)?.name
       : ""}
 
-    <span className="arrow">▼</span>
+    <span className="grn-arrow">▼</span>
   </div>
 
   {activeBrandIndex === i && (
@@ -639,7 +639,7 @@ setBatchList(filteredBatches);
       <td>
        <div className="custom-dropdown">
   <div
-    className="dropdown-display"
+    className="grn-dropdown-display"
     onClick={() =>
       setActiveItemIndex(activeItemIndex === i ? null : i)
     }
@@ -648,7 +648,7 @@ setBatchList(filteredBatches);
       ? items.find(it => it.id == d.item_id)?.name
       : ""}
 
-    <span className="arrow">▼</span>
+    <span className="grn-arrow">▼</span>
   </div>
 
   {activeItemIndex === i && (
@@ -766,7 +766,7 @@ setShowBatchModal(true);
       <td>
        <div className="custom-dropdown">
   <div
-    className="dropdown-display"
+    className="grn-dropdown-display"
     onClick={() =>
       setActiveLocationIndex(activeLocationIndex === i ? null : i)
     }
@@ -775,7 +775,7 @@ setShowBatchModal(true);
       ? locations.find(l => l.id == d.location_id)?.name
       : ""}
 
-    <span className="arrow">▼</span>
+    <span className="grn-arrow">▼</span>
   </div>
 
   {activeLocationIndex === i && (
@@ -811,7 +811,7 @@ setShowBatchModal(true);
       <td>
        <div className="custom-dropdown">
   <div
-    className="dropdown-display"
+    className="grn-dropdown-display"
     onClick={() =>
       setActiveBrandIndex(activeBrandIndex === i ? null : i)
     }
@@ -820,7 +820,7 @@ setShowBatchModal(true);
       ? brands.find(b => b.id == d.brand_id)?.name
       : ""}
 
-    <span className="arrow">▼</span>
+    <span className="grn-arrow">▼</span>
   </div>
 
   {activeBrandIndex === i && (

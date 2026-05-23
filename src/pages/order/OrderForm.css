@@ -1,515 +1,374 @@
+/* ================= ORDER UI ================= */
 
-
-/* CONTAINER */
-.order-ui-container {
-  height: 1000vh;
-  padding: 20px;
-  background: #f5f7fb;
-  width:100%;
-}
-/* TOP BAR */
-.order-ui-topbar {
+.order-ui-container{
+  flex: 1;
   display: flex;
-  align-items: center;
-  margin-bottom: 15px;
-}
-.custom-dropdown {
-  position: relative;
-  width: 100%;
-}
-.batch-modal-overlay {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: rgba(0,0,0,0.5);
+  flex-direction: column;
 
-  display: flex;
-  justify-content: center;
-  align-items: center;
+  padding: 0;
+  margin: 0;
 
-  z-index: 9999;
+  background: transparent;
+
+  overflow: visible !important;
 }
 
-.batch-modal-box {
-  background: white;
+/* ================= CARD ================= */
+
+.order-ui-card{
+  background: #fff;
+
+  border-radius: 16px;
+
   padding: 20px;
+
+  margin-bottom: 20px;
+
+  overflow: visible !important;
+}
+
+/* ================= HEADER ================= */
+
+.order-ui-header{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  margin-bottom: 18px;
+}
+
+.order-ui-header h2{
+  font-size: 28px;
+  font-weight: 700;
+}
+
+/* ================= GRID ================= */
+
+.order-ui-grid{
+  display: grid;
+  grid-template-columns: repeat(4,1fr);
+
+  gap: 16px;
+}
+
+/* ================= INPUT ================= */
+
+.order-ui-container input,
+.order-ui-container select,
+.dropdown-display{
+  width: 100%;
+
+  height: 46px;
+
+  border: 1px solid #ddd;
   border-radius: 10px;
-  width: 500px;
-  max-height: 400px;
-  overflow-y: auto;
-}
-.batch-popup {
-  position: absolute;
-  top: 100%;
-  left: 0;
-  width: 280px;
+
+  padding: 0 14px;
+
+  font-size: 14px;
+
   background: #fff;
-  border: 1px solid #ccc;
-  border-radius: 6px;
-  box-shadow: 0 4px 10px rgba(0,0,0,0.15);
-  z-index: 999;
-  max-height: 200px;
-  overflow-y: auto;
-  margin-top: 5px;
-}
-.modal-overlay {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: rgba(0,0,0,0.4);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  z-index: 999;
 }
 
-.modal-box {
-  background: #fff;
-  width: 400px;
-  border-radius: 12px;
-  padding: 20px;
-}
+/* ================= ADD BUTTON ================= */
 
-.batch-option {
-  padding: 10px;
-  border-bottom: 1px solid #eee;
+.order-ui-add-btn{
+  background: linear-gradient(
+    180deg,
+    #8e63e0,
+    #654fc4
+  );
+
+  color: #fff;
+
+  border: none;
+
+  padding: 10px 18px;
+
+  border-radius: 10px;
+
+  font-weight: 600;
+
   cursor: pointer;
 }
 
-.batch-option:hover {
-  background: #f5f5f5;
-}
+/* ================= TABLE CARD ================= */
 
-.dropdown-display {
-  height: 45px;
-  padding: 10px 40px 10px 12px;
-  border: 1px solid #ccc;
-  border-radius: 6px;
+.order-ui-card:last-child{
+  flex: 1;
+
   display: flex;
-  align-items: center;
+  flex-direction: column;
+
+  min-height: 0;
+
+  overflow: visible !important;
+}
+
+/* ================= TABLE WRAPPER ================= */
+
+.order-ui-table-wrapper{
   position: relative;
-  background: #fff;
+
+  border: 1px solid #eee;
+  border-radius: 12px;
+
+  height: 420px;
+
+  overflow-x: auto !important;
+  overflow-y: auto !important;
 }
 
-.arrow {
-  position: absolute;
-  right: 10px;
-}
+/* ================= TABLE ================= */
 
-.dropdown-box {
-  position: absolute;
+.order-ui-table{
   width: 100%;
-  background: #fff;
-  border: 1px solid #ddd;
-  z-index: 999;
+  min-width: 1150px;
+
+  border-collapse: collapse;
+
+  overflow: visible !important;
 }
 
+.order-ui-table tbody,
+.order-ui-table tr,
+.order-ui-table td{
+  overflow: visible !important;
+}
+
+/* ================= TABLE HEADER ================= */
+
+.order-ui-table th{
+  background: #f8fafc;
+
+  padding: 14px;
+
+  text-align: left;
+
+  font-size: 14px;
+  font-weight: 700;
+
+  color: #666;
+
+  position: sticky;
+  top: 0;
+
+  z-index: 10;
+}
+
+/* ================= TABLE TD ================= */
+
+.order-ui-table td{
+  padding: 12px;
+
+  border-top: 1px solid #eee;
+
+  position: relative;
+}
+
+/* ================= COLUMN WIDTH ================= */
 
 /* ITEM */
 .order-ui-table th:nth-child(1),
-.order-ui-table td:nth-child(1) {
-  min-width: 250px;
+.order-ui-table td:nth-child(1){
+  width: 220px;
+}
+
+/* QTY */
+.order-ui-table th:nth-child(2),
+.order-ui-table td:nth-child(2){
+  width: 90px;
 }
 
 /* BATCH */
 .order-ui-table th:nth-child(3),
-.order-ui-table td:nth-child(3) {
-  min-width: 200px;
+.order-ui-table td:nth-child(3){
+  width: 150px;
 }
 
 /* EXPIRY */
 .order-ui-table th:nth-child(4),
-.order-ui-table td:nth-child(4) {
-  min-width: 200px;
+.order-ui-table td:nth-child(4){
+  width: 150px;
 }
 
 /* LOCATION */
 .order-ui-table th:nth-child(5),
-.order-ui-table td:nth-child(5) {
-  min-width: 200px;
+.order-ui-table td:nth-child(5){
+  width: 150px;
 }
 
 /* BRAND */
 .order-ui-table th:nth-child(6),
-.order-ui-table td:nth-child(6) {
-  min-width: 200px;
+.order-ui-table td:nth-child(6){
+  width: 150px;
 }
 
 /* REMARK */
 .order-ui-table th:nth-child(7),
-.order-ui-table td:nth-child(7) {
-  min-width: 250px;
-}
-/* BACK BUTTON */
-.order-ui-back-btn {
-  background: #fff;
-  border: 1px solid #ddd;
-  padding: 8px 14px;
-  border-radius: 6px;
-  cursor: pointer;
-  font-size: 14px;
-  transition: 0.2s;
+.order-ui-table td:nth-child(7){
+  width: 180px;
 }
 
-.order-ui-back-btn:hover {
-  background: #f1f5f9;
-}
-/* CARD */
-.order-ui-card {
-  background: #fff;
-  border-radius: 10px;
-  padding: 20px;
-  margin-bottom: 20px;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+/* ACTION */
+.order-ui-table th:nth-child(8),
+.order-ui-table td:nth-child(8){
+  width: 120px;
 }
 
-/* HEADER */
-.order-ui-header {
-  display: flex;
-  justify-content: space-between; /* 🔥 THIS makes left + right */
-  align-items: center;
-}
+/* ================= DELETE BUTTON ================= */
 
-.order-ui-header h2 {
-  font-size: 18px;
-  font-weight: 600;
-}
-
-/* FORM GRID */
-.order-ui-grid {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 15px;
-}
-
-/* FORM GROUP */
-.order-ui-group {
-  display: flex;
-  flex-direction: column;
-}
-
-.order-ui-group label {
-  font-size: 13px;
-  margin-bottom: 5px;
-  color: #555;
-}
-
-/* INPUT */
-.order-ui-container input,
-.order-ui-container select {
-  padding: 8px;
-  border-radius: 6px;
-  border: 1px solid #ddd;
-}
-
-/* BUTTON */
-.order-ui-add-btn {
-background: linear-gradient(
-  180deg,
-  #8e63e0 0%,
-  #7a5cd6 50%,
-  #654fc4 100%
-);  color: white;
-  border: none;
-  padding: 8px 12px;
-  border-radius: 6px;
-  cursor: pointer;
-}
-.order-ui-table-wrapper {
-  max-height: 400px;   /* height fix */
-  overflow-y: auto;    /* ✅ vertical scroll */
-  overflow-x: auto;    /* optional horizontal */
-}
-/* TABLE */
-
-
-
-.order-ui-table td,
-.order-ui-table th {
-  padding: 14px;      /* bigger spacing */
-}
-.order-ui-table {
-  min-width: 100%;   /* 👈 increase table size */
-  width: max-content;  /* ✅ allow expansion */
-      min-height: 50vh;   /* 👈 increase table size */
-  border-collapse: collapse;
-  table-layout: fixed;
-  width: 200%;
-  height: 500%;
-}
-.order-ui-table-wrapper::-webkit-scrollbar {
-  width: 6px;
-}
-.order-ui-table-wrapper::-webkit-scrollbar-thumb {
-  background: #ccc;
-  border-radius: 10px;
-}
-.order-ui-table th {
-  text-align: left;
-  font-size: 13px;
-  color: #777;
-  padding: 10px;
-}
-
-.order-ui-table td {
-  padding: 10px;
-}
-
-.order-ui-table tr {
-  border-bottom: 1px solid #eee;
-}
-
-/* TABLE INPUT FIX */
-.order-ui-table input,
-.order-ui-table select {
-  width: 100%;
-  height: 36px;
-}
-/* ITEM COLUMN BIG */
-.order-ui-table th:nth-child(1),
-.order-ui-table td:nth-child(1) {
-  min-width: 220px;   /* 👈 increase this */
-  width: 250px;
-}
-/* REMARK */
-.order-ui-remark {
-  width: 100%;
-}
-.order-ui-view-btn {
-  background: #6c757d;
-  color: #fff;
-  border: none;
-  padding: 8px 12px;
-  border-radius: 6px;
-  cursor: not-allowed;
-  font-size: 16px;
-}
-/* DELETE */
-.order-ui-delete-btn {
-  background: none;
-  border: none;
-  color: red;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-/* SAVE */
-.order-ui-save-btn {
-  margin-top: 15px;
-background: linear-gradient(
-  180deg,
-  #8e63e0 0%,
-  #7a5cd6 50%,
-  #654fc4 100%
-);  color: white;
-  padding: 10px 20px;
-  border: none;
-  border-radius: 6px;
-  cursor: pointer;
-}
-
-/* MOBILE */
-.order-ui-mobile {
-  display: none;
-  flex-direction: column;
-  gap: 15px;
-}
-.order-ui-delete-btn {
+.order-ui-delete-btn{
   background: #ef4444;
+
   color: #fff;
-  border: none;
-  padding: 8px 10px;
-  border-radius: 6px;
-  cursor: pointer;
-  font-size: 16px;
 
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-.order-ui-delete-btn svg {
-  display: block;
-  font-size: 18px;
-}
-.order-ui-item-card {
-  background: #fff;
-  padding: 15px;
+  border: none;
+
+  width: 40px;
+  height: 40px;
+
   border-radius: 10px;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
+
+  cursor: pointer;
 }
 
-.order-ui-item-card label {
-  font-size: 12px;
-  color: #666;
-}
+/* ================= SAVE BUTTON ================= */
 
-.order-ui-item-card input,
-.order-ui-item-card select {
-  padding: 8px;
-  border: 1px solid #ddd;
-  border-radius: 6px;
-}
+.order-ui-save-btn{
+  margin-top: 12px;
 
-.order-ui-item-card .order-ui-delete-btn {
-  background: red;
+  background: linear-gradient(
+    180deg,
+    #8e63e0,
+    #654fc4
+  );
+
   color: white;
-  padding: 8px;
-  border-radius: 6px;
-}
-.batch-header {
-  display: grid;
-  grid-template-columns: 1fr 1fr 1fr;
-  padding: 10px;
-  font-weight: bold;
-  background: #f3f3f3;
-  border-bottom: 1px solid #ddd;
-}
 
-.batch-row-item {
-  display: grid;
-  grid-template-columns: 1fr 1fr 1fr;
-  padding: 10px;
-  border-bottom: 1px solid #eee;
-  cursor: pointer;
-}
-
-.batch-row-item:hover {
-  background: #f5f5ff;
-}
-.modal-close-btn {
-  padding: 6px 12px;
-  background: #ddd;
   border: none;
-  border-radius: 6px;
+
+  padding: 8px 20px;
+
+  height: 42px;
+
+  border-radius: 8px;
+
+  font-size: 14px;
+  font-weight: 600;
+
   cursor: pointer;
+
+  width: 180px;
 }
 
-.modal-close-btn:hover {
-  background: #ccc;
+/* ================= DROPDOWN ================= */
+
+.custom-dropdown{
+  position: relative;
+
+  width: 100%;
+
+  overflow: visible !important;
 }
-.batch-modal-overlay {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100vw;
-  height: 100vh;
 
-  background: rgba(0, 0, 0, 0.5);
-
+.dropdown-display{
   display: flex;
-  justify-content: center;
   align-items: center;
 
-  z-index: 9999;
+  cursor: pointer;
+
+  position: relative;
 }
 
-.batch-modal-box {
-  background: white;
-  padding: 20px;
+/* ================= ARROW ================= */
+
+.arrow{
+  position: absolute;
+
+  right: 14px;
+
+  font-size: 12px;
+}
+
+/* ================= DROPDOWN BOX ================= */
+
+.dropdown-box{
+  position: absolute;
+
+  top: calc(100% + 6px);
+  left: 0;
+
+  width: 100%;
+
+  background: #fff;
+
+  border: 1px solid #ddd;
   border-radius: 12px;
-  width: 350px;
+
+  z-index: 99999999 !important;
+
+  box-shadow: 0 10px 30px rgba(0,0,0,0.18);
+
+  max-height: 250px;
+
+  overflow: hidden;
 }
-/* ================= MOBILE VIEW ================= */
-@media (max-width: 768px) {
 
-  .order-ui-container {
-    padding: 10px;
-    width:100%;
-  }
+/* ================= SEARCH INPUT ================= */
 
-  .order-ui-card {
-    padding: 15px;
-  }
+.dropdown-box input{
+  border: none;
 
-  .order-ui-header {
-    flex-direction: column;
-    align-items: stretch;
-    gap: 10px;
-  }
+  border-bottom: 1px solid #eee;
 
-  .order-ui-grid {
+  border-radius: 0;
+}
+
+/* ================= OPTIONS ================= */
+
+.dropdown-options{
+  max-height: 220px;
+
+  overflow-y: auto;
+}
+
+.dropdown-option{
+  padding: 10px 14px;
+
+  cursor: pointer;
+}
+
+.dropdown-option:hover{
+  background: #f3f4f6;
+}
+
+/* ================= MOBILE ================= */
+
+.order-ui-mobile{
+  display: none;
+}
+
+@media(max-width:768px){
+
+  .order-ui-grid{
     grid-template-columns: 1fr;
-    gap: 10px;
   }
 
-  .order-ui-container input,
-  .order-ui-container select {
-    width: 100%;
-  }
-
-  .order-ui-add-btn {
-    width: 60%;
-    padding: 12px;
-  }
-
-  .order-ui-save-btn {
-    width: 100%;
-    padding: 12px;
-  }
-
-  .order-ui-table {
+  .order-ui-table-wrapper{
     display: none;
   }
 
-  .order-ui-mobile {
+  .order-ui-mobile{
     display: flex;
-  }
-}
-@media (max-width: 768px) {
-
-  .order-ui-header {
-    flex-direction: row;        /* ✅ row aakkanam */
-    justify-content: space-between;
-    align-items: center;
+    flex-direction: column;
+    gap: 16px;
   }
 
-}
-@media (max-width: 768px) {
-  .dropdown-box {
-    position: static;
+  .order-ui-save-btn,
+  .order-ui-delete-btn{
+    width: 100%;
+    height: 50px;
   }
-}
-.batch-modal-overlay {
-  position: fixed !important;
-  top: 0;
-  left: 0;
-  width: 100vw;
-  height: 100vh;
 
-  background: rgba(0, 0, 0, 0.6);
-
-  display: flex;
-  justify-content: center;
-  align-items: center;
-
-  z-index: 99999;
-}
-.batch-modal-box {
-  background: white;
-  border-radius: 12px;
-  padding: 16px;
-
-  width: 90%;
-  max-width: 400px;
-
-  max-height: 70vh;
-  overflow-y: auto;
-
-  box-shadow: 0 10px 30px rgba(0,0,0,0.2);
-}
-@media (max-width: 600px) {
-  .batch-modal-box {
-    width: 95%;
-    max-height: 80vh;
-    border-radius: 10px;
-  }
 }

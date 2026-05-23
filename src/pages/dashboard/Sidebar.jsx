@@ -132,16 +132,22 @@ const [inventoryOpen, setInventoryOpen] = useState(false);
 
      {/* ================= TRANSACTION ================= */}
 {/* ================= TRIP ================= */}
+{/* ================= TRIP ================= */}
 <div
   className="menu-item"
-  onClick={() => setTripOpen(!tripOpen)}
+  onClick={() =>
+    setOpenMenu(openMenu === "trip" ? null : "trip")
+  }
 >
   <MdAltRoute />
   <span>Trip</span>
-  <FaChevronDown className={tripOpen ? "rotate" : ""} />
+
+  <FaChevronDown
+    className={openMenu === "trip" ? "rotate" : ""}
+  />
 </div>
 
-{tripOpen && (
+{openMenu === "trip" && (
   <div className="submenu">
 
     <Link to="/fixed-trips" onClick={() => setMobileOpen(false)}>
@@ -161,18 +167,22 @@ const [inventoryOpen, setInventoryOpen] = useState(false);
 
   </div>
 )}
-
 {/* ================= INVENTORY ================= */}
 <div
   className="menu-item"
-  onClick={() => setInventoryOpen(!inventoryOpen)}
+  onClick={() =>
+    setOpenMenu(openMenu === "inventory" ? null : "inventory")
+  }
 >
   <FaWarehouse />
   <span>Inventory</span>
-  <FaChevronDown className={inventoryOpen ? "rotate" : ""} />
+
+  <FaChevronDown
+    className={openMenu === "inventory" ? "rotate" : ""}
+  />
 </div>
 
-{inventoryOpen && (
+{openMenu === "inventory" && (
   <div className="submenu">
 
     <Link to="/grn-list" onClick={() => setMobileOpen(false)}>
@@ -189,13 +199,13 @@ const [inventoryOpen, setInventoryOpen] = useState(false);
       <FaClipboardList />
       <span>Daily Picking</span>
     </Link>
+
     <Link to="/oha-list" onClick={() => setMobileOpen(false)}>
       <FaExchangeAlt />
       <span>OHA</span>
     </Link>
-    
+
   </div>
-  
 )}
 {/* ================= ACCOUNTS ================= */}
 
