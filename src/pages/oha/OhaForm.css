@@ -366,6 +366,121 @@
   opacity: 0.95;
   color: black;
 }
+/* ================= BATCH MODAL ================= */
+
+.batch-modal-overlay{
+  position: fixed;
+  inset: 0;
+
+  background: rgba(0,0,0,0.35);
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  z-index: 999999;
+}
+
+.batch-modal-box{
+  width: 500px;
+
+  background: #fff;
+
+  border-radius: 20px;
+
+  padding: 24px;
+
+  box-shadow: 0 20px 50px rgba(0,0,0,0.18);
+}
+
+.batch-modal-box h3{
+  font-size: 22px;
+  font-weight: 700;
+
+  margin-bottom: 18px;
+}
+
+/* ================= TABLE ================= */
+
+.batch-table{
+  width: 100%;
+}
+
+/* HEADER */
+
+.batch-header{
+  display: grid;
+  grid-template-columns: 1.2fr 1.2fr .8fr;
+
+  background: #f4f4f4;
+
+  padding: 16px 14px;
+
+  border-radius: 0;
+
+  font-weight: 700;
+
+  font-size: 16px;
+}
+
+/* ROW */
+
+.batch-row-item{
+  display: grid;
+  grid-template-columns: 1.2fr 1.2fr .8fr;
+
+  padding: 16px 14px;
+
+  border-bottom: 1px solid #e5e5e5;
+
+  cursor: pointer;
+
+  transition: .2s;
+}
+
+.batch-row-item:hover{
+  background: #f8f5ff;
+}
+
+/* TEXT */
+
+.batch-row-item div,
+.batch-header div{
+  font-size: 15px;
+}
+
+/* FOOTER */
+
+.batch-modal-footer{
+  display: flex;
+  justify-content: flex-end;
+
+  margin-top: 20px;
+}
+
+/* CLOSE BUTTON */
+
+.batch-close-btn,
+.modal-close-btn{
+  background: linear-gradient(
+    180deg,
+    #8e63e0,
+    #654fc4
+  );
+
+  border: none;
+
+  color: #fff;
+
+  padding: 12px 28px;
+
+  border-radius: 14px;
+
+  font-size: 15px;
+  font-weight: 600;
+
+  cursor: pointer;
+}
 /* ================= SAVE BUTTON ================= */
 
 .oha-ui-save-btn{

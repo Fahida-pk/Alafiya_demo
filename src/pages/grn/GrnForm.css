@@ -278,7 +278,41 @@
 
   width: 160px;
 }
+.batch-modal-footer{
+  display: flex;
+  justify-content: flex-end;
 
+  margin-top: 20px;
+}
+
+.batch-close-btn{
+  background: linear-gradient(
+    180deg,
+    #8e63e0,
+    #654fc4
+  );
+
+  color: #fff;
+
+  border: none;
+
+  padding: 10px 22px;
+
+  border-radius: 10px;
+
+  font-size: 14px;
+  font-weight: 600;
+
+  cursor: pointer;
+
+  transition: 0.2s;
+}
+
+.batch-close-btn:hover{
+  transform: translateY(-1px);
+  opacity: 0.95;
+  color: black;
+}
 /* ================= DROPDOWN ================= */
 
 .custom-dropdown{
