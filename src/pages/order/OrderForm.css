@@ -472,7 +472,19 @@
   .order-ui-table-wrapper{
     display: none;
   }
+.order-ui-mobile{
+  display: flex;
+  flex-direction: column;
 
+  gap: 24px; /* increase this */
+
+  overflow-y: auto;
+}
+.order-ui-mobile input,
+.order-ui-mobile select,
+.order-ui-mobile .custom-dropdown{
+  margin-bottom: 14px;
+}
   .order-ui-mobile{
     display: flex;
     flex-direction: column;

@@ -740,7 +740,11 @@ background: linear-gradient(
 
     margin: 0;
   }
-
+.oha-ui-mobile input,
+.oha-ui-mobile select,
+.oha-ui-mobile .custom-dropdown{
+  margin-bottom: 14px;
+}
   .oha-ui-add-btn{
     padding: 8px 14px;
 

@@ -465,7 +465,11 @@
   .grn-ui-table-wrapper{
     display: none;
   }
-
+.grn-ui-mobile input,
+.grn-ui-mobile select,
+.grn-ui-mobile .custom-dropdown{
+  margin-bottom: 14px;
+}
   .grn-ui-mobile{
     display: flex;
     flex-direction: column;
