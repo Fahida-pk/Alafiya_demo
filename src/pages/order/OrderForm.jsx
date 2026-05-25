@@ -259,10 +259,11 @@ const updatedBatches = batches.map(batch => {
     return;
   }
 
-  if (
-    row.item_id == d.item_id &&
-    row.batch === batch.batch
-  ) {
+ if (
+  row.item_id == details[i].item_id &&
+  row.batch === batch.batch &&
+  row.expiry === (batch.expiry_date || batch.expiry)
+) {
     usedQty += parseInt(row.qty || 0);
   }
 });
@@ -467,9 +468,10 @@ const updatedBatches = batches.map(batch => {
     if (index === i) return;
 
     // same batch + same item
-   if (
-  row.item_id == d.item_id &&
-  row.batch === batch.batch
+if (
+  row.item_id == details[i].item_id &&
+  row.batch === batch.batch &&
+  row.expiry === (batch.expiry_date || batch.expiry)
 ) {
       usedQty += parseInt(row.qty || 0);
     }
@@ -489,7 +491,9 @@ const filteredBatches = updatedBatches.filter(
   b => b.available_qty > 0
 );
 
-setBatchList(filteredBatches);
+setSelectedRowIndex(i);
+
+setShowBatchModal(true);
   }}
 />
       <label>Batch</label>
@@ -718,9 +722,10 @@ const updatedBatches = batches.map(batch => {
     if (index === i) return;
 
     if (
-      row.item_id == d.item_id &&
-      row.batch === batch.batch
-    ) {
+  row.item_id == details[i].item_id &&
+  row.batch === batch.batch &&
+  row.expiry === (batch.expiry_date || batch.expiry)
+) {
       usedQty += parseInt(row.qty || 0);
     }
   });
@@ -913,8 +918,10 @@ setShowBatchModal(true);
 
           const updated = [...details];
 
-          updated[selectedRowIndex].batch = b.batch;
-          updated[selectedRowIndex].expiry = b.expiry_date || b.expiry;
+         updated[selectedRowIndex].batch = b.batch;
+
+updated[selectedRowIndex].expiry =
+  b.expiry_date || b.expiry || "";
 
           setDetails(updated);
           setShowBatchModal(false);

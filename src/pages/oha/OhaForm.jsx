@@ -139,7 +139,24 @@ const fetchBatch = async (i, qty) => {
     `https://zyntaweb.com/demoalafiya/api/order_batches.php?item_id=${details[i].item_id}&customer_id=${header.customer_id}`
   );
 
-  const data = await res.json();
+ const text = await res.text();
+
+console.log("API RESPONSE =", text);
+
+let data = {};
+
+try {
+
+  data = JSON.parse(text);
+
+} catch (err) {
+
+  console.log("JSON ERROR =", err);
+
+  alert(text);
+
+  return;
+}
 
 const batches = Array.isArray(data)
   ? data
@@ -510,7 +527,24 @@ const value = details[i].picking_qty;
     `https://zyntaweb.com/demoalafiya/api/order_batches.php?item_id=${details[i].item_id}&customer_id=${header.customer_id}`
   );
 
-const data = await res.json();
+const text = await res.text();
+
+console.log("API RESPONSE =", text);
+
+let data = {};
+
+try {
+
+  data = JSON.parse(text);
+
+} catch (err) {
+
+  console.log("JSON ERROR =", err);
+
+  alert(text);
+
+  return;
+}
 
 let batches = Array.isArray(data)
   ? data
@@ -820,7 +854,24 @@ const value = details[i].picking_qty;
     `https://zyntaweb.com/demoalafiya/api/order_batches.php?item_id=${details[i].item_id}&customer_id=${header.customer_id}`
   );
 
-  const data = await res.json();
+  const text = await res.text();
+
+console.log("API RESPONSE =", text);
+
+let data = {};
+
+try {
+
+  data = JSON.parse(text);
+
+} catch (err) {
+
+  console.log("JSON ERROR =", err);
+
+  alert(text);
+
+  return;
+}
 
 let batches = Array.isArray(data)
   ? data
