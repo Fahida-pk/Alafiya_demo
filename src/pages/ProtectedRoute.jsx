@@ -1,12 +1,12 @@
 import { Navigate } from "react-router-dom";
 
 const ProtectedRoute = ({ children }) => {
+  // login check
+  const user = localStorage.getItem("token");
+  // അല്ലെങ്കിൽ sessionStorage use cheyyunnengil:
+  // const user = sessionStorage.getItem("token");
 
-  // localStorage il token undo check cheyyunnu
-  const token = localStorage.getItem("token");
-
-  // token illenkil login page ilek redirect
-  if (!token) {
+  if (!user) {
     return <Navigate to="/" replace />;
   }
 
