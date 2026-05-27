@@ -15,35 +15,24 @@ const Login = () => {
 
     try {
       const res = await fetch(
-        "https://zyntaweb.com/demoalafiya/api/login.php",
-        {
+"https://zyntaweb.com/demoalafiya/api/login.php",        {
           method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({
-            username,
-            password,
-          }),
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ username, password }),
         }
       );
 
       const data = await res.json();
 
       if (data.status === "success") {
-
-        // SESSION STORAGE
-        sessionStorage.setItem("token", "loggedin");
-        sessionStorage.setItem("user_id", data.user_id);
-        sessionStorage.setItem("role", data.role);
+        localStorage.setItem("user_id", data.user_id);
+        localStorage.setItem("role", data.role);
 
         navigate("/dashboard");
-
       } else {
         setError("Invalid username or password");
       }
-
-    } catch (error) {
+    } catch {
       setError("Server error. Try again");
     }
   };
@@ -51,26 +40,18 @@ const Login = () => {
   return (
     <div className="login-wrapper">
       <form className="login-content" onSubmit={handleLogin}>
-        
         <h1 className="brand">LOGIN</h1>
 
-        {error && (
-          <p style={{ color: "red" }}>
-            {error}
-          </p>
-        )}
+        {error && <p style={{ color: "red" }}>{error}</p>}
 
         <label>Username</label>
-
         <input
-          type="text"
           value={username}
           onChange={(e) => setUsername(e.target.value)}
           required
         />
 
         <label>Password</label>
-
         <input
           type="password"
           value={password}
@@ -78,10 +59,7 @@ const Login = () => {
           required
         />
 
-        <button type="submit" className="login-btn">
-          SUBMIT
-        </button>
-
+        <button className="login-btn">SUBMIT</button>
       </form>
     </div>
   );
