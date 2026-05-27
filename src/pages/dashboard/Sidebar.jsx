@@ -45,35 +45,21 @@ import {
 import "./Sidebar.css";
 
 const Sidebar = () => {
-
   const [openMenu, setOpenMenu] = useState(null);
-
   const [mobileOpen, setMobileOpen] = useState(false);
-
   const navigate = useNavigate();
-
-  const role = sessionStorage.getItem("role");
-
-  const [tripOpen, setTripOpen] = useState(false);
-
-  const [inventoryOpen, setInventoryOpen] = useState(false);
-
+  const role = localStorage.getItem("role");
+const [tripOpen, setTripOpen] = useState(false);
+const [inventoryOpen, setInventoryOpen] = useState(false);
   useEffect(() => {
-
     const handler = () => setMobileOpen(true);
-
     window.addEventListener("open-sidebar", handler);
-
     return () => window.removeEventListener("open-sidebar", handler);
-
   }, []);
 
   const handleLogout = () => {
-
-    sessionStorage.clear();
-
-    window.location.replace("/");
-
+    localStorage.clear();
+    navigate("/");
   };
 
   return (
