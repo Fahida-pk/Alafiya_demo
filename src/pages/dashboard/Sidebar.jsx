@@ -48,8 +48,7 @@ const Sidebar = () => {
   const [openMenu, setOpenMenu] = useState(null);
   const [mobileOpen, setMobileOpen] = useState(false);
   const navigate = useNavigate();
-  const role = localStorage.getItem("role");
-const [tripOpen, setTripOpen] = useState(false);
+const role = sessionStorage.getItem("role");const [tripOpen, setTripOpen] = useState(false);
 const [inventoryOpen, setInventoryOpen] = useState(false);
   useEffect(() => {
     const handler = () => setMobileOpen(true);
@@ -58,9 +57,9 @@ const [inventoryOpen, setInventoryOpen] = useState(false);
   }, []);
 
   const handleLogout = () => {
-    localStorage.clear();
-    navigate("/");
-  };
+  sessionStorage.clear();
+  navigate("/");
+};
 
   return (
     <>
