@@ -31,15 +31,13 @@ const Login = () => {
       const data = await res.json();
 
       if (data.status === "success") {
-        // ✅ SAVE SESSION
         sessionStorage.setItem("token", "loggedin");
         sessionStorage.setItem("user_id", data.user_id);
         sessionStorage.setItem("role", data.role);
 
-        // ✅ SAVE LOGIN TIME
+        // Login Time Save
         sessionStorage.setItem("loginTime", Date.now());
 
-        // ✅ REDIRECT
         navigate("/dashboard");
       } else {
         setError("Invalid username or password");

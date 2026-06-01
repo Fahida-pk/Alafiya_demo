@@ -4,11 +4,18 @@ const ProtectedRoute = ({ children }) => {
   const token = sessionStorage.getItem("token");
   const loginTime = sessionStorage.getItem("loginTime");
 
-  console.log("TOKEN =", token);
-  console.log("LOGIN TIME =", loginTime);
+  // 5 minutes
+  const FIVE_MINUTES = 5 * 60 * 1000;
 
   if (!token || !loginTime) {
-    console.log("REDIRECT TO LOGIN");
+    return <Navigate to="/" replace />;
+  }
+
+  const currentTime = Date.now();
+  const timeDifference = currentTime - Number(loginTime);
+
+  if (timeDifference > FIVE_MINUTES) {
+    sessionStorage.clear();
     return <Navigate to="/" replace />;
   }
 
