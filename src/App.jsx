@@ -40,16 +40,24 @@ function SessionChecker() {
   const navigate = useNavigate();
 
   useEffect(() => {
-    const loginTime = sessionStorage.getItem("loginTime");
+    const interval = setInterval(() => {
+      const token = sessionStorage.getItem("token");
+      const loginTime = sessionStorage.getItem("loginTime");
 
-    if (loginTime) {
-      const FIVE_MINUTES = 5 * 60 * 1000;
+      if (!token || !loginTime) {
+  sessionStorage.clear();
+  window.location.href = "/";
+  return;
+}
 
-      if (Date.now() - Number(loginTime) > FIVE_MINUTES) {
-        sessionStorage.clear();
-        navigate("/", { replace: true });
-      }
-    }
+if (Date.now() - Number(loginTime) > FIVE_MINUTES) {
+  sessionStorage.clear();
+  alert("Session Expired. Please Login Again.");
+  window.location.href = "/";
+}
+    }, 1000);
+
+    return () => clearInterval(interval);
   }, [navigate]);
 
   return null;
@@ -58,14 +66,11 @@ function SessionChecker() {
 function App() {
   return (
     <BrowserRouter>
-
       <SessionChecker />
 
       <Routes>
-        {/* LOGIN */}
         <Route path="/" element={<Login />} />
 
-        {/* PROTECTED ROUTES */}
         <Route
           element={
             <ProtectedRoute>
