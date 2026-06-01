@@ -1,13 +1,14 @@
 import { Navigate } from "react-router-dom";
 
 const ProtectedRoute = ({ children }) => {
+
   const token = sessionStorage.getItem("token");
   const loginTime = sessionStorage.getItem("loginTime");
 
-  // 5 minutes
   const FIVE_MINUTES = 5 * 60 * 1000;
 
   if (!token || !loginTime) {
+    sessionStorage.clear();
     return <Navigate to="/" replace />;
   }
 

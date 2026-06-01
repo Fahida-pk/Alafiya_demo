@@ -31,17 +31,23 @@ const Login = () => {
       const data = await res.json();
 
       if (data.status === "success") {
+
         sessionStorage.setItem("token", "loggedin");
         sessionStorage.setItem("user_id", data.user_id);
         sessionStorage.setItem("role", data.role);
 
-        // Login Time Save
-        sessionStorage.setItem("loginTime", Date.now());
+        // Save Login Time
+        sessionStorage.setItem(
+          "loginTime",
+          Date.now().toString()
+        );
 
         navigate("/dashboard");
+
       } else {
         setError("Invalid username or password");
       }
+
     } catch (error) {
       setError("Server error. Try again");
     }
@@ -50,6 +56,7 @@ const Login = () => {
   return (
     <div className="login-wrapper">
       <form className="login-content" onSubmit={handleLogin}>
+
         <h1 className="brand">LOGIN</h1>
 
         {error && (
@@ -81,6 +88,7 @@ const Login = () => {
         <button type="submit" className="login-btn">
           SUBMIT
         </button>
+
       </form>
     </div>
   );
