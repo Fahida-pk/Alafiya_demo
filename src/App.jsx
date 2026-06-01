@@ -1,4 +1,5 @@
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { BrowserRouter, Routes, Route, useNavigate } from "react-router-dom";
+import { useEffect } from "react";
 
 import Login from "./pages/login/login";
 import Dashboard from "./pages/dashboard/Dashboard";
@@ -29,16 +30,38 @@ import OHAReport from "./pages/oha/OHAReport";
 import CurrentStockReport from "./pages/stock/CurrentStockReport";
 import DailySettlement from "./pages/daily_settlement/DailySettlement";
 import ProtectedRoute from "./pages/login/ProtectedRoute";
-import Expense  from "./pages/Expense/expense";
+import Expense from "./pages/Expense/expense";
 import ExpenseReport from "./pages/Expense/ExpenseReport";
-import BankDepositReport from  "./pages/BankDeposit/BankDepositReport";
+import BankDepositReport from "./pages/BankDeposit/BankDepositReport";
 import DailyReportSummary from "./pages/daily_settlement/dailyreport";
-import BankDeposit from  "./pages/BankDeposit/BankDeposit";
+import BankDeposit from "./pages/BankDeposit/BankDeposit";
+
+function SessionChecker() {
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    const loginTime = sessionStorage.getItem("loginTime");
+
+    if (loginTime) {
+      const FIVE_MINUTES = 5 * 60 * 1000;
+
+      if (Date.now() - Number(loginTime) > FIVE_MINUTES) {
+        sessionStorage.clear();
+        navigate("/", { replace: true });
+      }
+    }
+  }, [navigate]);
+
+  return null;
+}
+
 function App() {
   return (
     <BrowserRouter>
-      <Routes>
 
+      <SessionChecker />
+
+      <Routes>
         {/* LOGIN */}
         <Route path="/" element={<Login />} />
 
@@ -88,7 +111,6 @@ function App() {
             element={<CurrentStockReport />}
           />
         </Route>
-
       </Routes>
     </BrowserRouter>
   );
