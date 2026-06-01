@@ -45,16 +45,18 @@ function SessionChecker() {
       const loginTime = sessionStorage.getItem("loginTime");
 
       if (!token || !loginTime) {
-  sessionStorage.clear();
-  window.location.href = "/";
-  return;
-}
+        sessionStorage.clear();
+        navigate("/", { replace: true });
+        return;
+      }
 
-if (Date.now() - Number(loginTime) > FIVE_MINUTES) {
-  sessionStorage.clear();
-  alert("Session Expired. Please Login Again.");
-  window.location.href = "/";
-}
+      const FIVE_MINUTES = 5 * 60 * 1000;
+
+      if (Date.now() - Number(loginTime) > FIVE_MINUTES) {
+        sessionStorage.clear();
+        alert("Session Expired. Please Login Again.");
+        navigate("/", { replace: true });
+      }
     }, 1000);
 
     return () => clearInterval(interval);
