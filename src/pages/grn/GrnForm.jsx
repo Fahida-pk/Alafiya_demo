@@ -3,6 +3,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import { FaTrash } from "react-icons/fa";
 import { MdInventory } from "react-icons/md";
 import { BsBoxSeam } from "react-icons/bs";
+import { FaPlus } from "react-icons/fa";
 import "./GrnForm.css";
 
 const GRN_API = "https://zyntaweb.com/demoalafiya/api/grn_header.php";
@@ -25,6 +26,7 @@ const [itemSearch, setItemSearch] = useState("");
 const [openItemIndex, setOpenItemIndex] = useState(null);
 const [openLocationIndex, setOpenLocationIndex] = useState(null);
 const [locationSearch, setLocationSearch] = useState("");
+const [showSupplierModal, setShowSupplierModal] = useState(false);
   const [header, setHeader] = useState({
     date: "",
     supplier_id: "",
@@ -276,54 +278,81 @@ const filteredLocations = locations.filter(l =>
 
       {/* SUPPLIER */}
       <div className="order-ui-group">
-        <label>Supplier *</label>
-       <div className="custom-dropdown">
- <div
-  className="grn-dropdown-display"
-  onClick={() => setShowSupplierDropdown(!showSupplierDropdown)}
->
-  {header.supplier_id
-    ? suppliers.find(s => s.id == header.supplier_id)?.name
-    : ""}
+  <label>Supplier *</label>
 
-  <span className="grn-arrow">▼</span>
+  <div style={{ display: "flex", gap: "10px", alignItems: "center" }}>
+    <div className="custom-dropdown" style={{ flex: 1 }}>
+      <div
+        className="grn-dropdown-display"
+        onClick={() => setShowSupplierDropdown(!showSupplierDropdown)}
+      >
+        {header.supplier_id
+          ? suppliers.find(s => s.id == header.supplier_id)?.name
+          : ""}
+
+        <span className="grn-arrow">▼</span>
+      </div>
+
+      {showSupplierDropdown && (
+        <div className="dropdown-box">
+          <input
+            type="text"
+            placeholder="Search supplier..."
+            value={supplierSearch}
+            onChange={(e) => setSupplierSearch(e.target.value)}
+            className="dropdown-search"
+          />
+
+          <div className="dropdown-options">
+            {filteredSuppliers.map(s => (
+              <div
+                key={s.id}
+                className="dropdown-option"
+                onClick={() => {
+                  setHeader({ ...header, supplier_id: s.id });
+                  setShowSupplierDropdown(false);
+                  setSupplierSearch("");
+                }}
+              >
+                {s.name}
+              </div>
+            ))}
+          </div>
+        </div>
+      )}
+    </div>
+
+    {/* Add Supplier Button */}
+    <button
+      type="button"
+      className="supplier-add-btn"
+      onClick={() => setShowSupplierModal(true)}
+    >
+      <FaPlus />
+    </button>
+  </div>
 </div>
+  {showSupplierModal && (
+  <div className="supplier-modal-overlay">
+    <div className="supplier-modal-box">
+      <div className="supplier-modal-header">
+        <h3>Add Supplier</h3>
 
-  {showSupplierDropdown && (
-    <div className="dropdown-box">
-      <input
-        type="text"
-        placeholder="Search supplier..."
-        value={supplierSearch}
-        autoFocus
-        onChange={(e) => setSupplierSearch(e.target.value)}
-        className="dropdown-search"
-      />
+        <button
+          type="button"
+          onClick={() => setShowSupplierModal(false)}
+        >
+          ✕
+        </button>
+      </div>
 
-      <div className="dropdown-options">
-        {filteredSuppliers.length > 0 ? (
-          filteredSuppliers.map(s => (
-            <div
-              key={s.id}
-              className="dropdown-option"
-              onClick={() => {
-                setHeader({ ...header, supplier_id: s.id });
-                setShowSupplierDropdown(false);
-                setSupplierSearch("");
-              }}
-            >
-              {s.name}
-            </div>
-          ))
-        ) : (
-          <div className="no-results">No results found</div>
-        )}
+      <div className="supplier-modal-body">
+        <p>Supplier Form Here</p>
       </div>
     </div>
-  )}
-</div>
-      </div>
-
+  </div>
+)}
+  
       {/* REMARKS */}
       <div className="order-ui-group">
         <label>Remarks</label>
