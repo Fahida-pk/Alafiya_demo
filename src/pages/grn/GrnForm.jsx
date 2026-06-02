@@ -4,6 +4,8 @@ import { FaTrash } from "react-icons/fa";
 import { MdInventory } from "react-icons/md";
 import { BsBoxSeam } from "react-icons/bs";
 import { FaPlus } from "react-icons/fa";
+import PhoneInput from "react-phone-input-2";
+import "react-phone-input-2/lib/style.css";
 import "./GrnForm.css";
 
 const GRN_API = "https://zyntaweb.com/demoalafiya/api/grn_header.php";
@@ -27,6 +29,12 @@ const [openItemIndex, setOpenItemIndex] = useState(null);
 const [openLocationIndex, setOpenLocationIndex] = useState(null);
 const [locationSearch, setLocationSearch] = useState("");
 const [showSupplierModal, setShowSupplierModal] = useState(false);
+const [supplierForm, setSupplierForm] = useState({
+  name: "",
+  address: "",
+  phone: "",
+  status: "ACTIVE",
+});
   const [header, setHeader] = useState({
     date: "",
     supplier_id: "",
@@ -82,7 +90,57 @@ const [loading, setLoading] = useState(false);
         .then(d => setGrnNumber(d.number || ""));
     }
   }, [id]);
+const handleSupplierChange = (e) => {
+  setSupplierForm({
+    ...supplierForm,
+    [e.target.name]: e.target.value,
+  });
+};
 
+const handleSupplierPhone = (value) => {
+  setSupplierForm({
+    ...supplierForm,
+    phone: "+" + value,
+  });
+};
+
+const saveSupplier = async (e) => {
+  e.preventDefault();
+
+  const res = await fetch(SUPPLIER_API, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(supplierForm),
+  });
+
+  const data = await res.json();
+
+  if (data.status === "success") {
+    alert("Supplier Added ✅");
+
+    const supplierRes = await fetch(SUPPLIER_API);
+    const supplierData = await supplierRes.json();
+
+    setSuppliers(
+      Array.isArray(supplierData)
+        ? supplierData
+        : supplierData.data || []
+    );
+
+    setShowSupplierModal(false);
+
+    setSupplierForm({
+      name: "",
+      address: "",
+      phone: "",
+      status: "ACTIVE",
+    });
+  } else {
+    alert(data.message || "Failed");
+  }
+};
   // ================= ADD ROW =================
   const addRow = () => {
     setDetails([
@@ -346,9 +404,46 @@ const filteredLocations = locations.filter(l =>
         </button>
       </div>
 
-      <div className="supplier-modal-body">
-        <p>Supplier Form Here</p>
-      </div>
+      <form
+        onSubmit={saveSupplier}
+        className="supplier-modal-body"
+      >
+        <label>Name</label>
+        <input
+          name="name"
+          value={supplierForm.name}
+          onChange={handleSupplierChange}
+          required
+        />
+
+        <label>Address</label>
+        <input
+          name="address"
+          value={supplierForm.address}
+          onChange={handleSupplierChange}
+        />
+
+        <label>Phone</label>
+        <PhoneInput
+          country="in"
+          value={supplierForm.phone}
+          onChange={handleSupplierPhone}
+        />
+
+        <label>Status</label>
+        <select
+          name="status"
+          value={supplierForm.status}
+          onChange={handleSupplierChange}
+        >
+          <option value="ACTIVE">ACTIVE</option>
+          <option value="INACTIVE">INACTIVE</option>
+        </select>
+
+        <button type="submit">
+          Save Supplier
+        </button>
+      </form>
     </div>
   </div>
 )}
