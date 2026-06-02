@@ -1,5 +1,4 @@
-import { BrowserRouter, Routes, Route, useNavigate } from "react-router-dom";
-import { useEffect } from "react";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
 
 import Login from "./pages/login/login";
 import Dashboard from "./pages/dashboard/Dashboard";
@@ -36,40 +35,9 @@ import BankDepositReport from "./pages/BankDeposit/BankDepositReport";
 import DailyReportSummary from "./pages/daily_settlement/dailyreport";
 import BankDeposit from "./pages/BankDeposit/BankDeposit";
 
-function SessionChecker() {
-  const navigate = useNavigate();
-
-  useEffect(() => {
-    const interval = setInterval(() => {
-      const token = sessionStorage.getItem("token");
-      const loginTime = sessionStorage.getItem("loginTime");
-
-      if (!token || !loginTime) {
-        sessionStorage.clear();
-        navigate("/", { replace: true });
-        return;
-      }
-
-      const FIVE_MINUTES = 5 * 60 * 1000;
-
-      if (Date.now() - Number(loginTime) > FIVE_MINUTES) {
-        sessionStorage.clear();
-        alert("Session Expired. Please Login Again.");
-        navigate("/", { replace: true });
-      }
-    }, 1000);
-
-    return () => clearInterval(interval);
-  }, [navigate]);
-
-  return null;
-}
-
 function App() {
   return (
     <BrowserRouter>
-      <SessionChecker />
-
       <Routes>
         <Route path="/" element={<Login />} />
 

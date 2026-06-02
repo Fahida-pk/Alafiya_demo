@@ -119,14 +119,18 @@ item_id: "", picking_qty: "", batch: "",
     setDetails(updated);
   };
 
-  const handleItemChange = (i, value) => {
-    const item = items.find(x => x.id == value);
-    const updated = [...details];
-    updated[i].item_id = value;
-    updated[i].location_id = item?.location_id || "";
-    setDetails(updated);
-  };
+const handleItemChange = (i, value) => {
 
+
+
+  const item = items.find(x => x.id == value);
+
+  const updated = [...details];
+  updated[i].item_id = value;
+  updated[i].location_id = item?.location_id || "";
+
+  setDetails(updated);
+};
   const deleteRow = (i) => {
     setDetails(details.filter((_, index) => index !== i));
   };
@@ -135,10 +139,9 @@ const fetchBatch = async (i, qty) => {
   if (!header.customer_id) return;
   if (!details[i].item_id) return;
 
-  const res = await fetch(
-    `https://zyntaweb.com/demoalafiya/api/order_batches.php?item_id=${details[i].item_id}&customer_id=${header.customer_id}`
-  );
-
+const res = await fetch(
+  `https://zyntaweb.com/demoalafiya/api/order_batches.php?item_id=${details[i].item_id}&customer_id=${header.customer_id}&date=${header.date}`
+);
  const text = await res.text();
 
 console.log("API RESPONSE =", text);
@@ -228,7 +231,19 @@ if (invalidRow) {
   setLoading(false);
   return;
 }
+// ✅ 3. Batch & Expiry validation
+const batchMissing = details.find(
+  d =>
+    d.item_id &&
+    Number(d.picking_qty) > 0 &&
+    (!d.batch || !d.expiry)
+);
 
+if (batchMissing) {
+  alert("Please select Batch and Expiry ❗");
+  setLoading(false);
+  return;
+}
 // ✅ 3. Final items
 const validItems = details.filter(
   d => d.item_id && Number(d.picking_qty) > 0
@@ -344,21 +359,34 @@ return (
         />
 
        {/* CUSTOMER */}
+{/* CUSTOMER */}
 <div className="custom-dropdown">
   <div
     className="dropdown-display"
-    onClick={() => setActiveDropdown("customer")}
+    onClick={() => {
+
+      const customerLocked = details.some(
+        d => d.batch
+      );
+
+      if (customerLocked) {
+        alert("Customer cannot be changed after batch selection ❗");
+        return;
+      }
+
+      setActiveDropdown("customer");
+    }}
   >
     {header.customer_id
       ? customers.find(c => c.id == header.customer_id)?.name
       : "Select Customer"}
+
     <span className="arrow">▼</span>
   </div>
 
   {activeDropdown === "customer" && (
     <div className="dropdown-box">
 
-      {/* 🔥 SEARCH */}
       <input
         placeholder="Search..."
         value={searchText}
@@ -374,19 +402,25 @@ return (
               key={c.id}
               className="dropdown-option"
               onClick={() => {
-  const updatedHeader = { ...header, customer_id: c.id };
-  setHeader(updatedHeader);
 
-  setActiveDropdown(null);
-  setSearchText("");
+                const updatedHeader = {
+                  ...header,
+                  customer_id: c.id
+                };
 
-  // 🔥 IMPORTANT: batch auto load
-  details.forEach((d, index) => {
-   if (d.picking_qty && d.item_id) {
-  fetchBatch(index, d.picking_qty);
-}
-  });
-}}
+                setHeader(updatedHeader);
+
+                setActiveDropdown(null);
+                setSearchText("");
+
+                // Batch auto load
+                details.forEach((d, index) => {
+                  if (d.picking_qty && d.item_id) {
+                    fetchBatch(index, d.picking_qty);
+                  }
+                });
+
+              }}
             >
               {c.name}
             </div>
@@ -451,10 +485,15 @@ return (
 <td>
   <div className="custom-dropdown">
 
-    <div
-      className="dropdown-display"
-      onClick={() => setActiveDropdown("item" + i)}
-    >
+   <div
+  className="dropdown-display"
+  onClick={() => {
+
+   
+
+    setActiveDropdown("item" + i);
+  }}
+>
       {d.item_id
         ? items.find(it => it.id == d.item_id)?.name
         : "Select Item"}
@@ -517,15 +556,25 @@ return (
 const value = details[i].picking_qty;
 
   if (!value || value <= 0) return;
+ if (!value || value <= 0) return;
 
+  if (!header.date) {
+    alert("Please select Date ❗");
+    return;
+  }
+
+  if (!header.customer_id) {
+    alert("Please select Customer ❗");
+    return;
+  }
   if (!details[i].item_id) {
     alert("Select item first ❗");
     return;
   }
 
-  const res = await fetch(
-    `https://zyntaweb.com/demoalafiya/api/order_batches.php?item_id=${details[i].item_id}&customer_id=${header.customer_id}`
-  );
+const res = await fetch(
+  `https://zyntaweb.com/demoalafiya/api/order_batches.php?item_id=${details[i].item_id}&customer_id=${header.customer_id}&date=${header.date}`
+);
 
 const text = await res.text();
 
@@ -784,10 +833,15 @@ setShowBatchModal(false);
         <label>Item</label>
 
         <div className="custom-dropdown">
-          <div
-            className="dropdown-display"
-            onClick={() => setActiveDropdown("item" + i)}
-          >
+        <div
+  className="dropdown-display"
+  onClick={() => {
+
+    
+
+    setActiveDropdown("item" + i);
+  }}
+>
             {d.item_id
               ? items.find(it => it.id == d.item_id)?.name
               : "Select Item"}
@@ -844,16 +898,25 @@ setShowBatchModal(false);
 const value = details[i].picking_qty;
 
   if (!value || value <= 0) return;
+ if (!value || value <= 0) return;
 
+  if (!header.date) {
+    alert("Please select Date ❗");
+    return;
+  }
+
+  if (!header.customer_id) {
+    alert("Please select Customer ❗");
+    return;
+  }
   if (!details[i].item_id) {
     alert("Select item first ❗");
     return;
   }
 
-  const res = await fetch(
-    `https://zyntaweb.com/demoalafiya/api/order_batches.php?item_id=${details[i].item_id}&customer_id=${header.customer_id}`
-  );
-
+ const res = await fetch(
+  `https://zyntaweb.com/demoalafiya/api/order_batches.php?item_id=${details[i].item_id}&customer_id=${header.customer_id}&date=${header.date}`
+);
   const text = await res.text();
 
 console.log("API RESPONSE =", text);

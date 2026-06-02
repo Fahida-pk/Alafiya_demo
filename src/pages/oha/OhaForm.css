@@ -482,7 +482,11 @@
   cursor: pointer;
 }
 /* ================= SAVE BUTTON ================= */
-
+.oha-ui-save-btn{
+  position: fixed;
+  bottom: 20px;
+  left: 320px;
+}
 .oha-ui-save-btn{
   margin-top: 12px;
 
@@ -751,6 +755,24 @@ background: linear-gradient(
     font-size: 13px;
 
     white-space: nowrap;
+  }
+
+}
+@media(max-width:768px){
+
+  .oha-ui-save-btn{
+    position: static !important;
+
+    width: 100%;
+
+    height: 50px;
+
+    margin-top: 15px;
+
+    margin-bottom: 20px;
+
+    left: auto;
+    bottom: auto;
   }
 
 }

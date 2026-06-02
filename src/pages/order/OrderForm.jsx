@@ -5,7 +5,9 @@ import { FaEdit, FaTrash } from "react-icons/fa";
 import { FaEye } from "react-icons/fa";
 import { useLocation } from "react-router-dom";
 import { useParams } from "react-router-dom";
-
+import { FaPlus } from "react-icons/fa";
+import PhoneInput from "react-phone-input-2";
+import "react-phone-input-2/lib/style.css";
 import "./OrderForm.css";
 
 const ORDER_API = "https://zyntaweb.com/demoalafiya/api/order_header.php";
@@ -30,7 +32,14 @@ const [batchPopup, setBatchPopup] = useState([]);
 const [activeBatchIndex, setActiveBatchIndex] = useState(null);
 const [itemSearch, setItemSearch] = useState("");
 const [activeItemIndex, setActiveItemIndex] = useState(null);
+const [showCustomerModal, setShowCustomerModal] = useState(false);
 
+const [customerForm, setCustomerForm] = useState({
+  name: "",
+  address: "",
+  phone: "",
+  status: "ACTIVE",
+});
 const [locationSearch, setLocationSearch] = useState("");
 const [activeLocationIndex, setActiveLocationIndex] = useState(null);
 const [showBatchModal, setShowBatchModal] = useState(false);
@@ -122,7 +131,38 @@ const addRow = () => {
     remark: ""
   }]);
 };
+const saveCustomer = async (e) => {
+  e.preventDefault();
 
+  const res = await fetch(CUSTOMER_API, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(customerForm),
+  });
+
+  await res.json();
+
+  // refresh customer list
+  const customerRes = await fetch(CUSTOMER_API);
+  const customerData = await customerRes.json();
+
+  setCustomers(
+    Array.isArray(customerData)
+      ? customerData
+      : customerData.data || []
+  );
+
+  setShowCustomerModal(false);
+
+  setCustomerForm({
+    name: "",
+    address: "",
+    phone: "",
+    status: "ACTIVE",
+  });
+};
   const handleDetailChange = (index, field, value) => {
     const newDetails = [...details];
     newDetails[index][field] = value;
@@ -322,48 +362,141 @@ setBatchList(filteredBatches);
 />
           </div>
 
-          <div className="order-ui-group">
-            <label>Customer *</label>
-       <div className="custom-dropdown">
-  <div
-    className="grn-dropdown-display"
-    onClick={() => setActiveCustomer(!activeCustomer)}
-  >
-    {header.customer_id
-      ? customers.find(c => c.id == header.customer_id)?.name
-      : ""}
+      <div className="order-ui-group">
+  <label>Customer *</label>
 
-    <span className="grn-arrow">▼</span>
-  </div>
+  <div style={{ display: "flex", alignItems: "center", gap: "10px" }}>
+    <div className="custom-dropdown" style={{ flex: 1 }}>
+      <div
+        className="grn-dropdown-display"
+        onClick={() => setActiveCustomer(!activeCustomer)}
+      >
+        {header.customer_id
+          ? customers.find(c => c.id == header.customer_id)?.name
+          : "Select Customer"}
 
-  {activeCustomer && (
-    <div className="dropdown-box">
-      <input
-        type="text"
-        placeholder="Search customer..."
-        value={customerSearch}
-        onChange={(e) => setCustomerSearch(e.target.value)}
-        className="dropdown-search"
-      />
-
-      <div className="dropdown-options">
-        {filteredCustomers.map(c => (
-          <div
-            key={c.id}
-            className="dropdown-option"
-            onClick={() => {
-              setHeader({ ...header, customer_id: c.id });
-              setActiveCustomer(false);
-              setCustomerSearch("");
-            }}
-          >
-            {c.name}
-          </div>
-        ))}
+        <span className="grn-arrow">▼</span>
       </div>
+
+      {activeCustomer && (
+        <div className="dropdown-box">
+          <input
+            type="text"
+            placeholder="Search customer..."
+            value={customerSearch}
+            onChange={(e) => setCustomerSearch(e.target.value)}
+            className="dropdown-search"
+          />
+
+          <div className="dropdown-options">
+            {filteredCustomers.map(c => (
+              <div
+                key={c.id}
+                className="dropdown-option"
+                onClick={() => {
+                  setHeader({ ...header, customer_id: c.id });
+                  setActiveCustomer(false);
+                  setCustomerSearch("");
+                }}
+              >
+                {c.name}
+              </div>
+            ))}
+          </div>
+        </div>
+      )}
     </div>
-  )}
-</div>
+
+    <button
+      type="button"
+      className="supplier-add-btn"
+      onClick={() => setShowCustomerModal(true)}
+    >
+      <FaPlus />
+    </button>
+ 
+
+  
+    
+{showCustomerModal && (
+  <div className="supplier-modal-overlay">
+    <div className="supplier-modal-box">
+      <div className="supplier-modal-header">
+        <h3>Add Customer</h3>
+
+        <button
+          type="button"
+          onClick={() => setShowCustomerModal(false)}
+        >
+          ✕
+        </button>
+      </div>
+
+      <form
+  onSubmit={saveCustomer}
+  className="supplier-modal-body"
+>
+  <label>Name</label>
+  <input
+    name="name"
+    value={customerForm.name}
+    onChange={(e) =>
+      setCustomerForm({
+        ...customerForm,
+        name: e.target.value,
+      })
+    }
+    required
+  />
+
+  <label>Address</label>
+  <input
+    name="address"
+    value={customerForm.address}
+    onChange={(e) =>
+      setCustomerForm({
+        ...customerForm,
+        address: e.target.value,
+      })
+    }
+  />
+
+  <label>Phone</label>
+  <PhoneInput
+    country="in"
+    value={customerForm.phone}
+    onChange={(value) =>
+      setCustomerForm({
+        ...customerForm,
+        phone: "+" + value,
+      })
+    }
+  />
+
+  <label>Status</label>
+  <select
+    value={customerForm.status}
+    onChange={(e) =>
+      setCustomerForm({
+        ...customerForm,
+        status: e.target.value,
+      })
+    }
+  >
+    <option value="ACTIVE">ACTIVE</option>
+    <option value="INACTIVE">INACTIVE</option>
+  </select>
+
+  <button type="submit">
+    Save Customer
+  </button>
+</form>
+    </div>
+  </div>
+)}
+ </div>
+
+
           </div>
 
           <div className="order-ui-group">
@@ -882,13 +1015,15 @@ setShowBatchModal(true);
         </div>
 
         {!isView && (
- <button
-  className="order-ui-save-btn"
-  onClick={handleSave}
-  disabled={loading}
->
-  {loading ? "Saving..." : id ? "Update Order" : "Save Order"}
-</button>
+ <div className="save-order-fixed">
+  <button
+    className="order-ui-save-btn"
+    onClick={handleSave}
+    disabled={loading}
+  >
+    {loading ? "Saving..." : id ? "Update Order" : "Save Order"}
+  </button>
+</div>
 )}
  {/* ✅ ONLY ONE MODAL HERE */}
     {showBatchModal && (

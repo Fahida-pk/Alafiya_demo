@@ -1,7 +1,7 @@
 import { Navigate } from "react-router-dom";
 
 const ProtectedRoute = ({ children }) => {
-  const user = localStorage.getItem("user_id");
+  const user = sessionStorage.getItem("user_id");
 
   if (!user) {
     return <Navigate to="/" replace />;
