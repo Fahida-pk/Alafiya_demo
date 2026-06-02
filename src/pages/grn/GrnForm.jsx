@@ -20,6 +20,7 @@ const GrnForm = () => {
 
   const [grnNumber, setGrnNumber] = useState("");
   const [suppliers, setSuppliers] = useState([]);
+  const [saving, setSaving] = useState(false);
   const [items, setItems] = useState([]);
   const [locations, setLocations] = useState([]);
 const [supplierSearch, setSupplierSearch] = useState("");
@@ -107,38 +108,49 @@ const handleSupplierPhone = (value) => {
 const saveSupplier = async (e) => {
   e.preventDefault();
 
-  const res = await fetch(SUPPLIER_API, {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify(supplierForm),
-  });
+  if (saving) return; // ✅ Multiple click prevent
 
-  const data = await res.json();
+  try {
+    setSaving(true);
 
-  if (data.status === "success") {
-    alert("Supplier Added ✅");
-
-    const supplierRes = await fetch(SUPPLIER_API);
-    const supplierData = await supplierRes.json();
-
-    setSuppliers(
-      Array.isArray(supplierData)
-        ? supplierData
-        : supplierData.data || []
-    );
-
-    setShowSupplierModal(false);
-
-    setSupplierForm({
-      name: "",
-      address: "",
-      phone: "",
-      status: "ACTIVE",
+    const res = await fetch(SUPPLIER_API, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(supplierForm),
     });
-  } else {
-    alert(data.message || "Failed");
+
+    const data = await res.json();
+
+    if (data.status === "success") {
+      alert("Supplier Added ✅");
+
+      const supplierRes = await fetch(SUPPLIER_API);
+      const supplierData = await supplierRes.json();
+
+      setSuppliers(
+        Array.isArray(supplierData)
+          ? supplierData
+          : supplierData.data || []
+      );
+
+      setShowSupplierModal(false);
+
+      setSupplierForm({
+        name: "",
+        address: "",
+        phone: "",
+        status: "ACTIVE",
+      });
+    } else {
+      alert(data.message || "Failed");
+    }
+  } catch (err) {
+    console.error(err);
+    alert("Error saving supplier ❌");
+  } finally {
+    setSaving(false);
   }
 };
   // ================= ADD ROW =================
@@ -217,7 +229,37 @@ const handleSave = async () => {
   .filter(d => d.item_id && d.qty > 0);
 
     console.log("VALID ITEMS:", validItems);
+// ✅ Date validation
+if (!header.date) {
+  alert("Please select date ❗");
+  return;
+}
 
+// ✅ Customer validation
+if (!header.customer_id) {
+  alert("Please select customer ❗");
+  return;
+}
+
+// ✅ Item validation
+if (validItems.length === 0) {
+  alert("Please enter at least one item ❗");
+  return;
+}
+
+// ✅ Batch + Expiry validation
+for (const item of validItems) {
+
+  if (!item.batch || item.batch.trim() === "") {
+    alert("Please select batch ❗");
+    return;
+  }
+
+  if (!item.expiry || item.expiry.trim() === "") {
+    alert("Please select expiry ❗");
+    return;
+  }
+}
     if (validItems.length === 0) {
       alert("Please add at least one item ❗");
       return;
@@ -439,10 +481,9 @@ const filteredLocations = locations.filter(l =>
           <option value="ACTIVE">ACTIVE</option>
           <option value="INACTIVE">INACTIVE</option>
         </select>
-
-        <button type="submit">
-          Save Supplier
-        </button>
+<button type="submit" disabled={saving}>
+  {saving ? "Saving..." : "Save"}
+</button>
       </form>
     </div>
   </div>
@@ -760,14 +801,7 @@ const filteredLocations = locations.filter(l =>
       >
         Delete
       </button>
-{i === details.length - 1 && (
-  <button
-    className="order-ui-save-btn"
-    onClick={handleSave}
-  >
-    Save Order
-  </button>
-)}
+
     </div>
   ))}
 </div> {/* grn-ui-card close */}
@@ -777,7 +811,7 @@ const filteredLocations = locations.filter(l =>
     className="order-ui-save-btn"
     onClick={handleSave}
   >
-    {id ? "Update Order" : "Save Order"}
+    {id ? "Update " : "Save "}
   </button>
 </div>
 

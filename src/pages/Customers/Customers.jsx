@@ -13,7 +13,7 @@ const Customers = () => {
   const [search, setSearch] = useState("");
   const [isEdit, setIsEdit] = useState(false);
   const [showModal, setShowModal] = useState(false);
-
+const [saving, setSaving] = useState(false);
   const [message, setMessage] = useState("");
   const [messageType, setMessageType] = useState("");
 
@@ -102,22 +102,27 @@ const customersPerPage = 5;
   };
 
   // SUBMIT
-  const handleSubmit = async (e) => {
-    e.preventDefault();
+ const handleSubmit = async (e) => {
+  e.preventDefault();
 
-    if (nameError) {
-      setMessage("Fix name error");
-      setMessageType("error");
-      autoHide();
-      return;
-    }
+  if (saving) return; // ✅ Prevent multiple clicks
 
-    if (phoneError || !form.phone) {
-      setMessage("Enter valid phone number");
-      setMessageType("error");
-      autoHide();
-      return;
-    }
+  if (nameError) {
+    setMessage("Fix name error");
+    setMessageType("error");
+    autoHide();
+    return;
+  }
+
+  if (phoneError || !form.phone) {
+    setMessage("Enter valid phone number");
+    setMessageType("error");
+    autoHide();
+    return;
+  }
+
+  try {
+    setSaving(true);
 
     await fetch(API, {
       method: isEdit ? "PUT" : "POST",
@@ -129,28 +134,38 @@ const customersPerPage = 5;
     setMessageType("success");
     autoHide();
 
-    loadCustomers();
+    await loadCustomers();
+
     setShowModal(false);
     resetForm();
-  };
 
-  const autoHide = () => {
-    setTimeout(() => setMessage(""), 3000);
-  };
+  } catch (err) {
+    console.error(err);
+    setMessage("Error saving customer");
+    setMessageType("error");
+    autoHide();
 
-  const resetForm = () => {
-    setForm({
-      id: "",
-      name: "",
-      address: "",
-      phone: "",
-      status: "ACTIVE",
-    });
-    setIsEdit(false);
-    setPhoneError("");
-    setNameError("");
-  };
+  } finally {
+    setSaving(false);
+  }
+};
+const autoHide = () => {
+  setTimeout(() => setMessage(""), 3000);
+};
 
+const resetForm = () => {
+  setForm({
+    id: "",
+    name: "",
+    address: "",
+    phone: "",
+    status: "ACTIVE",
+  });
+
+  setIsEdit(false);
+  setPhoneError("");
+  setNameError("");
+};
   // EDIT
   const editCustomer = (c) => {
     setForm(c);
@@ -355,9 +370,17 @@ onChange={(e) => {
                 <option value="INACTIVE">INACTIVE</option>
               </select>
 
-              <button className="customers-save-btn">
-                {isEdit ? "UPDATE" : "SAVE"}
-              </button>
+             <button
+  type="submit"
+  className="customers-save-btn"
+  disabled={saving}
+>
+  {saving
+    ? "Saving..."
+    : isEdit
+    ? "UPDATE"
+    : "SAVE"}
+</button>
             </form>
           </div>
         </div>

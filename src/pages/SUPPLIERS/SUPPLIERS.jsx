@@ -9,7 +9,7 @@ const API = "https://zyntaweb.com/demoalafiya/api/suppliers.php";
 
 const Suppliers = () => {
   const [suppliers, setSuppliers] = useState([]);
-
+const [saving, setSaving] = useState(false);
  const [form, setForm] = useState({
   id: "",
   name: "",
@@ -45,7 +45,17 @@ const suppliersPerPage = 5; // nee change cheyyam (5,10,20)
   const handlePhoneChange = (value) => {
     setForm({ ...form, phone: "+" + value });
   };
+const resetForm = () => {
+  setForm({
+    id: "",
+    name: "",
+    address: "",
+    phone: "",
+    status: "ACTIVE",
+  });
 
+  setIsEdit(false);
+};
   // ================= SEARCH FILTER 🔥 =================
   const filtered = suppliers.filter((s) =>
     `${s.name} ${s.phone} ${s.address}`
@@ -63,38 +73,41 @@ const totalPages = Math.ceil(filtered.length / suppliersPerPage);
 const handleSubmit = async (e) => {
   e.preventDefault();
 
-  const res = await fetch(API, {
-    method: isEdit ? "PUT" : "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify(form),
-  });
+  if (saving) return;
 
-  const data = await res.json(); // 🔥 MUST
+  try {
+    setSaving(true);
 
-  console.log("SAVE RESPONSE:", data); // debug
+    const res = await fetch(API, {
+      method: isEdit ? "PUT" : "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(form),
+    });
 
-  if (data.status === "success") {
-setMessage(isEdit ? "Updated ✅" : "Added 🎉");
+    const data = await res.json();
 
-// 🔥 ADD THIS
-setTimeout(() => {
-  setMessage("");
-}, 2000);    loadData();
-    setShowModal(false);
-    resetForm();
-  } else {
-    alert(data.message || "Error saving");
+    console.log("SAVE RESPONSE:", data);
+
+    if (data.status === "success") {
+      setMessage(isEdit ? "Updated ✅" : "Added 🎉");
+
+      setTimeout(() => {
+        setMessage("");
+      }, 2000);
+
+      await loadData();
+
+      setShowModal(false);
+      resetForm();
+    } else {
+      alert(data.message || "Error saving");
+    }
+  } catch (err) {
+    console.error(err);
+    alert("Something went wrong");
+  } finally {
+    setSaving(false);
   }
-};
-  const resetForm = () => {
-  setForm({
-    id: "",
-    name: "",
-    address: "",
-    phone: "",
-    status: "ACTIVE", // ✅
-  });
-  setIsEdit(false);
 };
     
 
@@ -292,8 +305,9 @@ required
   <option value="INACTIVE">INACTIVE</option>
 </select>
 
-              <button type="submit">Save</button>
-            </form>
+<button type="submit" disabled={saving}>
+  {saving ? "Saving..." : "Save"}
+</button>            </form>
           </div>
         </div>
       )}

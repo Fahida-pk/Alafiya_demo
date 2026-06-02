@@ -435,6 +435,9 @@
   border-radius: 8px;
   padding: 12px 30px;
   cursor: pointer;
+   width: 180px;
+     height: 42px;
+
 }
 /* ================= OPTIONS ================= */
 

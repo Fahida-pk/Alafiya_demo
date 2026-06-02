@@ -49,6 +49,7 @@ if (path === "/oha-report") return "OHA Report";
 if (path === "/current-stock-report") return "Current Stock Report";
 if (path === "/expense-report") return "Expense Report";
 if (path === "/bank-deposit-report") return "Bank Deposit Report";
+if (path === "/daily-report-summary") return "Daily Summary Report"; // ✅ ADD THIS
 
     // ===== ADMIN =====
     if (path === "/users") return "User";

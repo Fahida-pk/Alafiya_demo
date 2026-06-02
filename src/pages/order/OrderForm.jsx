@@ -26,6 +26,7 @@ const navigate = useNavigate();
   const [locations, setLocations] = useState([]);
   const [brands, setBrands] = useState([]);
 const location = useLocation();
+const [savingCustomer, setSavingCustomer] = useState(false);
 const [customerSearch, setCustomerSearch] = useState("");
 const [activeCustomer, setActiveCustomer] = useState(false);
 const [batchPopup, setBatchPopup] = useState([]);
@@ -134,27 +135,47 @@ const addRow = () => {
 const saveCustomer = async (e) => {
   e.preventDefault();
 
-  const res = await fetch(CUSTOMER_API, {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify(customerForm),
-  });
+  if (savingCustomer) return; // ✅ multiple click prevent
 
-  await res.json();
+  try {
+    setSavingCustomer(true);
 
-  // refresh customer list
-  const customerRes = await fetch(CUSTOMER_API);
-  const customerData = await customerRes.json();
+    const res = await fetch(CUSTOMER_API, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(customerForm),
+    });
 
-  setCustomers(
-    Array.isArray(customerData)
-      ? customerData
-      : customerData.data || []
-  );
+    await res.json();
 
-  setShowCustomerModal(false);
+    // refresh customer list
+    const customerRes = await fetch(CUSTOMER_API);
+    const customerData = await customerRes.json();
+
+    setCustomers(
+      Array.isArray(customerData)
+        ? customerData
+        : customerData.data || []
+    );
+
+    setShowCustomerModal(false);
+
+    setCustomerForm({
+      name: "",
+      address: "",
+      phone: "",
+      status: "ACTIVE",
+    });
+
+  } catch (err) {
+    console.error(err);
+    alert("Error saving customer ❌");
+  } finally {
+    setSavingCustomer(false);
+  }
+
 
   setCustomerForm({
     name: "",
@@ -178,7 +199,37 @@ const handleSave = async () => {
 
     // 🔥 FILTER ONLY VALID ITEMS
     const validItems = details.filter(d => d.item_id && d.qty);
+// ✅ Date validation
+if (!header.date) {
+  alert("Please select date ❗");
+  return;
+}
 
+// ✅ Customer validation
+if (!header.customer_id) {
+  alert("Please select customer ❗");
+  return;
+}
+
+// ✅ Item validation
+if (validItems.length === 0) {
+  alert("Please enter at least one item ❗");
+  return;
+}
+
+// ✅ Batch + Expiry validation
+for (const item of validItems) {
+
+  if (!item.batch || item.batch.trim() === "") {
+    alert("Please select batch ❗");
+    return;
+  }
+
+  if (!item.expiry || item.expiry.trim() === "") {
+    alert("Please select expiry ❗");
+    return;
+  }
+}
     if (validItems.length === 0) {
       alert("Please enter at least one item ❗");
       return;
@@ -487,9 +538,12 @@ setBatchList(filteredBatches);
     <option value="INACTIVE">INACTIVE</option>
   </select>
 
-  <button type="submit">
-    Save Customer
-  </button>
+  <button
+  type="submit"
+  disabled={savingCustomer}
+>
+  {savingCustomer ? "Saving..." : "Save Customer"}
+</button>
 </form>
     </div>
   </div>
