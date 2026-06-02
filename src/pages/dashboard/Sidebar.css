@@ -7,10 +7,10 @@
 
 
 .sidebar {
-
   width: 260px;
-  min-height: 100vh;
+  height: 100vh;      /* important */
   padding: 28px 20px;
+
   font-family: "Poppins", sans-serif;
   color: #fff;
 
@@ -24,21 +24,38 @@
   display: flex;
   flex-direction: column;
 
-  /* ✅ IMPORTANT FIX */
-  overflow-y: auto;
+  overflow-y: scroll;
   overflow-x: hidden;
-
-  /* ✅ SMOOTH MOBILE SCROLL */
-  -webkit-overflow-scrolling: touch;
-
-  /* ✅ SCROLLBAR HIDE */
-  scrollbar-width: none;
 }
-
 .sidebar::-webkit-scrollbar {
-  display: none;
+  width: 10px;
 }
 
+.sidebar::-webkit-scrollbar-track {
+ background: linear-gradient(
+    180deg,
+    #8e63e0 0%,
+    #7a5cd6 50%,
+    #654fc4 100%
+  );
+}
+
+.sidebar::-webkit-scrollbar-thumb {
+background: linear-gradient(
+    180deg,
+    #8e63e0 0%,
+    #7a5cd6 50%,
+    #654fc4 100%
+  );  border-radius: 20px;
+}
+
+.sidebar::-webkit-scrollbar-thumb:hover {
+background: linear-gradient(
+    180deg,
+    #8e63e0 0%,
+    #7a5cd6 50%,
+    #654fc4 100%
+  );}
 .menu-item svg,
 .submenu svg {
   font-size: 24px;

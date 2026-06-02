@@ -421,6 +421,21 @@
 .supplier-add-btn:hover {
   opacity: 0.9;
 }
+.save-order-fixed{
+  position: fixed;
+  bottom: 20px;
+  left: 280px; /* sidebar width */
+  z-index: 99999;
+}
+
+.order-ui-save-btn{
+  background: linear-gradient(180deg,#8e63e0,#654fc4);
+  color: white;
+  border: none;
+  border-radius: 8px;
+  padding: 12px 30px;
+  cursor: pointer;
+}
 /* ================= OPTIONS ================= */
 
 .dropdown-options{
@@ -497,7 +512,18 @@
 
     width: 100%;
   }
+@media(max-width:768px){
 
+  .save-order-fixed{
+    display: none;
+  }
+
+  .order-ui-save-btn{
+    position: static !important;
+    width: 100%;
+    margin-top: 10px;
+  }
+}
   .grn-ui-save-btn,
   .grn-ui-delete-btn{
     width: 100%;

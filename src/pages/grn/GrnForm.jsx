@@ -760,16 +760,28 @@ const filteredLocations = locations.filter(l =>
       >
         Delete
       </button>
-
+{i === details.length - 1 && (
+  <button
+    className="order-ui-save-btn"
+    onClick={handleSave}
+  >
+    Save Order
+  </button>
+)}
     </div>
   ))}
+</div> {/* grn-ui-card close */}
+
+<div className="save-order-fixed">
+  <button
+    className="order-ui-save-btn"
+    onClick={handleSave}
+  >
+    {id ? "Update Order" : "Save Order"}
+  </button>
 </div>
 
-       <button className="order-ui-save-btn" onClick={handleSave}>
-  {id ? "Update Order" : "Save Order"}
-</button>
-
-      </div>
+</div> {/* grn-ui-container close */}
     </div>
   );
 };
