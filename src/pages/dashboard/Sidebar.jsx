@@ -109,14 +109,15 @@ const [inventoryOpen, setInventoryOpen] = useState(false);
       <FaUsers />
       <span>Customer</span>
     </Link>
-    <Link to="/items" onClick={() => setMobileOpen(false)}>
-      <FaClipboardCheck />
-      <span>Item</span>
-    </Link>
+    
     <Link to="/locations">
   <FaMapMarkerAlt  />
   <span>Location</span>
 </Link>
+<Link to="/items" onClick={() => setMobileOpen(false)}>
+      <FaClipboardCheck />
+      <span>Item</span>
+    </Link>
 <Link to="/suppliers" onClick={() => setMobileOpen(false)}>
       <FaTruckLoading />
       <span>Supplier</span>
