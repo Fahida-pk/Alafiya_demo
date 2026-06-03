@@ -130,9 +130,14 @@ const deleteItem = async (id) => {
   const data = await res.json();
 
   if (data.status === "error") {
-    setAlertMsg(data.message);
-    return;
-  } else {
+  setAlertMsg(data.message);
+
+  setTimeout(() => {
+    setAlertMsg("");
+  }, 2000);
+
+  return;
+} else {
     setMessage("Deleted ✅");
 
     setTimeout(() => {
@@ -311,18 +316,14 @@ required
 </button>            </form>
           </div>
         </div>
-      )}
-            {alertMsg && (
-        <div className="custom-alert-overlay">
-          <div className="custom-alert-box">
-            <p>{alertMsg}</p>
-
-            <button onClick={() => setAlertMsg("")}>
-              OK
-            </button>
-          </div>
-        </div>
-      )}
+      )}{alertMsg && (
+  <div className="custom-alert-overlay">
+    <div className="custom-alert-box">
+      <p>{alertMsg}</p>
+    </div>
+  </div>
+)}
+      
     </div>
     
   );
