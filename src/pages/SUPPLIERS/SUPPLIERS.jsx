@@ -312,7 +312,19 @@ required
           </div>
         </div>
       )}
+            {alertMsg && (
+        <div className="custom-alert-overlay">
+          <div className="custom-alert-box">
+            <p>{alertMsg}</p>
+
+            <button onClick={() => setAlertMsg("")}>
+              OK
+            </button>
+          </div>
+        </div>
+      )}
     </div>
+    
   );
 };
 
