@@ -116,18 +116,35 @@ const Items = () => {
   };
 
   // DELETE
-  const deleteItem = async (id) => {
-    if (!window.confirm("Delete this item?")) return;
+const deleteItem = async (id) => {
+  if (!window.confirm("Delete this item?")) return;
 
-    await fetch(`${API}?id=${id}`, { method: "DELETE" });
+  const res = await fetch(`${API}?id=${id}`, {
+    method: "DELETE",
+  });
 
-    setMessage("Item deleted ❌");
-    setMessageType("success");
+  const data = await res.json();
 
-    setTimeout(() => setMessage(""), 3000);
+  if (data.status === "error") {
+    setMessage(data.message);
+    setMessageType("error");
 
-    loadItems();
-  };
+    setTimeout(() => {
+      setMessage("");
+    }, 2000);
+
+    return;
+  }
+
+  setMessage("Item deleted ✅");
+  setMessageType("success");
+
+  setTimeout(() => {
+    setMessage("");
+  }, 2000);
+
+  loadItems();
+};
 
   return (
     <div className="item-page">
