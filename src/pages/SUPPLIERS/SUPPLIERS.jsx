@@ -22,6 +22,7 @@ const [saving, setSaving] = useState(false);
   const [isEdit, setIsEdit] = useState(false);
   const [showModal, setShowModal] = useState(false);
   const [message, setMessage] = useState("");
+  const [alertMsg, setAlertMsg] = useState("");
 const [currentPage, setCurrentPage] = useState(1);
 const suppliersPerPage = 5; // nee change cheyyam (5,10,20)
   // ================= LOAD =================
@@ -119,7 +120,7 @@ const handleSubmit = async (e) => {
   };
 
   // ================= DELETE =================
-  const deleteItem = async (id) => {
+const deleteItem = async (id) => {
   if (!window.confirm("Delete?")) return;
 
   const res = await fetch(`${API}?id=${id}`, {
@@ -129,16 +130,16 @@ const handleSubmit = async (e) => {
   const data = await res.json();
 
   if (data.status === "error") {
-    alert(data.message); // 🔥 "already used" message
+    setAlertMsg(data.message);
+    return;
   } else {
     setMessage("Deleted ✅");
 
-// 🔥 AUTO HIDE
-setTimeout(() => {
-  setMessage("");
-}, 2000);
+    setTimeout(() => {
+      setMessage("");
+    }, 2000);
 
-loadData();
+    loadData();
   }
 };
 
