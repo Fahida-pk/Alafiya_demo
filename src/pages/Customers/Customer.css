@@ -46,7 +46,25 @@
   border-radius: 8px;
   width: 240px;
 }
-
+.customers-table td {
+  vertical-align: top;
+  white-space: normal;
+  word-break: break-word;
+  line-height: 1.6;
+  padding: 14px 12px;
+}
+.customers-table td:nth-child(2) {
+  max-width: 350px;
+  white-space: normal;
+  word-wrap: break-word;
+  line-height: 1.6;
+}
+.customers-table td:nth-child(1) {
+  max-width: 350px;
+  white-space: normal;
+  word-wrap: break-word;
+  line-height: 1.6;
+}
 /* ===== TABLE ===== */
 .customers-table {
   width: 100%;

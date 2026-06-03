@@ -278,6 +278,16 @@
   border-radius: 12px;
   padding: 20px;
 }
+.supplier-list-card td {
+  vertical-align: top;
+}
+
+.supplier-list-card td:nth-child(2) {
+  max-width: 300px;
+  white-space: normal;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+}
 /* ================= MOBILE SUPPLIER CARD VIEW =================== */
 @media (max-width: 576px) {
 

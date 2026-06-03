@@ -114,12 +114,12 @@ const customersPerPage = 5;
     return;
   }
 
-  if (phoneError || !form.phone) {
-    setMessage("Enter valid phone number");
-    setMessageType("error");
-    autoHide();
-    return;
-  }
+if (phoneError && !isEdit) {
+  setMessage("Enter valid phone number");
+  setMessageType("error");
+  autoHide();
+  return;
+}
 
   try {
     setSaving(true);
@@ -163,15 +163,19 @@ const resetForm = () => {
   });
 
   setIsEdit(false);
-  setPhoneError("");
+  setPhoneError(""); // ✅ add this line
   setNameError("");
 };
   // EDIT
-  const editCustomer = (c) => {
-    setForm(c);
-    setIsEdit(true);
-    setShowModal(true);
-  };
+const editCustomer = (c) => {
+  setForm(c);
+  setIsEdit(true);
+
+  setPhoneError(""); // ✅ phone error clear
+  setNameError("");  // ✅ name error clear
+
+  setShowModal(true);
+};
 
   // DELETE
   const deleteCustomer = async (id) => {
