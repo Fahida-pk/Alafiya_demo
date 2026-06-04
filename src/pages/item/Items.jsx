@@ -207,10 +207,21 @@ const deleteItem = async (id) => {
   ) : (
     currentItems.map((i) => (
       <tr key={i.id}>
-        <td data-label="Code">{i.item_code}</td>
-        <td data-label="Item Name">{i.name}</td>
-        <td data-label="Unit">{i.unit}</td>
-        <td data-label="Location">{i.location_name || "-"}</td>
+      <td data-label="Code">
+  <span>{i.item_code}</span>
+</td>
+
+<td data-label="Item Name">
+  <span>{i.name}</span>
+</td>
+
+<td data-label="Unit">
+  <span>{i.unit}</span>
+</td>
+
+<td data-label="Location">
+  <span>{i.location_name || "-"}</span>
+</td>
 
         <td data-label="Actions">
           <button
@@ -282,7 +293,7 @@ const deleteItem = async (id) => {
                 name="unit"
                 value={form.unit}
                 onChange={handleChange}
-                required
+              
               />
 
               <label>Location *</label>
@@ -290,7 +301,7 @@ const deleteItem = async (id) => {
                 name="location_id"
                 value={form.location_id}
                 onChange={handleChange}
-                required
+                
               >
                 <option value="">Select Location</option>
                 {locations.map((loc) => (
