@@ -12,7 +12,7 @@ const Items = () => {
   const [search, setSearch] = useState("");
   const [isEdit, setIsEdit] = useState(false);
   const [showModal, setShowModal] = useState(false);
-
+const [saving, setSaving] = useState(false);
   const [message, setMessage] = useState("");
   const [messageType, setMessageType] = useState("");
 
@@ -65,9 +65,14 @@ const Items = () => {
   };
 
   // SUBMIT
-  const handleSubmit = async (e) => {
-    e.preventDefault();
+ const handleSubmit = async (e) => {
+  e.preventDefault();
 
+  if (saving) return; // prevent double click
+
+  setSaving(true);
+
+  try {
     const res = await fetch(API, {
       method: isEdit ? "PUT" : "POST",
       headers: { "Content-Type": "application/json" },
@@ -91,7 +96,10 @@ const Items = () => {
     loadItems();
     setShowModal(false);
     resetForm();
-  };
+  } finally {
+    setSaving(false);
+  }
+};
 
   // RESET
   const resetForm = () => {
@@ -311,9 +319,16 @@ const deleteItem = async (id) => {
                 ))}
               </select>
 
-              <button className="item-save-btn">
-                {isEdit ? "✏️ UPDATE ITEM" : "💾 ADD ITEM"}
-              </button>
+             <button
+  className="item-save-btn"
+  disabled={saving}
+>
+  {saving
+    ? "Saving..."
+    : isEdit
+    ? "✏️ UPDATE ITEM"
+    : "💾 ADD ITEM"}
+</button>
             </form>
           </div>
         </div>
