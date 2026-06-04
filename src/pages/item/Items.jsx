@@ -53,7 +53,8 @@ const [saving, setSaving] = useState(false);
 
   // ✅ PAGINATION (AFTER FILTER)
   const totalPages = Math.max(1, Math.ceil(filtered.length / itemsPerPage));
-
+const [showDeleteModal, setShowDeleteModal] = useState(false);
+const [deleteId, setDeleteId] = useState(null);
   const indexOfLast = currentPage * itemsPerPage;
   const indexOfFirst = indexOfLast - itemsPerPage;
 
@@ -125,7 +126,11 @@ const [saving, setSaving] = useState(false);
 
   // DELETE
 const deleteItem = async (id) => {
-  if (!window.confirm("Delete this item?")) return;
+  const confirmDelete = window.confirm(
+    "Are you sure you want to delete this item?\n\nClick OK for Yes or Cancel for No."
+  );
+
+  if (!confirmDelete) return;
 
   const res = await fetch(`${API}?id=${id}`, {
     method: "DELETE",
@@ -153,7 +158,27 @@ const deleteItem = async (id) => {
 
   loadItems();
 };
+const confirmDelete = async () => {
+  const res = await fetch(`${API}?id=${deleteId}`, {
+    method: "DELETE",
+  });
 
+  const data = await res.json();
+
+  if (data.status === "error") {
+    setMessage(data.message);
+    setMessageType("error");
+  } else {
+    setMessage("Item deleted ✅");
+    setMessageType("success");
+    loadItems();
+  }
+
+  setShowDeleteModal(false);
+  setDeleteId(null);
+
+  setTimeout(() => setMessage(""), 2000);
+};
   return (
     <div className="item-page">
       <TopNavbar />
@@ -239,12 +264,15 @@ const deleteItem = async (id) => {
             ✏️
           </button>
 
-          <button
-            className="item-delete-btn"
-            onClick={() => deleteItem(i.id)}
-          >
-            <FaTrash />
-          </button>
+       <button
+  className="item-delete-btn"
+  onClick={() => {
+    setDeleteId(i.id);
+    setShowDeleteModal(true);
+  }}
+>
+  <FaTrash />
+</button>
         </td>
       </tr>
     ))
@@ -277,7 +305,31 @@ const deleteItem = async (id) => {
           </div>
         )}
       </div>
+{showDeleteModal && (
+  <div className="delete-modal-overlay">
+    <div className="delete-modal">
+      <h3>Delete Item</h3>
 
+      <p>Are you sure you want to delete this item?</p>
+
+      <div className="delete-actions">
+        <button
+          className="delete-yes-btn"
+          onClick={confirmDelete}
+        >
+          Yes
+        </button>
+
+        <button
+          className="delete-no-btn"
+          onClick={() => setShowDeleteModal(false)}
+        >
+          No
+        </button>
+      </div>
+    </div>
+  </div>
+)}
       {/* ✅ MODAL */}
       {showModal && (
         <div className="item-modal-overlay">
