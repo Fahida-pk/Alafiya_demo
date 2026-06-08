@@ -8,7 +8,33 @@
 .floating-table td[data-label="Actions"] {
   display: flex;
 }
+.modal-header{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+}
 
+.modal-close-btn{
+  border:none;
+  background:none;
+  font-size:24px;
+  cursor:pointer;
+  color:#555;
+}
+.modal-close-btn{
+  width:40px !important;
+  height:40px !important;
+  color:#2d2a2a !important;
+  border:none !important;
+  font-size:24px !important;
+  display:flex !important;
+  align-items:center;
+  justify-content:center;
+  cursor:pointer;
+}
+.modal-close-btn:hover{
+  color:red;
+}
 /* ================= CARD ================= */
 .floating-trip-list-card {
   background: #ffffff;

@@ -336,10 +336,17 @@ const totalTime = getTimeDifference(form.start_time, form.end_time);
       {showModal && (
         <div className="modal-overlay">
           <div className="floating-modal-box">
-            <div className="modal-header">
-              <h3>{isEdit ? "Edit Floating Trip" : "Add Floating Trip"}</h3>
-              <button className="modal-close-btn" onClick={() => setShowModal(false)}>✕</button>
-            </div>
+           <div className="modal-header">
+  <h3>{isEdit ? "Edit Floating Trip" : "Add Floating Trip"}</h3>
+
+  <button
+    type="button"
+    className="modal-close-btn"
+    onClick={() => setShowModal(false)}
+  >
+    ✕
+  </button>
+</div>
 
             <form onSubmit={handleSubmit} className="modal-body">
               <label>Date *</label>
