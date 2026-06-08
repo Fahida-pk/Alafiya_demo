@@ -263,11 +263,6 @@
 
 /* ================= COLUMN WIDTH ================= */
 
-/* ITEM */
-.oha-ui-table th:nth-child(1),
-.oha-ui-table td:nth-child(1){
-  width: 220px;
-}
 
 /* QTY */
 .oha-ui-table th:nth-child(2),
@@ -284,7 +279,7 @@
 /* EXPIRY */
 .oha-ui-table th:nth-child(4),
 .oha-ui-table td:nth-child(4){
-  width: 165px;
+  width: 160px;
 }
 
 /* LOCATION */
@@ -308,7 +303,7 @@
 /* REMARK */
 .oha-ui-table th:nth-child(8),
 .oha-ui-table td:nth-child(8){
-  width: 160px;
+  width: 140px;
 }
 /* ================= DELETE BUTTON ================= */
 .oha-ui-container input,
@@ -658,7 +653,10 @@
 }
 
 /* ================= MOBILE ================= */
-
+.oha-ui-table th:nth-child(1),
+.oha-ui-table td:nth-child(1){
+  width: 260px;      /* 220 → 320 */
+}
 .oha-ui-mobile{
   display: none;
 }

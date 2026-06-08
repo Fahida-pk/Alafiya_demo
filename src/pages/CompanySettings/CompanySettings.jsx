@@ -12,11 +12,12 @@ import { FiHome } from "react-icons/fi";
 
 const COMPANY_API = "https://zyntaweb.com/demoalafiya/api/company.php";
 const CompanySettings = () => {
-  const [companyForm, setCompanyForm] = useState({
-    company_name: "",
-    address: "",
-    phone: "",
-  });
+const [companyForm, setCompanyForm] = useState({
+  company_name: "",
+  address: "",
+  phone: "",
+  mileage_allowance: 3.50,
+});
 
   const [message, setMessage] = useState("");
   const [messageType, setMessageType] = useState("");
@@ -32,13 +33,14 @@ const CompanySettings = () => {
       const res = await fetch(COMPANY_API);
       const data = await res.json();
 
-      if (data && data.company_name) {
-        setCompanyForm({
-          company_name: data.company_name,
-          address: data.address,
-          phone: data.phone,
-        });
-      }
+    if (data && data.company_name) {
+  setCompanyForm({
+    company_name: data.company_name,
+    address: data.address,
+    phone: data.phone,
+    mileage_allowance: data.mileage_allowance ?? 3.5,
+  });
+}
     } catch (err) {
       console.error(err);
     }
@@ -97,11 +99,12 @@ const CompanySettings = () => {
   };
 
   const handleClear = () => {
-    setCompanyForm({
-      company_name: "",
-      address: "",
-      phone: "",
-    });
+   setCompanyForm({
+  company_name: "",
+  address: "",
+  phone: "",
+  mileage_allowance: 3.5,
+});
   };
 
   return (
@@ -155,7 +158,16 @@ const CompanySettings = () => {
                 inputStyle={{ width: "100%" }}
               />
             </div>
-
+<div className="form-group">
+  <label>Mileage Allowance</label>
+  <input
+    type="number"
+    step="0.01"
+    name="mileage_allowance"
+    value={companyForm.mileage_allowance ?? 3.5}
+    onChange={handleChange}
+  />
+</div>
            <div className="company-btn-wrapper">
   <button type="submit" className="company-btn save-btn">
     <FaSave className="btn-icon" />

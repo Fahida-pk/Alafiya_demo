@@ -217,23 +217,6 @@ if (validItems.length === 0) {
   return;
 }
 
-// ✅ Batch + Expiry validation
-for (const item of validItems) {
-
-  if (!item.batch || item.batch.trim() === "") {
-    alert("Please select batch ❗");
-    return;
-  }
-
-  if (!item.expiry || item.expiry.trim() === "") {
-    alert("Please select expiry ❗");
-    return;
-  }
-}
-    if (validItems.length === 0) {
-      alert("Please enter at least one item ❗");
-      return;
-    }
 
     let method = id ? "PUT" : "POST";
 

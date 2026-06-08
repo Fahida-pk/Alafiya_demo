@@ -454,7 +454,17 @@
 .save-order-fixed{
   margin-top: 15px;
 }
+.dropdown-text{
+  flex: 1;
+  min-width: 0;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
 
+.grn-arrow{
+  flex-shrink: 0;
+}
 @media (min-width: 769px){
   .save-order-fixed{
     position: fixed;
@@ -462,6 +472,17 @@
     left: 280px;
     z-index: 99999;
   }
+  .dropdown-text{
+  flex: 1;
+  min-width: 0;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+.grn-arrow{
+  flex-shrink: 0;
+}
 }
 @media(max-width:768px){
  .order-ui-save-btn{

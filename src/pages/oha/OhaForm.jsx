@@ -231,19 +231,7 @@ if (invalidRow) {
   setLoading(false);
   return;
 }
-// ✅ 3. Batch & Expiry validation
-const batchMissing = details.find(
-  d =>
-    d.item_id &&
-    Number(d.picking_qty) > 0 &&
-    (!d.batch || !d.expiry)
-);
 
-if (batchMissing) {
-  alert("Please select Batch and Expiry ❗");
-  setLoading(false);
-  return;
-}
 // ✅ 3. Final items
 const validItems = details.filter(
   d => d.item_id && Number(d.picking_qty) > 0

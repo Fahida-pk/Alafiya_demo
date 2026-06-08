@@ -12,17 +12,19 @@ import "./FloatingTrip.css";
 const API = "https://zyntaweb.com/demoalafiya/api/floating_trips.php";
 const DRIVER_API = "https://zyntaweb.com/demoalafiya/api/drivers.php";
 const VEHICLE_API = "https://zyntaweb.com/demoalafiya/api/vehicles.php";
+const COMPANY_API = "https://zyntaweb.com/demoalafiya/api/company.php";
+
 const FloatingTrips = () => {
   const [trips, setTrips] = useState([]);
   const [drivers, setDrivers] = useState([]);
   const [vehicles, setVehicles] = useState([]);
-
   const [search, setSearch] = useState("");
   const [showModal, setShowModal] = useState(false);
   const [isEdit, setIsEdit] = useState(false);
 // DRIVER
 const [driverSearch, setDriverSearch] = useState("");
 const [showDriverDropdown, setShowDriverDropdown] = useState(false);
+const [mileageRate, setMileageRate] = useState(3.5);
 
 // VEHICLE
 const [vehicleSearch, setVehicleSearch] = useState("");
@@ -57,11 +59,20 @@ const recordsPerPage = 7;
   /* LOAD DATA */
   const loadAll = async () => {
     try {
-      const [t, d, v] = await Promise.all([
-        fetch(API).then(r => r.json()),
-        fetch(DRIVER_API).then(r => r.json()),
-        fetch(VEHICLE_API).then(r => r.json())
-      ]);
+    const [t, d, v, c] = await Promise.all([
+  fetch(API).then(r => r.json()),
+  fetch(DRIVER_API).then(r => r.json()),
+  fetch(VEHICLE_API).then(r => r.json()),
+  fetch(COMPANY_API).then(r => r.json())
+]);
+
+setTrips(t);
+setDrivers(d);
+setVehicles(v);
+
+if (c?.mileage_allowance) {
+  setMileageRate(parseFloat(c.mileage_allowance));
+}
       setTrips(t);
       setDrivers(d);
       setVehicles(v);
@@ -161,7 +172,6 @@ const endKm = parseFloat(form.end_km) || 0;
 const totalDistance = endKm > startKm ? (endKm - startKm).toFixed(2) : 0;
 
 // Example mileage rate (change if needed)
-const mileageRate = 3.5;
 
 const mileageAllowance = Math.round(
   parseFloat(totalDistance) * mileageRate
@@ -527,7 +537,9 @@ const totalTime = getTimeDifference(form.start_time, form.end_time);
 
 <label>
   Mileage Allowance 
-  <span className="formula-hint">(Distance × 3.5)</span>
+ <span className="formula-hint">
+  (Distance × {mileageRate})
+</span>
 </label>
 <input
   type="text"
