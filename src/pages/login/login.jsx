@@ -28,30 +28,40 @@ const Login = () => {
         }
       );
 
-      const data = await res.json();
+    const data = await res.json();
 console.log(data);
-      if (data.status === "success") {
 
-        sessionStorage.setItem("token", "loggedin");
-        sessionStorage.setItem("user_id", data.user_id);
-        sessionStorage.setItem("role", data.role);
+if (data.status === "success") {
 
-        // Save Login Time
-        sessionStorage.setItem(
-          "loginTime",
-          Date.now().toString()
-        );
+  console.log("Login Success");
 
-        navigate("/dashboard");
+  sessionStorage.setItem("token", "loggedin");
+  sessionStorage.setItem("user_id", data.user_id);
+  sessionStorage.setItem("role", data.role);
 
-      } else {
-        setError("Invalid username or password");
-      }
+  console.log(
+    "Saved User ID:",
+    sessionStorage.getItem("user_id")
+  );
 
-    } catch (error) {
-      setError("Server error. Try again");
-    }
-  };
+  sessionStorage.setItem(
+    "loginTime",
+    Date.now().toString()
+  );
+
+  alert("Login Success");
+
+  navigate("/dashboard");
+
+} else {
+  setError("Invalid username or password");
+}
+
+} catch (error) {
+  console.log(error);
+  setError("Server error. Try again");
+}
+};
 
   return (
     <div className="login-wrapper">
