@@ -27,7 +27,7 @@ const [fixedCount, setFixedCount] = useState(0);
 const [settlementTotal, setSettlementTotal] = useState(0);
 
   useEffect(() => {
-    const role = localStorage.getItem("role");
+const role = sessionStorage.getItem("role");
     if (!role) {
       navigate("/");
       return;
