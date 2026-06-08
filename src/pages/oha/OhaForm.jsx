@@ -336,105 +336,124 @@ return (
         </button>
       </div>
 
-      <div className="oha-ui-grid">
+     <div className="oha-ui-grid">
 
-        <input value={ohaNumber} readOnly />
-
-        <input
-          type="date"
-          value={header.date}
-          onChange={e => setHeader({ ...header, date: e.target.value })}
-        />
-
-       {/* CUSTOMER */}
-{/* CUSTOMER */}
-<div className="custom-dropdown">
-  <div
-    className="dropdown-display"
-    onClick={() => {
-
-      const customerLocked = details.some(
-        d => d.batch
-      );
-
-      if (customerLocked) {
-        alert("Customer cannot be changed after batch selection ❗");
-        return;
-      }
-
-      setActiveDropdown("customer");
-    }}
-  >
-    {header.customer_id
-      ? customers.find(c => c.id == header.customer_id)?.name
-      : "Select Customer"}
-
-    <span className="arrow">▼</span>
+  {/* OHA NO */}
+  <div className="form-group">
+    <label>OHA No</label>
+    <input value={ohaNumber} readOnly />
   </div>
 
-  {activeDropdown === "customer" && (
-    <div className="dropdown-box">
+  {/* DATE */}
+  <div className="form-group">
+    <label>Date *</label>
+    <input
+      type="date"
+      value={header.date}
+      onChange={e =>
+        setHeader({ ...header, date: e.target.value })
+      }
+    />
+  </div>
 
-      <input
-        placeholder="Search..."
-        value={searchText}
-        onChange={e => setSearchText(e.target.value)}
-      />
+  {/* CUSTOMER */}
+  <div className="form-group">
+    <label>Customer *</label>
 
-      <div className="dropdown-options">
+    <div className="custom-dropdown">
+      <div
+        className="dropdown-display"
+        onClick={() => {
 
-        {filterData(customers).length > 0 ? (
+          const customerLocked = details.some(
+            d => d.batch
+          );
 
-          filterData(customers).map(c => (
-            <div
-              key={c.id}
-              className="dropdown-option"
-              onClick={() => {
+          if (customerLocked) {
+            alert("Customer cannot be changed after batch selection ❗");
+            return;
+          }
 
-                const updatedHeader = {
-                  ...header,
-                  customer_id: c.id
-                };
+          setActiveDropdown("customer");
+        }}
+      >
+        {header.customer_id
+          ? customers.find(c => c.id == header.customer_id)?.name
+          : "Select Customer"}
 
-                setHeader(updatedHeader);
+        <span className="arrow">▼</span>
+      </div>
 
-                setActiveDropdown(null);
-                setSearchText("");
+      {activeDropdown === "customer" && (
+        <div className="dropdown-box">
 
-                // Batch auto load
-                details.forEach((d, index) => {
-                  if (d.picking_qty && d.item_id) {
-                    fetchBatch(index, d.picking_qty);
-                  }
-                });
+          <input
+            placeholder="Search..."
+            value={searchText}
+            onChange={e => setSearchText(e.target.value)}
+          />
 
-              }}
-            >
-              {c.name}
-            </div>
-          ))
+          <div className="dropdown-options">
 
-        ) : (
+            {filterData(customers).length > 0 ? (
 
-          <div className="no-results">
-            <MdSearchOff size={18} />
-            No customer found
+              filterData(customers).map(c => (
+                <div
+                  key={c.id}
+                  className="dropdown-option"
+                  onClick={() => {
+
+                    const updatedHeader = {
+                      ...header,
+                      customer_id: c.id
+                    };
+
+                    setHeader(updatedHeader);
+
+                    setActiveDropdown(null);
+                    setSearchText("");
+
+                    details.forEach((d, index) => {
+                      if (d.picking_qty && d.item_id) {
+                        fetchBatch(index, d.picking_qty);
+                      }
+                    });
+
+                  }}
+                >
+                  {c.name}
+                </div>
+              ))
+
+            ) : (
+
+              <div className="no-results">
+                <MdSearchOff size={18} />
+                No customer found
+              </div>
+
+            )}
+
           </div>
-
-        )}
-
-      </div>
+        </div>
+      )}
     </div>
-  )}
+  </div>
+
+  {/* REMARKS */}
+  <div className="form-group">
+    <label>Remarks</label>
+    <input
+      placeholder="Remarks"
+      value={header.remarks}
+      onChange={e =>
+        setHeader({ ...header, remarks: e.target.value })
+      }
+    />
+  </div>
+
 </div>
-        <input
-          placeholder="Remarks"
-          value={header.remarks}
-          onChange={e => setHeader({ ...header, remarks: e.target.value })}
-        />
-      </div>
-    </div>
-
+</div>
     {/* DETAILS */}
     <div className="oha-ui-card">
 

@@ -254,7 +254,17 @@
 
   z-index: 10;
 }
+.form-group{
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
 
+.form-group label{
+  font-size: 14px;
+  font-weight: 600;
+  color: #444;
+}
 .oha-ui-table td{
   padding: 12px;
 
@@ -771,6 +781,27 @@ background: linear-gradient(
 
     left: auto;
     bottom: auto;
+  }
+
+}
+@media(max-width:768px){
+
+  .oha-ui-card{
+    padding: 12px;
+    margin-bottom: 10px;
+  }
+
+  .form-group{
+    gap: 4px;
+    margin-bottom: 8px;
+  }
+
+  .form-group label{
+    margin-bottom: 2px;
+  }
+
+  .oha-ui-grid{
+    gap: 10px;
   }
 
 }

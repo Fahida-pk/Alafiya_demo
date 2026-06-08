@@ -253,7 +253,7 @@
 /* ITEM */
 .order-ui-table th:nth-child(1),
 .order-ui-table td:nth-child(1){
-  width: 220px;
+  width: 250px;
 }
 
 /* QTY */
@@ -465,6 +465,7 @@
 .grn-arrow{
   flex-shrink: 0;
 }
+
 @media (min-width: 769px){
   .save-order-fixed{
     position: fixed;
