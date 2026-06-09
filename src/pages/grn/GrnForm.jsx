@@ -235,27 +235,8 @@ if (!header.date) {
   return;
 }
 
-// ✅ Customer validation
-if (!header.customer_id) {
-  alert("Please select customer ❗");
-  return;
-}
 
 // ✅ Item validation
-if (validItems.length === 0) {
-  alert("Please enter at least one item ❗");
-  return;
-}
-
-
-    if (validItems.length === 0) {
-      alert("Please add at least one item ❗");
-      return;
-    }
- if (!header.date) {
-      alert("Please select date ❗");
-      return;
-    }
 
     if (!header.supplier_id) {
       alert("Please select supplier ❗");
