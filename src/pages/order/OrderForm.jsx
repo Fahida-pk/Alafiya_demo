@@ -1109,14 +1109,14 @@ updated[selectedRowIndex].expiry =
   </div>
 
   {/* ✅ CLOSE BUTTON */}
-  <div style={{ textAlign: "right", marginTop: "10px" }}>
-    <button
-      onClick={() => setShowBatchModal(false)}
-      className="modal-close-btn"
-    >
-      Close
-    </button>
-  </div>
+<div style={{ textAlign: "right", marginTop: "10px" }}>
+  <button
+    onClick={() => setShowBatchModal(false)}
+    className="modal-close-btn"
+  >
+    Close
+  </button>
+</div>
 </div>
 
 </div>

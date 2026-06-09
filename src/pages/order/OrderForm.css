@@ -206,7 +206,35 @@
 }
 
 /* ================= OPTIONS ================= */
+.modal-close-btn{
+  background: linear-gradient(
+    180deg,
+    #8e63e0,
+    #654fc4
+  );
 
+  color: #fff;
+  border: none;
+
+  min-width: 100px;
+  height: 40px;
+
+  padding: 0 20px;
+
+  border-radius: 8px;
+
+  font-size: 14px;
+  font-weight: 600;
+  float: right;
+
+  cursor: pointer;
+}
+.modal-close-btn:hover{
+  opacity: 0.9;
+  font-style: blanchedalmond;
+    color: #fff;
+
+}
 .dropdown-options{
   max-height: 220px;
   overflow-y: auto;
