@@ -206,47 +206,43 @@ const saveSupplier = async (e) => {
   }
 };
   // ================= SAVE =================
+// ================= SAVE =================
 const handleSave = async () => {
   if (loading) return;
 
   try {
     setLoading(true);
 
-   const validItems = details
-  .map(d => {
-    const qty = parseFloat(d.qty);
+    const validItems = details
+      .map(d => ({
+        item_id: Number(d.item_id),
+        qty: parseFloat(d.qty) || 0,
+        unit: (d.qty || "").replace(/[0-9.]/g, "").trim(),
+        batch: d.batch || "",
+        expiry: d.expiry || null,
+        location_id: d.location_id ? Number(d.location_id) : null,
+        remark: d.remark || ""
+      }))
+      .filter(d => d.item_id);
 
-    return {
-      item_id: Number(d.item_id),
-      qty: qty,
-      unit: d.qty.replace(/[0-9.]/g, "").trim(), // ✅ optional
-      batch: d.batch || "",
-      expiry: d.expiry || null,
-      location_id: Number(d.location_id),
-      remark: d.remark || ""
-    };
-  })
-  .filter(d => d.item_id && d.qty > 0);
+    // Date validation
+    if (!header.date) {
+      alert("Please select date ❗");
+      return;
+    }
 
-    console.log("VALID ITEMS:", validItems);
-// ✅ Date validation
-if (!header.date) {
-  alert("Please select date ❗");
-  return;
-}
-
-
-// ✅ Item validation
-
+    // Supplier validation
     if (!header.supplier_id) {
       alert("Please select supplier ❗");
       return;
     }
 
+    // At least one item
     if (validItems.length === 0) {
       alert("Please add at least one item ❗");
       return;
     }
+
     const method = id ? "PUT" : "POST";
 
     // ================= HEADER =================
@@ -259,30 +255,20 @@ if (!header.date) {
     const headerData = await headerRes.json();
     const grnId = id ? id : headerData.id;
 
-    console.log("GRN ID:", grnId);
-
     if (!grnId) {
       alert("Header failed ❌");
       return;
     }
 
     // ================= DETAILS =================
-    const detailsRes = await fetch(DETAILS_API, {
-      method: id ? "PUT" : "POST",   // 🔥 CRITICAL FIX
+    await fetch(DETAILS_API, {
+      method: id ? "PUT" : "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
         grn_id: grnId,
         items: validItems
       })
     });
-
-    const detailsData = await detailsRes.json();
-    console.log("DETAILS:", detailsData);
-
-    if (detailsData.status !== "success") {
-      alert("Failed to save items ❌");
-      return;
-    }
 
     alert(id ? "GRN Updated ✅" : "GRN Saved ✅");
 
@@ -776,12 +762,13 @@ const filteredLocations = locations.filter(l =>
 </div> {/* grn-ui-card close */}
 
 <div className="save-order-fixed">
-  <button
-    className="order-ui-save-btn"
-    onClick={handleSave}
-  >
-    {id ? "Update " : "Save "}
-  </button>
+<button
+  className="order-ui-save-btn"
+  onClick={handleSave}
+  disabled={loading}
+>
+  {loading ? "Saving..." : (id ? "Update" : "Save")}
+</button>
 </div>
 
 </div> {/* grn-ui-container close */}
