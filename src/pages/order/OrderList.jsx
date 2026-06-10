@@ -8,8 +8,8 @@ import { FaPlus } from "react-icons/fa";
 
 import "./OrderList.css";
 
-const API = "https://zyntaweb.com/demoalafiya/api/order_header.php";
-const CUSTOMER_API = "https://zyntaweb.com/demoalafiya/api/customer.php";
+const API = "https://zyntaweb.com/alafiya/api/order_header.php";
+const CUSTOMER_API = "https://zyntaweb.com/alafiya/api/customer.php";
 
 const OrderList = () => {
   const [orders, setOrders] = useState([]);

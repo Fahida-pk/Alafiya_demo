@@ -6,7 +6,7 @@ import PhoneInput from "react-phone-input-2";
 import "react-phone-input-2/lib/style.css";
 import "./Drivers.css";
 
-const API = "https://zyntaweb.com/demoalafiya/api/drivers.php";
+const API = "https://zyntaweb.com/alafiya/api/drivers.php";
 const Drivers = () => {
   const [drivers, setDrivers] = useState([]);
   const [search, setSearch] = useState("");

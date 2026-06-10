@@ -5,10 +5,10 @@ import { BsBank2 } from "react-icons/bs";
 import { MdReceiptLong } from "react-icons/md";
 
 const API =
-  "https://zyntaweb.com/demoalafiya/api/bankdepositreport.php";
+  "https://zyntaweb.com/alafiya/api/bankdepositreport.php";
 
 const COMPANY_API =
-  "https://zyntaweb.com/demoalafiya/api/company.php";
+  "https://zyntaweb.com/alafiya/api/company.php";
 
 const BankDepositReport = () => {
 

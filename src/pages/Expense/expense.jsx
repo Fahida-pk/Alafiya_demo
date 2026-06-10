@@ -7,7 +7,7 @@ import { FaTrash, FaPlus, FaSearch } from "react-icons/fa";
 import "./Expense.css";
 
 const API =
-  "https://zyntaweb.com/demoalafiya/api/expenseentry.php";
+  "https://zyntaweb.com/alafiya/api/expenseentry.php";
 
 const Expense = () => {
 

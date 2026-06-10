@@ -3,11 +3,11 @@ import TopNavbar from "../dashboard/TopNavbar";
 import "./OHAReport.css";
 import { MdKeyboardReturn } from "react-icons/md";
 
-const API = "https://zyntaweb.com/demoalafiya/api/oha_report.php";
-const CUSTOMER_API = "https://zyntaweb.com/demoalafiya/api/customer.php";
-const ITEM_API = "https://zyntaweb.com/demoalafiya/api/items.php";
-const REASON_API = "https://zyntaweb.com/demoalafiya/api/return_reason_codes.php";
-const COMPANY_API = "https://zyntaweb.com/demoalafiya/api/company.php";
+const API = "https://zyntaweb.com/alafiya/api/oha_report.php";
+const CUSTOMER_API = "https://zyntaweb.com/alafiya/api/customer.php";
+const ITEM_API = "https://zyntaweb.com/alafiya/api/items.php";
+const REASON_API = "https://zyntaweb.com/alafiya/api/return_reason_codes.php";
+const COMPANY_API = "https://zyntaweb.com/alafiya/api/company.php";
 
 const OHAReport = () => {
 

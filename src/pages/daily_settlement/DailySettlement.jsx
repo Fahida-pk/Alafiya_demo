@@ -4,7 +4,7 @@ import { FaTrash, FaPlus, FaSearch } from "react-icons/fa";
 import { HiOutlineClipboardDocumentList } from "react-icons/hi2";
 import "./DailySettlement.css";
 
-const API = "https://zyntaweb.com/demoalafiya/api/daily_settlement.php";
+const API = "https://zyntaweb.com/alafiya/api/daily_settlement.php";
 
 const DailySettlement = () => {
 

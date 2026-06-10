@@ -3,8 +3,8 @@ import TopNavbar from "../dashboard/TopNavbar";
 import { FaTrash, FaPlus, FaEdit } from "react-icons/fa";
 import "./item.css";
 
-const API = "https://zyntaweb.com/demoalafiya/api/items.php";
-const LOCATION_API = "https://zyntaweb.com/demoalafiya/api/locations.php";
+const API = "https://zyntaweb.com/alafiya/api/items.php";
+const LOCATION_API = "https://zyntaweb.com/alafiya/api/locations.php";
 
 const Items = () => {
   const [items, setItems] = useState([]);

@@ -8,11 +8,11 @@ import PhoneInput from "react-phone-input-2";
 import "react-phone-input-2/lib/style.css";
 import "./GrnForm.css";
 
-const GRN_API = "https://zyntaweb.com/demoalafiya/api/grn_header.php";
-const DETAILS_API = "https://zyntaweb.com/demoalafiya/api/grn_details.php";
-const SUPPLIER_API = "https://zyntaweb.com/demoalafiya/api/suppliers.php";
-const ITEM_API = "https://zyntaweb.com/demoalafiya/api/items.php";
-const LOCATION_API = "https://zyntaweb.com/demoalafiya/api/locations.php";
+const GRN_API = "https://zyntaweb.com/alafiya/api/grn_header.php";
+const DETAILS_API = "https://zyntaweb.com/alafiya/api/grn_details.php";
+const SUPPLIER_API = "https://zyntaweb.com/alafiya/api/suppliers.php";
+const ITEM_API = "https://zyntaweb.com/alafiya/api/items.php";
+const LOCATION_API = "https://zyntaweb.com/alafiya/api/locations.php";
 
 const GrnForm = () => {
   const { id } = useParams();

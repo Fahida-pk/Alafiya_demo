@@ -9,12 +9,12 @@ import {
   FaMapMarkedAlt,
   FaSearch
 } from "react-icons/fa";
-const VEHICLE_API = "https://zyntaweb.com/demoalafiya/api/vehicles.php";
-const DRIVER_API = "https://zyntaweb.com/demoalafiya/api/drivers.php";
-const TRIP_API   = "https://zyntaweb.com/demoalafiya/api/trip.php";
-const FLOATING_API = "https://zyntaweb.com/demoalafiya/api/floating_trips.php";
-const FIXED_API    = "https://zyntaweb.com/demoalafiya/api/fixed_trips.php";
-const SETTLEMENT_API = "https://zyntaweb.com/demoalafiya/api/payment.php";
+const VEHICLE_API = "https://zyntaweb.com/alafiya/api/vehicles.php";
+const DRIVER_API = "https://zyntaweb.com/alafiya/api/drivers.php";
+const TRIP_API   = "https://zyntaweb.com/alafiya/api/trip.php";
+const FLOATING_API = "https://zyntaweb.com/alafiya/api/floating_trips.php";
+const FIXED_API    = "https://zyntaweb.com/alafiya/api/fixed_trips.php";
+const SETTLEMENT_API = "https://zyntaweb.com/alafiya/api/payment.php";
 
 const Dashboard = () => {
   const navigate = useNavigate();

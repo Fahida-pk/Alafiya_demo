@@ -2,9 +2,9 @@ import { useState, useEffect } from "react";
 import TopNavbar from "../dashboard/TopNavbar";
 import "./DailyPicking.css";
 
-const API = "https://zyntaweb.com/demoalafiya/api/daily_picking.php";
-const UPDATE_API = "https://zyntaweb.com/demoalafiya/api/order_details.php";
-const COMPANY_API = "https://zyntaweb.com/demoalafiya/api/company.php";
+const API = "https://zyntaweb.com/alafiya/api/daily_picking.php";
+const UPDATE_API = "https://zyntaweb.com/alafiya/api/order_details.php";
+const COMPANY_API = "https://zyntaweb.com/alafiya/api/company.php";
 
 const DailyPicking = () => {
 

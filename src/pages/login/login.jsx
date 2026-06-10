@@ -15,7 +15,7 @@ const Login = () => {
 
   try {
     const res = await fetch(
-      "https://zyntaweb.com/demoalafiya/api/login.php",
+      "https://zyntaweb.com/alafiya/api/login.php",
       {
         method: "POST",
         headers: {

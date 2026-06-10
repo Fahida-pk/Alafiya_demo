@@ -5,7 +5,7 @@ import PhoneInput from "react-phone-input-2";
 import "react-phone-input-2/lib/style.css";
 import "./Supplier.css";
 
-const API = "https://zyntaweb.com/demoalafiya/api/suppliers.php";
+const API = "https://zyntaweb.com/alafiya/api/suppliers.php";
 
 const Suppliers = () => {
   const [suppliers, setSuppliers] = useState([]);

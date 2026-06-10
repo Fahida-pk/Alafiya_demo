@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import TopNavbar from "../dashboard/TopNavbar";
 import { FaTrash, FaPlus, FaEdit } from "react-icons/fa";
 import "./Brands.css";
-const API = "https://zyntaweb.com/demoalafiya/api/brands.php";
+const API = "https://zyntaweb.com/alafiya/api/brands.php";
 
 const Brands = () => {
   const [brands, setBrands] = useState([]);

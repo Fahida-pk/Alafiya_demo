@@ -4,7 +4,7 @@ import { FaEdit, FaTrash, FaSearch, FaPlus } from "react-icons/fa";
 
 import "./Vehicles.css";
 
-const API = "https://zyntaweb.com/demoalafiya/api/vehicles.php";
+const API = "https://zyntaweb.com/alafiya/api/vehicles.php";
 
 const Vehicles = () => {
   const [vehicles, setVehicles] = useState([]);

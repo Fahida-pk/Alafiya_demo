@@ -7,12 +7,12 @@ import { FaUndo } from "react-icons/fa";
 import { MdAssignmentReturn } from "react-icons/md";
 import "./OhaForm.css";
 
-const OHA_API = "https://zyntaweb.com/demoalafiya/api/oha_header.php";
-const DETAILS_API = "https://zyntaweb.com/demoalafiya/api/oha_details.php";
-const CUSTOMER_API = "https://zyntaweb.com/demoalafiya/api/customer.php";
-const ITEM_API = "https://zyntaweb.com/demoalafiya/api/items.php";
-const LOCATION_API = "https://zyntaweb.com/demoalafiya/api/locations.php";
-const REASON_API = "https://zyntaweb.com/demoalafiya/api/return_reason_codes.php";
+const OHA_API = "https://zyntaweb.com/alafiya/api/oha_header.php";
+const DETAILS_API = "https://zyntaweb.com/alafiya/api/oha_details.php";
+const CUSTOMER_API = "https://zyntaweb.com/alafiya/api/customer.php";
+const ITEM_API = "https://zyntaweb.com/alafiya/api/items.php";
+const LOCATION_API = "https://zyntaweb.com/alafiya/api/locations.php";
+const REASON_API = "https://zyntaweb.com/alafiya/api/return_reason_codes.php";
 
 const OhaForm = () => {
   const { id } = useParams();
@@ -140,7 +140,7 @@ const fetchBatch = async (i, qty) => {
   if (!details[i].item_id) return;
 
 const res = await fetch(
-  `https://zyntaweb.com/demoalafiya/api/order_batches.php?item_id=${details[i].item_id}&customer_id=${header.customer_id}&date=${header.date}`
+  `https://zyntaweb.com/alafiya/api/order_batches.php?item_id=${details[i].item_id}&customer_id=${header.customer_id}&date=${header.date}`
 );
  const text = await res.text();
 
@@ -580,7 +580,7 @@ const value = details[i].picking_qty;
   }
 
 const res = await fetch(
-  `https://zyntaweb.com/demoalafiya/api/order_batches.php?item_id=${details[i].item_id}&customer_id=${header.customer_id}&date=${header.date}`
+  `https://zyntaweb.com/alafiya/api/order_batches.php?item_id=${details[i].item_id}&customer_id=${header.customer_id}&date=${header.date}`
 );
 
 const text = await res.text();
@@ -922,7 +922,7 @@ const value = details[i].picking_qty;
   }
 
  const res = await fetch(
-  `https://zyntaweb.com/demoalafiya/api/order_batches.php?item_id=${details[i].item_id}&customer_id=${header.customer_id}&date=${header.date}`
+  `https://zyntaweb.com/alafiya/api/order_batches.php?item_id=${details[i].item_id}&customer_id=${header.customer_id}&date=${header.date}`
 );
   const text = await res.text();
 
