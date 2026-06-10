@@ -213,18 +213,6 @@ const handleSave = async () => {
   try {
     setLoading(true);
 
-    const validItems = details
-      .map(d => ({
-        item_id: Number(d.item_id),
-        qty: parseFloat(d.qty) || 0,
-        unit: (d.qty || "").replace(/[0-9.]/g, "").trim(),
-        batch: d.batch || "",
-        expiry: d.expiry || null,
-        location_id: d.location_id ? Number(d.location_id) : null,
-        remark: d.remark || ""
-      }))
-      .filter(d => d.item_id);
-
     // Date validation
     if (!header.date) {
       alert("Please select date ❗");
@@ -237,6 +225,28 @@ const handleSave = async () => {
       return;
     }
 
+    // Quantity validation
+    const invalidQty = details.some(
+      d => d.item_id && (!d.qty || parseFloat(d.qty) <= 0)
+    );
+
+    if (invalidQty) {
+      alert("Please enter quantity for all selected items ❗");
+      return;
+    }
+
+    const validItems = details
+      .map(d => ({
+        item_id: Number(d.item_id),
+        qty: parseFloat(d.qty) || 0,
+        unit: (d.qty || "").replace(/[0-9.]/g, "").trim(),
+        batch: d.batch || "",
+        expiry: d.expiry || null,
+        location_id: d.location_id ? Number(d.location_id) : null,
+        remark: d.remark || ""
+      }))
+      .filter(d => d.item_id);
+
     // At least one item
     if (validItems.length === 0) {
       alert("Please add at least one item ❗");
@@ -248,8 +258,13 @@ const handleSave = async () => {
     // ================= HEADER =================
     const headerRes = await fetch(GRN_API, {
       method,
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ ...header, id })
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({
+        ...header,
+        id
+      })
     });
 
     const headerData = await headerRes.json();
@@ -261,14 +276,23 @@ const handleSave = async () => {
     }
 
     // ================= DETAILS =================
-    await fetch(DETAILS_API, {
+    const detailRes = await fetch(DETAILS_API, {
       method: id ? "PUT" : "POST",
-      headers: { "Content-Type": "application/json" },
+      headers: {
+        "Content-Type": "application/json"
+      },
       body: JSON.stringify({
         grn_id: grnId,
         items: validItems
       })
     });
+
+    const detailData = await detailRes.json();
+
+    if (detailData.status === "error") {
+      alert(detailData.message || "Save failed ❌");
+      return;
+    }
 
     alert(id ? "GRN Updated ✅" : "GRN Saved ✅");
 
@@ -529,12 +553,14 @@ const filteredLocations = locations.filter(l =>
 </div>
                   </td>
 
-                  <td>
-                    <input
-                      value={d.qty}
-                      onChange={e => handleChange(i, "qty", e.target.value)}
-                    />
-                  </td>
+        <td>
+  <input
+    type="number"
+    min="1"
+    value={d.qty}
+    onChange={e => handleChange(i, "qty", e.target.value)}
+  />
+</td>
 
                   <td>
                     <input
@@ -667,13 +693,15 @@ const filteredLocations = locations.filter(l =>
 </div>
       </div>
 
-      <div className="grn-field">
-        <label>Qty</label>
-        <input
-          value={d.qty}
-          onChange={e => handleChange(i, "qty", e.target.value)}
-        />
-      </div>
+    <div className="grn-field">
+  <label>Qty</label>
+  <input
+    type="number"
+    min="1"
+    value={d.qty}
+    onChange={e => handleChange(i, "qty", e.target.value)}
+  />
+</div>
 
       <div className="grn-field">
         <label>Batch</label>
