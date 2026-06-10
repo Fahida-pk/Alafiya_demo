@@ -358,9 +358,12 @@
 
   min-width: 100% !important;
 
-  table-layout: auto !important;
-}
+  table-layout: fixed !important;
 
+  border-collapse: collapse !important;
+
+  border: 1px solid #000 !important;
+}
 /* 🔥 SMALL FONT */
 
 .dp-pro-table th,
@@ -370,7 +373,13 @@
 
   padding: 2px !important;
 
-  white-space: nowrap !important;
+  white-space: normal !important;
+
+  word-wrap: break-word !important;
+
+  overflow-wrap: break-word !important;
+
+  border: 1px solid #000 !important;
 }
 
 /* 🔥 COLUMN WIDTHS */
@@ -382,17 +391,16 @@
 
 .dp-pro-table th:nth-child(2),
 .dp-pro-table td:nth-child(2){
-  width: 11% !important;
+  width: 18% !important;
 }
-
 .dp-pro-table th:nth-child(3),
 .dp-pro-table td:nth-child(3){
-  width: 10% !important;
+  width: 12% !important;
 }
 
 .dp-pro-table th:nth-child(4),
 .dp-pro-table td:nth-child(4){
-  width: 10% !important;
+  width: 6% !important;
 }
 
 .dp-pro-table th:nth-child(5),
@@ -422,9 +430,8 @@
 
 .dp-pro-table th:nth-child(10),
 .dp-pro-table td:nth-child(10){
-  width: 12% !important;
+  width: 15% !important;
 }
-
 
   .dp-pro-table thead{
     display: table-header-group !important;
@@ -462,4 +469,19 @@
   .dp-pro-table select{
     display: none !important;
   }
+}
+@media print{
+
+  .dp-pro-table{
+    width: 99% !important;
+    margin: 0 auto !important;
+    border: 1px solid #000 !important;
+    border-collapse: collapse !important;
+  }
+
+  .dp-pro-table th,
+  .dp-pro-table td{
+    border: 1px solid #000 !important;
+  }
+
 }

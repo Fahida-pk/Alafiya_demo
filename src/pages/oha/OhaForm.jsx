@@ -236,7 +236,28 @@ if (invalidRow) {
 const validItems = details.filter(
   d => d.item_id && Number(d.picking_qty) > 0
 );
+// ✅ Daily Picking Validation
+for (const item of validItems) {
 
+  const res = await fetch(
+    `https://zyntaweb.com/alafiya/api/order_batches.php?item_id=${item.item_id}&customer_id=${header.customer_id}&date=${header.date}`
+  );
+
+  const data = await res.json();
+
+  const batches = Array.isArray(data)
+    ? data
+    : data.data || [];
+
+  if (batches.length === 0) {
+
+    alert(`No Daily Picking Found For ${header.date} ❗`);
+
+    setLoading(false);
+
+    return;
+  }
+}
     const method = id ? "PUT" : "POST";
 
     // ================= HEADER =================
@@ -1088,14 +1109,14 @@ batches = batches.filter(
       {/* ACTION */}
       <div className="oha-field">
         <label>status</label>
-        <select
-          value={d.status}
-          onChange={e => handleChange(i, "status", e.target.value)}
-        >
-          <option value="">Select</option>
-          <option value="TO_STOCK">To Stock</option>
-          <option value="NOT_TO_STOCK">Not To Stock</option>
-        </select>
+     <select
+  value={d.action || ""}
+  onChange={e => handleChange(i, "action", e.target.value)}
+>
+  <option value="">Select</option>
+  <option value="TO_STOCK">To Stock</option>
+  <option value="NOT_TO_STOCK">Not To Stock</option>
+</select>
       </div>
 
       {/* REMARK */}

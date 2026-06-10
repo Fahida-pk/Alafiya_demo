@@ -555,6 +555,7 @@ const filteredLocations = locations.filter(l =>
 
         <td>
   <input
+  
     type="number"
     min="1"
     value={d.qty}

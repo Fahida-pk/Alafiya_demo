@@ -197,33 +197,47 @@ const handleSave = async () => {
   try {
     setLoading(true); // 🔒 lock button
 
+    // ✅ Date validation
+    if (!header.date) {
+      alert("Please select date ❗");
+      return;
+    }
+
+    // ✅ Customer validation
+    if (!header.customer_id) {
+      alert("Please select customer ❗");
+      return;
+    }
+
+    // ✅ Quantity Mandatory Validation
+    for (const row of details) {
+
+      if (row.item_id && (!row.qty || Number(row.qty) <= 0)) {
+        alert("Quantity is mandatory ❗");
+        return;
+      }
+
+    }
+
     // 🔥 FILTER ONLY VALID ITEMS
-    const validItems = details.filter(d => d.item_id && d.qty);
-// ✅ Date validation
-if (!header.date) {
-  alert("Please select date ❗");
-  return;
-}
+    const validItems = details.filter(
+      d => d.item_id && d.qty
+    );
 
-// ✅ Customer validation
-if (!header.customer_id) {
-  alert("Please select customer ❗");
-  return;
-}
-
-// ✅ Item validation
-if (validItems.length === 0) {
-  alert("Please enter at least one item ❗");
-  return;
-}
-
+    // ✅ Item validation
+    if (validItems.length === 0) {
+      alert("Please enter at least one item ❗");
+      return;
+    }
 
     let method = id ? "PUT" : "POST";
 
     // ✅ SAVE HEADER
     const res = await fetch(ORDER_API, {
       method: method,
-      headers: { "Content-Type": "application/json" },
+      headers: {
+        "Content-Type": "application/json"
+      },
       body: JSON.stringify({
         ...header,
         id: id
@@ -249,6 +263,7 @@ if (validItems.length === 0) {
 
     // 🔥 AFTER SAVE RESET FORM
     if (!id) {
+
       setHeader({
         date: "",
         customer_id: "",
@@ -268,16 +283,23 @@ if (validItems.length === 0) {
       ]);
 
       // 🔥 LOAD NEXT ORDER NUMBER
-      const nextRes = await fetch(ORDER_API + "?type=next_number");
+      const nextRes = await fetch(
+        ORDER_API + "?type=next_number"
+      );
+
       const nextData = await nextRes.json();
       setOrderNumber(nextData.number);
     }
 
   } catch (err) {
+
     console.error(err);
     alert("Error ❌");
+
   } finally {
+
     setLoading(false); // 🔓 unlock button
+
   }
 };
   const filteredCustomers = customers.filter(c =>
