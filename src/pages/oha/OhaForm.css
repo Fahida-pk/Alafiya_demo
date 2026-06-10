@@ -670,7 +670,24 @@
 .oha-ui-mobile{
   display: none;
 }
+.oha-select-display1{
+  height: 50px !important;
+  min-height: 50px !important;
 
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  white-space: nowrap;
+  overflow: hidden;
+}
+
+.oha-select-display1 .item-short-name{
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  flex: 1;
+}
 @media(max-width:768px){
 
   .oha-modal{

@@ -12,7 +12,28 @@ html, body {
   background: #f4f7fb;
   min-height: 100vh;
 }
+.grn-select-display{
+  height: 50px;
+  padding: 0 12px;
 
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  background: #fff;
+
+  overflow: hidden;
+  white-space: nowrap;
+}
+
+.grn-short-name{
+  flex: 1;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
 /* CARD */
 .grn-card-container {
   background: #ffffff;

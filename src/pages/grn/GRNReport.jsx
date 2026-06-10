@@ -112,15 +112,22 @@ const [hasSearched, setHasSearched] = useState(false);
           {/* SUPPLIER */}
           <div className="grn-select-wrapper">
             <label>Supplier</label>
+<div
+  className="grn-select-display"
+  onClick={() => setShowSupplierDropdown(!showSupplierDropdown)}
+>
+  <span className="grn-short-name">
+    {supplierId
+      ? suppliers
+          .find(s => s.id == supplierId)
+          ?.name?.split(" ")
+          .slice(0, 3)
+          .join(" ")
+      : "Select supplier"}
+  </span>
 
-            <div className="grn-select-display"
-              onClick={() => setShowSupplierDropdown(!showSupplierDropdown)}>
-              {supplierId
-                ? suppliers.find(s => s.id == supplierId)?.name
-                : "Select supplier"}
-              <span>▼</span>
-            </div>
-
+  <span>▼</span>
+</div>
             {showSupplierDropdown && (
               <div className="grn-dropdown-box">
 
@@ -159,13 +166,22 @@ const [hasSearched, setHasSearched] = useState(false);
           <div className="grn-select-wrapper">
             <label>Item</label>
 
-            <div className="grn-select-display"
-              onClick={() => setShowItemDropdown(!showItemDropdown)}>
-              {itemId
-                ? items.find(i => i.id == itemId)?.name
-                : "Select item"}
-              <span>▼</span>
-            </div>
+           <div
+  className="grn-select-display"
+  onClick={() => setShowItemDropdown(!showItemDropdown)}
+>
+  <span className="grn-short-name">
+    {itemId
+      ? items
+          .find(i => i.id == itemId)
+          ?.name?.split(" ")
+          .slice(0, 3)
+          .join(" ")
+      : "Select item"}
+  </span>
+
+  <span>▼</span>
+</div>
 
             {showItemDropdown && (
               <div className="grn-dropdown-box">

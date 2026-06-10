@@ -427,10 +427,15 @@ setBatchList(filteredBatches);
         className="grn-dropdown-display"
         onClick={() => setActiveCustomer(!activeCustomer)}
       >
-        {header.customer_id
-          ? customers.find(c => c.id == header.customer_id)?.name
-          : "Select Customer"}
-
+      {
+  header.customer_id
+    ? customers
+        .find(c => c.id == header.customer_id)
+        ?.name?.split(" ")
+        .slice(0, 3)
+        .join(" ")
+    : ""
+}
         <span className="grn-arrow">▼</span>
       </div>
 
