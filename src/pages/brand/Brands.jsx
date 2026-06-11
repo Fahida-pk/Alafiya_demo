@@ -22,11 +22,16 @@ const brandsPerPage = 5;
   });
 
   // ================= LOAD =================
-  const loadBrands = async () => {
-    const res = await fetch(API);
-    const data = await res.json();
-    setBrands(Array.isArray(data) ? data : []);
-  };
+ const loadBrands = async () => {
+  const res = await fetch(API);
+  const data = await res.json();
+
+  if (Array.isArray(data)) {
+    setBrands(data.sort((a, b) => b.id - a.id));
+  } else {
+    setBrands([]);
+  }
+};
 
   useEffect(() => {
     loadBrands();
