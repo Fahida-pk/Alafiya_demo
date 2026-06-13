@@ -30,11 +30,16 @@ const customersPerPage = 5;
   });
 
   // LOAD
-  const loadCustomers = async () => {
-    const res = await fetch(API);
-    const data = await res.json();
-    setCustomers(Array.isArray(data) ? data : []);
-  };
+const loadCustomers = async () => {
+  const res = await fetch(API);
+  const data = await res.json();
+
+  if (Array.isArray(data)) {
+    setCustomers(data.reverse()); // latest customer first
+  } else {
+    setCustomers([]);
+  }
+};
 
   useEffect(() => {
     loadCustomers();

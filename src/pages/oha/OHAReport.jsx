@@ -128,13 +128,22 @@ const fetchReport = async () => {
           <div className="oha-select-wrapper">
             <label>Customer</label>
 
-            <div className="oha-select-display"
-              onClick={() => setShowCustomerDropdown(!showCustomerDropdown)}>
-              {customerId
-                ? customers.find(c => c.id == customerId)?.name
-                : "Select customer"}
-              <span>▼</span>
-            </div>
+           <div
+  className="oha-select-display"
+  onClick={() => setShowCustomerDropdown(!showCustomerDropdown)}
+>
+  <span className="item-short-name">
+    {customerId
+      ? customers
+          .find(c => c.id == customerId)
+          ?.name?.split(" ")
+          .slice(0, 3)
+          .join(" ")
+      : "Select customer"}
+  </span>
+
+  <span>▼</span>
+</div>
 
             {showCustomerDropdown && (
               <div className="oha-dropdown-box">
@@ -175,13 +184,22 @@ const fetchReport = async () => {
           <div className="oha-select-wrapper">
             <label>Item</label>
 
-            <div className="oha-select-display"
-              onClick={() => setShowItemDropdown(!showItemDropdown)}>
-              {itemId
-                ? items.find(i => i.id == itemId)?.name
-                : "Select item"}
-              <span>▼</span>
-            </div>
+            <div
+  className="oha-select-display"
+  onClick={() => setShowItemDropdown(!showItemDropdown)}
+>
+  <span className="item-short-name">
+    {itemId
+      ? items
+          .find(i => i.id == itemId)
+          ?.name?.split(" ")
+          .slice(0, 3)
+          .join(" ")
+      : "Select item"}
+  </span>
+
+  <span>▼</span>
+</div>
 
             {showItemDropdown && (
               <div className="oha-dropdown-box">
@@ -215,15 +233,22 @@ const fetchReport = async () => {
           {/* REASON */}
           <div className="oha-select-wrapper">
             <label>Reason</label>
+<div
+  className="oha-select-display"
+  onClick={() => setShowReasonDropdown(!showReasonDropdown)}
+>
+  <span className="item-short-name">
+    {reasonId
+      ? reasons
+          .find(r => r.id == reasonId)
+          ?.description?.split(" ")
+          .slice(0, 3)
+          .join(" ")
+      : "Select reason"}
+  </span>
 
-            <div className="oha-select-display"
-              onClick={() => setShowReasonDropdown(!showReasonDropdown)}>
-              {reasonId
-                ? reasons.find(r => r.id == reasonId)?.description
-                : "Select reason"}
-              <span>▼</span>
-            </div>
-
+  <span>▼</span>
+</div>
             {showReasonDropdown && (
               <div className="oha-dropdown-box">
                 <div className="oha-search-box">

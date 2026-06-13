@@ -93,14 +93,22 @@ const CurrentStockReport = () => {
           {/* ITEM */}
           <div className="oha-select-wrapper">
             <label>Item</label>
+<div
+  className="oha-select-display"
+  onClick={() => setShowItemDropdown(!showItemDropdown)}
+>
+  <span className="item-short-name">
+    {itemId
+      ? items
+          .find(i => i.id == itemId)
+          ?.name?.split(" ")
+          .slice(0, 3)
+          .join(" ")
+      : "Select item"}
+  </span>
 
-            <div className="oha-select-display"
-              onClick={() => setShowItemDropdown(!showItemDropdown)}>
-              {itemId
-                ? items.find(i => i.id == itemId)?.name
-                : "Select item"}
-              <span>▼</span>
-            </div>
+  <span>▼</span>
+</div>
 
             {showItemDropdown && (
               <div className="oha-dropdown-box">

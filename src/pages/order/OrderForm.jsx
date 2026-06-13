@@ -427,10 +427,15 @@ setBatchList(filteredBatches);
         className="grn-dropdown-display"
         onClick={() => setActiveCustomer(!activeCustomer)}
       >
-        {header.customer_id
-          ? customers.find(c => c.id == header.customer_id)?.name
-          : "Select Customer"}
-
+      {
+  header.customer_id
+    ? customers
+        .find(c => c.id == header.customer_id)
+        ?.name?.split(" ")
+        .slice(0, 3)
+        .join(" ")
+    : ""
+}
         <span className="grn-arrow">▼</span>
       </div>
 
@@ -587,18 +592,20 @@ setBatchList(filteredBatches);
 
       <label>Item</label>
      <div className="custom-dropdown">
-  <div
-    className="grn-dropdown-display"
-    onClick={() =>
-      setActiveItemIndex(activeItemIndex === i ? null : i)
-    }
-  >
+ <div
+  className="grn-dropdown-display"
+  onClick={() =>
+    setActiveItemIndex(activeItemIndex === i ? null : i)
+  }
+>
+  <span className="dropdown-text">
     {d.item_id
       ? items.find(it => it.id == d.item_id)?.name
       : ""}
+  </span>
 
-    <span className="grn-arrow">▼</span>
-  </div>
+  <span className="grn-arrow">▼</span>
+</div>
 
   {activeItemIndex === i && (
     <div className="dropdown-box">

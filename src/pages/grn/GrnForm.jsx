@@ -365,10 +365,15 @@ const filteredLocations = locations.filter(l =>
         className="grn-dropdown-display"
         onClick={() => setShowSupplierDropdown(!showSupplierDropdown)}
       >
-        {header.supplier_id
-          ? suppliers.find(s => s.id == header.supplier_id)?.name
-          : ""}
-
+    {
+  header.supplier_id
+    ? suppliers
+        .find(s => s.id == header.supplier_id)
+        ?.name?.split(" ")
+        .slice(0, 3)
+        .join(" ")
+    : ""
+}
         <span className="grn-arrow">▼</span>
       </div>
 
@@ -516,9 +521,15 @@ const filteredLocations = locations.filter(l =>
       setOpenItemIndex(openItemIndex === i ? null : i)
     }
   >
-    {d.item_id
-      ? items.find(it => it.id == d.item_id)?.name
-      : ""}
+    {
+  d.item_id
+    ? items
+        .find(it => it.id == d.item_id)
+        ?.name?.split(" ")
+        .slice(0, 3)
+        .join(" ")
+    : ""
+}
 
     <span className="grn-arrow">▼</span>
   </div>
@@ -655,9 +666,15 @@ const filteredLocations = locations.filter(l =>
   setOpenItemIndex(openItemIndex === i ? null : i)
 }
   >
-    {d.item_id
-      ? items.find(it => it.id == d.item_id)?.name
-      : ""}
+  {
+  d.item_id
+    ? items
+        .find(it => it.id == d.item_id)
+        ?.name?.split(" ")
+        .slice(0, 3)
+        .join(" ")
+    : ""
+}
 
     <span className="grn-arrow">▼</span>
   </div>
