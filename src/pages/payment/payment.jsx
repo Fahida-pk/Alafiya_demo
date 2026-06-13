@@ -3,8 +3,8 @@ import TopNavbar from "../dashboard/TopNavbar";
 import { FaEdit, FaTrash, FaPlus } from "react-icons/fa";
 import "./payment.css";
 
-const API = "https://zyntaweb.com/alafiya/api/payment.php";
-const DRIVER_API = "https://zyntaweb.com/alafiya/api/drivers.php";
+const API = "https://zyntaweb.com/demoalafiya/api/payment.php";
+const DRIVER_API = "https://zyntaweb.com/demoalafiya/api/drivers.php";
 
 const Payment = () => {
 

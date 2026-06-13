@@ -6,7 +6,7 @@ import TopNavbar from "../dashboard/TopNavbar";
 import { FaPlus } from "react-icons/fa";
 
 import "../order/OrderList.css";
-const API = "https://zyntaweb.com/alafiya/api/grn_header.php";
+const API = "https://zyntaweb.com/demoalafiya/api/grn_header.php";
 
 const GrnList = () => {
   const [grns, setGrns] = useState([]);

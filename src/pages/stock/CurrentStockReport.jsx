@@ -3,9 +3,9 @@ import TopNavbar from "../dashboard/TopNavbar";
 import "../oha/OHAReport.css";
 import { MdKeyboardReturn } from "react-icons/md";
 import { HiOutlineArchiveBox } from "react-icons/hi2";
-const API = "https://zyntaweb.com/alafiya/api/current_stock_report.php";
-const ITEM_API = "https://zyntaweb.com/alafiya/api/items.php";
-const COMPANY_API = "https://zyntaweb.com/alafiya/api/company.php";
+const API = "https://zyntaweb.com/demoalafiya/api/current_stock_report.php";
+const ITEM_API = "https://zyntaweb.com/demoalafiya/api/items.php";
+const COMPANY_API = "https://zyntaweb.com/demoalafiya/api/company.php";
 
 const CurrentStockReport = () => {
 

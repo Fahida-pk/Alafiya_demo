@@ -6,7 +6,7 @@ import { FaTrash, FaPlus, FaSearch } from "react-icons/fa";
 import "./BankDeposit.css";
 
 const API =
-  "https://zyntaweb.com/alafiya/api/BankDeposit.php";
+  "https://zyntaweb.com/demoalafiya/api/BankDeposit.php";
 
 const BankDeposit = () => {
 

@@ -9,10 +9,10 @@ import { BsCashStack } from "react-icons/bs";
 import { MdReceiptLong } from "react-icons/md";
 
 const API =
-  "https://zyntaweb.com/alafiya/api/DailySummaryReport.php";
+  "https://zyntaweb.com/demoalafiya/api/DailySummaryReport.php";
 
 const COMPANY_API =
-  "https://zyntaweb.com/alafiya/api/company.php";
+  "https://zyntaweb.com/demoalafiya/api/company.php";
 
 const DailyReportSummary = () => {
 

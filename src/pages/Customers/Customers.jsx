@@ -6,7 +6,7 @@ import "react-phone-input-2/lib/style.css";
 import "./Customer.css";
 
 // API
-const API = "https://zyntaweb.com/alafiya/api/customer.php";
+const API = "https://zyntaweb.com/demoalafiya/api/customer.php";
 
 const Customers = () => {
   const [customers, setCustomers] = useState([]);

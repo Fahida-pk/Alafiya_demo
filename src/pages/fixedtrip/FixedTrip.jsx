@@ -7,10 +7,10 @@ import "react-phone-input-2/lib/style.css";
 
 import "./FixedTrip.css";
 
-const API = "https://zyntaweb.com/alafiya/api/fixed_trips.php";
-const ROUTE_API = "https://zyntaweb.com/alafiya/api/trip.php";
-const DRIVER_API = "https://zyntaweb.com/alafiya/api/drivers.php";
-const VEHICLE_API = "https://zyntaweb.com/alafiya/api/vehicles.php";
+const API = "https://zyntaweb.com/demoalafiya/api/fixed_trips.php";
+const ROUTE_API = "https://zyntaweb.com/demoalafiya/api/trip.php";
+const DRIVER_API = "https://zyntaweb.com/demoalafiya/api/drivers.php";
+const VEHICLE_API = "https://zyntaweb.com/demoalafiya/api/vehicles.php";
 const FixedTrips = () => {
   const navigate = useNavigate();
 

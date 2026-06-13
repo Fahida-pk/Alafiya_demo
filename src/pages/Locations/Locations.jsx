@@ -3,7 +3,7 @@ import TopNavbar from "../dashboard/TopNavbar";
 import { FaTrash, FaPlus, FaEdit } from "react-icons/fa";
 import "./Locations.css"; // ✅ separate css
 
-const API = "https://zyntaweb.com/alafiya/api/locations.php";
+const API = "https://zyntaweb.com/demoalafiya/api/locations.php";
 
 const Locations = () => {
   const [locations, setLocations] = useState([]);

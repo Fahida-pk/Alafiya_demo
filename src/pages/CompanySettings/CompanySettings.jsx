@@ -10,7 +10,7 @@ import { MdBusiness } from "react-icons/md";
 import { HiOutlineOfficeBuilding } from "react-icons/hi";
 import { FiHome } from "react-icons/fi";
 
-const COMPANY_API = "https://zyntaweb.com/alafiya/api/company.php";
+const COMPANY_API = "https://zyntaweb.com/demoalafiya/api/company.php";
 const CompanySettings = () => {
 const [companyForm, setCompanyForm] = useState({
   company_name: "",

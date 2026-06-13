@@ -10,13 +10,13 @@ import PhoneInput from "react-phone-input-2";
 import "react-phone-input-2/lib/style.css";
 import "./OrderForm.css";
 
-const ORDER_API = "https://zyntaweb.com/alafiya/api/order_header.php";
-const DETAILS_API = "https://zyntaweb.com/alafiya/api/order_details.php";
+const ORDER_API = "https://zyntaweb.com/demoalafiya/api/order_header.php";
+const DETAILS_API = "https://zyntaweb.com/demoalafiya/api/order_details.php";
 
-const CUSTOMER_API = "https://zyntaweb.com/alafiya/api/customer.php";
-const ITEM_API = "https://zyntaweb.com/alafiya/api/items.php";
-const LOCATION_API = "https://zyntaweb.com/alafiya/api/locations.php";
-const BRAND_API = "https://zyntaweb.com/alafiya/api/brands.php";
+const CUSTOMER_API = "https://zyntaweb.com/demoalafiya/api/customer.php";
+const ITEM_API = "https://zyntaweb.com/demoalafiya/api/items.php";
+const LOCATION_API = "https://zyntaweb.com/demoalafiya/api/locations.php";
+const BRAND_API = "https://zyntaweb.com/demoalafiya/api/brands.php";
 const OrderForm = () => {
   const { id } = useParams();
 const navigate = useNavigate();
@@ -328,7 +328,7 @@ const handleItemChange = async (i, value) => {
 
   // 🔥 FIX: use value
   const res = await fetch(
-    `https://zyntaweb.com/alafiya/api/stock_batches.php?item_id=${value}`
+    `https://zyntaweb.com/demoalafiya/api/stock_batches.php?item_id=${value}`
   );
 
   const data = await res.json();
@@ -644,7 +644,7 @@ setBatchList(filteredBatches);
       return;
     }
 
-    const res = await fetch(`https://zyntaweb.com/alafiya/api/stock_batches.php?item_id=${details[i].item_id}`)
+    const res = await fetch(`https://zyntaweb.com/demoalafiya/api/stock_batches.php?item_id=${details[i].item_id}`)
 
     const data = await res.json();
     const batches = Array.isArray(data) ? data : data.data || [];
@@ -898,7 +898,7 @@ setShowBatchModal(true);
   }
 
   const res = await fetch(
-    `https://zyntaweb.com/alafiya/api/stock_batches.php?item_id=${details[i].item_id}`
+    `https://zyntaweb.com/demoalafiya/api/stock_batches.php?item_id=${details[i].item_id}`
   );
 
   const data = await res.json();

@@ -11,13 +11,13 @@ import {
 } from "react-icons/md";
 
 const API =
-  "https://zyntaweb.com/alafiya/api/expense_report.php";
+  "https://zyntaweb.com/demoalafiya/api/expense_report.php";
 
 const EXPENSE_CLASS_API =
-  "https://zyntaweb.com/alafiya/api/expenseentry.php?dropdown=1";
+  "https://zyntaweb.com/demoalafiya/api/expenseentry.php?dropdown=1";
 
 const COMPANY_API =
-  "https://zyntaweb.com/alafiya/api/company.php";
+  "https://zyntaweb.com/demoalafiya/api/company.php";
 
 const ExpenseReport = () => {
 

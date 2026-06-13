@@ -6,7 +6,7 @@ import TopNavbar from "../dashboard/TopNavbar";
 
 import "../order/OrderList.css";
 
-const API = "https://zyntaweb.com/alafiya/api/oha_header.php";
+const API = "https://zyntaweb.com/demoalafiya/api/oha_header.php";
 
 const OhaList = () => {
   const [ohas, setOhas] = useState([]);

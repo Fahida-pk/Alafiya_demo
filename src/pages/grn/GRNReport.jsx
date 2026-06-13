@@ -3,10 +3,10 @@ import TopNavbar from "../dashboard/TopNavbar";
 import "./GRNReport.css";
 import { MdReceiptLong } from "react-icons/md";
 
-const API = "https://zyntaweb.com/alafiya/api/grn_report.php";
-const SUPPLIER_API = "https://zyntaweb.com/alafiya/api/suppliers.php";
-const ITEM_API = "https://zyntaweb.com/alafiya/api/items.php";
-const COMPANY_API = "https://zyntaweb.com/alafiya/api/company.php";
+const API = "https://zyntaweb.com/demoalafiya/api/grn_report.php";
+const SUPPLIER_API = "https://zyntaweb.com/demoalafiya/api/suppliers.php";
+const ITEM_API = "https://zyntaweb.com/demoalafiya/api/items.php";
+const COMPANY_API = "https://zyntaweb.com/demoalafiya/api/company.php";
 
 const GRNReport = () => {
 

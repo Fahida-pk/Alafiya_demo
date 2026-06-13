@@ -4,7 +4,7 @@ import { FaEdit, FaTrash, FaSearch, FaPlus } from "react-icons/fa";
 import TopNavbar from "../dashboard/TopNavbar";
 import "./TripMaster.css";
 
-const API = "https://zyntaweb.com/alafiya/api/trip.php";
+const API = "https://zyntaweb.com/demoalafiya/api/trip.php";
 const TripMaster = () => {
   const [trips, setTrips] = useState([]);
   const [search, setSearch] = useState("");
