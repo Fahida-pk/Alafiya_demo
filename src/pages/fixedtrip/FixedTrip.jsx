@@ -20,7 +20,7 @@ const FixedTrips = () => {
   const [drivers, setDrivers] = useState([]);
   const [vehicles, setVehicles] = useState([]);
 const [phoneError, setPhoneError] = useState("");
-
+const [saving, setSaving] = useState(false);
   const [search, setSearch] = useState("");
   const [showModal, setShowModal] = useState(false);
   const [isEdit, setIsEdit] = useState(false);
@@ -142,8 +142,11 @@ const validatePhone = (phone) => {
     setForm(prev => ({ ...prev, [e.target.name]: e.target.value }));
 
   /* ================= SAVE / UPDATE ================= */
-  const handleSubmit = async (e) => {
+
+const handleSubmit = async (e) => {
   e.preventDefault();
+
+  if (saving) return; // prevent double click
 
   const error = validateForm();
 
@@ -151,27 +154,39 @@ const validatePhone = (phone) => {
     setMessage(error);
     setMessageType("error");
     autoHide();
-    return;  // ❌ stop submit
+    return;
   }
 
-  await fetch(API, {
-    method: isEdit ? "PUT" : "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify(form),
-  });
+  try {
+    setSaving(true);
 
-  setMessage(isEdit 
-    ? "Fixed trip updated successfully ✅" 
-    : "Fixed trip added successfully 🎉"
-  );
+    await fetch(API, {
+      method: isEdit ? "PUT" : "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(form),
+    });
 
-  setMessageType("success");
-  autoHide();
+    setMessage(
+      isEdit
+        ? "Fixed trip updated successfully ✅"
+        : "Fixed trip added successfully 🎉"
+    );
 
-  setShowModal(false);
-  setIsEdit(false);
-  setForm(emptyForm);
-  loadAll();
+    setMessageType("success");
+    autoHide();
+
+    setShowModal(false);
+    setIsEdit(false);
+    setForm(emptyForm);
+
+    await loadAll();
+  } catch (err) {
+    console.error(err);
+    setMessage("Something went wrong");
+    setMessageType("error");
+  } finally {
+    setSaving(false);
+  }
 };
   /* ================= EDIT ================= */
   const editTrip = (t) => {
@@ -606,8 +621,17 @@ const filteredRoutes = routes.filter(r =>
   value={form.remark}
   onChange={handleChange}
 />
-              <button className="save-btn">{isEdit ? "✏️ UPDATE" : "💾 SAVE"}</button>
-            </form>
+<button
+  type="submit"
+  className="save-btn"
+  disabled={saving}
+>
+  {saving
+    ? "Saving..."
+    : isEdit
+      ? "✏️ UPDATE"
+      : "💾 SAVE"}
+</button>            </form>
           </div>
         </div>
       )}

@@ -29,7 +29,7 @@ const [mileageRate, setMileageRate] = useState(3.5);
 // VEHICLE
 const [vehicleSearch, setVehicleSearch] = useState("");
 const [showVehicleDropdown, setShowVehicleDropdown] = useState(false);
-
+const [saving, setSaving] = useState(false);
   const [message, setMessage] = useState("");
   const [messageType, setMessageType] = useState("");
 
@@ -101,8 +101,14 @@ const filteredVehicles = vehicles.filter(v =>
 );
 
   /* SAVE */
-  const handleSubmit = async (e) => {
-    e.preventDefault();
+
+const handleSubmit = async (e) => {
+  e.preventDefault();
+
+  if (saving) return; // prevent double click
+
+  try {
+    setSaving(true);
 
     const res = await fetch(API, {
       method: isEdit ? "PUT" : "POST",
@@ -119,25 +125,36 @@ const filteredVehicles = vehicles.filter(v =>
       return;
     }
 
-    setMessage(isEdit
-      ? "Floating trip updated successfully ✅"
-      : "Floating trip added successfully 🎉"
+    setMessage(
+      isEdit
+        ? "Floating trip updated successfully ✅"
+        : "Floating trip added successfully 🎉"
     );
+
     setMessageType("success");
     autoHide();
 
     setShowModal(false);
     setIsEdit(false);
     setForm(emptyForm);
-    loadAll();
-  };
 
-  /* EDIT */
-  const editTrip = (t) => {
-    setForm(t);
-    setIsEdit(true);
-    setShowModal(true);
-  };
+    await loadAll();
+  } catch (err) {
+    console.error(err);
+    setMessage("Something went wrong");
+    setMessageType("error");
+    autoHide();
+  } finally {
+    setSaving(false);
+  }
+};
+
+/* EDIT */
+const editTrip = (t) => {
+  setForm(t);
+  setIsEdit(true);
+  setShowModal(true);
+};
 
   /* DELETE */
   const deleteTrip = async (id) => {
@@ -599,9 +616,17 @@ const totalTime = getTimeDifference(form.start_time, form.end_time);
   readOnly
   className="calculated-box"
 />
-              <button className="save-floating-btn">
-                {isEdit ? "UPDATE" : "SAVE"}
-              </button>
+              <button
+  type="submit"
+  className="save-floating-btn"
+  disabled={saving}
+>
+  {saving
+    ? "Saving..."
+    : isEdit
+      ? "UPDATE"
+      : "SAVE"}
+</button>
             </form>
           </div>
         </div>
