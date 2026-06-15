@@ -218,28 +218,26 @@ const Row = ({ date, driver, company, route }) => (
     </div>
   </Panel>
 
- <Panel title="Recent Floating Trips">
+<Panel title="Recent Floating Trips">
   <div className="table-scroll">
-    <div className="table-scroll-content">
 
-      <div className="recent-table-header">
-        <div>Date</div>
-        <div>Driver</div>
-        <div>Vehicle</div>
-        <div>Area</div>
-      </div>
-
-      {(recent.floatingTrips || []).map((r, i) => (
-        <Row
-          key={i}
-          date={r.trip_date}
-          driver={r.driver_name}
-          company={r.name}
-          route={r.area_name}
-        />
-      ))}
-
+    <div className="recent-table-header">
+      <div>Date</div>
+      <div>Driver</div>
+      <div>Vehicle</div>
+      <div>Area</div>
     </div>
+
+    {(recent.floatingTrips || []).map((r, i) => (
+      <Row
+        key={i}
+        date={r.trip_date}
+        driver={r.driver_name}
+        company={r.name}
+        route={r.area_name}
+      />
+    ))}
+
   </div>
 </Panel>
 </div>
