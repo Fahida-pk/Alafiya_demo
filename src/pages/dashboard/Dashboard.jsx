@@ -192,63 +192,88 @@ const Row = ({ date, driver, company, route }) => (
       <div className="panel-grid"><Panel title="Payments vs Expenses"><Line data={lineData} options={options} /></Panel>
       <Panel title="Trips Summary"><Bar data={tripBar} options={options} /></Panel>
       <Panel title="Payment Mix"><Doughnut data={donutData} /></Panel></div><div className="panel-grid">
-<Panel title="Recent Fixed Trips">
+<div className="bottom-section">
 
-  <div className="recent-table-header">
-    <div>Date</div>
-    <div>Driver</div>
-    <div>Vehicle</div>
-    <div>Route</div>
+<div className="trip-panels">
+
+  <Panel title="Recent Fixed Trips">
+    <div className="table-scroll">
+
+    <div className="recent-table-header">
+      <div>Date</div>
+      <div>Driver</div>
+      <div>Vehicle</div>
+      <div>Route</div>
+    </div>
+
+    {(recent.fixedTrips || []).map((r, i) => (
+      <Row
+        key={i}
+        date={r.trip_date}
+        driver={r.driver_name}
+        company={r.name}
+        route={r.route_name}
+      />
+    ))}
+    </div>
+  </Panel>
+
+ <Panel title="Recent Floating Trips">
+  <div className="table-scroll">
+    <div className="table-scroll-content">
+
+      <div className="recent-table-header">
+        <div>Date</div>
+        <div>Driver</div>
+        <div>Vehicle</div>
+        <div>Area</div>
+      </div>
+
+      {(recent.floatingTrips || []).map((r, i) => (
+        <Row
+          key={i}
+          date={r.trip_date}
+          driver={r.driver_name}
+          company={r.name}
+          route={r.area_name}
+        />
+      ))}
+
+    </div>
   </div>
-
-  {(recent.fixedTrips || []).map((r, i) => (
-    <Row
-      key={i}
-      date={r.trip_date}
-      driver={r.driver_name}
-      company={r.name}
-      route={r.route_name}
-    />
-  ))}
 </Panel>
-
-<Panel title="Recent Floating Trips">
-
-  <div className="recent-table-header">
-    <div>Date</div>
-    <div>Driver</div>
-    <div>Vehicle</div>
-    <div>Area</div>
-  </div>
-
-  {(recent.floatingTrips || []).map((r, i) => (
-    <Row
-      key={i}
-      date={r.trip_date}
-      driver={r.driver_name}
-      company={r.name}
-      route={r.area_name}
-    />
-  ))}
-</Panel>
-
-<Panel title="Recent Payments">
-<div className="payment-header">
-  <div>Date</div>
-  <div>Driver</div>
-  <div>Amount</div>
-  <div>Balance</div>
 </div>
- {(recent.payments || []).map((r, i) => (
-  <PaymentRow
-    key={i}
-    date={r.payment_date}
-    driver={r.driver_name}
-    amount={r.amount}
-    balance={r.current_balance}
-  />
-))}
-</Panel>
-</div></div></div></>);
-};
+
+<div className="payment-panel">
+  <Panel title="Recent Payments">
+
+    <div className="payment-header">
+      <div>Date</div>
+      <div>Driver</div>
+      <div>Amount</div>
+      <div>Balance</div>
+    </div>
+
+    {(recent.payments || []).map((r, i) => (
+      <PaymentRow
+        key={i}
+        date={r.payment_date}
+        driver={r.driver_name}
+        amount={r.amount}
+        balance={r.current_balance}
+      />
+    ))}
+
+  </Panel>
+</div>
+
+</div> {/* bottom-section */}
+
+</div> {/* dashboard-inner */}
+</div> {/* dashboard-content */}
+</div>
+</>
+);
+};   // <-- ഇത് missing ആണ്
+
 export default Dashboard;
