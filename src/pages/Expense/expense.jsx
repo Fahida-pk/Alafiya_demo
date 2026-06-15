@@ -597,7 +597,7 @@ const Expense = () => {
                 name="voucher_no"
                 value={form.voucher_no}
                 onChange={handleChange}
-                required
+                
               />
 
               <label>Remarks</label>

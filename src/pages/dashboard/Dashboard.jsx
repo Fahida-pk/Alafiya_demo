@@ -11,7 +11,38 @@ const CHARTS_API = "https://zyntaweb.com/demoalafiya/api/dashboard_charts.php";
 const RECENT_API = "https://zyntaweb.com/demoalafiya/api/dashboard_recent.php";
 const Dashboard = () => {
   const navigate = useNavigate();
-  const [summary, setSummary] = useState({ vehicles: 0, drivers: 0, routes: 0, floatingTrips: 0, fixedTrips: 0, paymentsTotal: 0, expensesTotal: 0, settlementTotal: 0, todayFixedTrips: 0, todayFloatingTrips: 0 });
+ const [summary, setSummary] = useState({
+  vehicles: 0,
+  drivers: 0,
+  routes: 0,
+  floatingTrips: 0,
+  fixedTrips: 0,
+
+  fixedTripTotalAmount: 0,
+  lastMonthFixedTripAmount: 0,
+
+  floatingTripTotalAmount: 0,
+  lastMonthFloatingTripAmount: 0,
+
+  totalPaymentAmount: 0,
+  lastMonthPaymentAmount: 0,
+  totalBalanceToSettlement: 0,
+ totalGRN: 0,
+  totalOrders: 0,
+  totalOHA: 0,
+totalCashSettlement: 0,
+  lastMonthCashSettlement: 0,
+  todayCashSettlement: 0,
+  totalExpense: 0,
+  lastMonthExpense: 0,
+  todayExpense: 0,
+   totalBankDeposit: 0,
+  lastMonthBankDeposit: 0,
+  todayBankDeposit: 0,
+  netCashBalance: 0,
+  todayFixedTrips: 0,
+  todayFloatingTrips: 0
+});
   const [charts, setCharts] = useState({ monthlyTrips: [], monthlyFloating: [], monthlyPayments: [], monthlyExpenses: [], paymentModes: [], expenseClasses: [], topDrivers: [], topRoutes: [] });
   const [recent, setRecent] = useState({ fixedTrips: [], floatingTrips: [], payments: [], expenses: [], settlements: [] });
   useEffect(() => {
@@ -22,16 +53,114 @@ const Dashboard = () => {
       try { const r = await fetch(RECENT_API); setRecent(await r.json()); } catch {}
     })();
   }, [navigate]);
-  const cards = [
-    { label: "Vehicles", value: summary.vehicles, icon: <FaTruck />, cls: "card-a" },
-    { label: "Drivers", value: summary.drivers, icon: <FaUserTie />, cls: "card-b" },
-    { label: "Routes", value: summary.routes, icon: <FaRoute />, cls: "card-c" },
-    { label: "Fixed Trips", value: summary.fixedTrips, icon: <FaClipboardList />, cls: "card-d" },
-    { label: "Floating Trips", value: summary.floatingTrips, icon: <FaMapMarkedAlt />, cls: "card-e" },
-    { label: "Payments", value: summary.paymentsTotal, icon: <FaMoneyBillWave />, cls: "card-f" },
-    { label: "Expenses", value: summary.expensesTotal, icon: <FaBoxes />, cls: "card-g" },
-    { label: "Settlements", value: summary.settlementTotal, icon: <FaReceipt />, cls: "card-h" },
-  ];
+const cards = [
+  { label: "Vehicles", value: summary.vehicles, icon: <FaTruck />, cls: "card-a" },
+  { label: "Drivers", value: summary.drivers, icon: <FaUserTie />, cls: "card-b" },
+  { label: "Routes", value: summary.routes, icon: <FaRoute />, cls: "card-c" },
+  { label: "Fixed Trips", value: summary.fixedTrips, icon: <FaClipboardList />, cls: "card-d" },
+
+  { label: "Floating Trips", value: summary.floatingTrips, icon: <FaMapMarkedAlt />, cls: "card-e" },
+
+  { label: "Total Fixed Trip Amount", value: summary.fixedTripTotalAmount, icon: <FaMoneyBillWave />, cls: "card-f" },
+
+  { label: "Last Month Fixed", value: summary.lastMonthFixedTripAmount, icon: <FaMoneyBillWave />, cls: "card-g" },
+
+  { label: "Floating Trip Amount", value: summary.floatingTripTotalAmount, icon: <FaMoneyBillWave />, cls: "card-h" },
+
+  { label: "Last Month Floating", value: summary.lastMonthFloatingTripAmount, icon: <FaMoneyBillWave />, cls: "card-i" },
+
+{ label: "Total Payment Amount", value: summary.totalPaymentAmount, icon: <FaMoneyBillWave />, cls: "card-j" },
+
+{ label: "Last Month Payment", value: summary.lastMonthPaymentAmount, icon: <FaMoneyBillWave />, cls: "card-k" },
+
+{ label: "Balance To Settlement", value: summary.totalBalanceToSettlement, icon: <FaMoneyBillWave />, cls: "card-l" },
+{
+  label: "Total GRN",
+  value: summary.totalGRN,
+  icon: <FaBoxes />,
+  cls: "card-m"
+},
+
+{
+  label: "Total Orders",
+  value: summary.totalOrders,
+  icon: <FaClipboardList />,
+  cls: "card-n"
+},
+
+{
+  label: "Total OHA",
+  value: summary.totalOHA,
+  icon: <FaReceipt />,
+  cls: "card-o"
+},
+{
+  label: "Total Cash Settlement",
+  value: summary.totalCashSettlement,
+  icon: <FaMoneyBillWave />,
+  cls: "card-p"
+},
+
+{
+  label: "Last Month Cash Settlement",
+  value: summary.lastMonthCashSettlement,
+  icon: <FaMoneyBillWave />,
+  cls: "card-q"
+},
+
+{
+  label: "Today Cash Settlement",
+  value: summary.todayCashSettlement,
+  icon: <FaMoneyBillWave />,
+  cls: "card-r"
+},
+{
+  label: "Total Expense",
+  value: summary.totalExpense,
+  icon: <FaMoneyBillWave />,
+  cls: "card-s"
+},
+
+{
+  label: "Last Month Expense",
+  value: summary.lastMonthExpense,
+  icon: <FaMoneyBillWave />,
+  cls: "card-t"
+},
+
+{
+  label: "Today Expense",
+  value: summary.todayExpense,
+  icon: <FaMoneyBillWave />,
+  cls: "card-u"
+},
+{
+  label: "Total Bank Deposit",
+  value: summary.totalBankDeposit,
+  icon: <FaMoneyBillWave />,
+  cls: "card-v"
+},
+
+{
+  label: "Last Month Deposit",
+  value: summary.lastMonthBankDeposit,
+  icon: <FaMoneyBillWave />,
+  cls: "card-w"
+},
+
+{
+  label: "Today Deposit",
+  value: summary.todayBankDeposit,
+  icon: <FaMoneyBillWave />,
+  cls: "card-x"
+},
+{
+  label: "Net Cash Balance",
+  value: summary.netCashBalance,
+  icon: <FaMoneyBillWave />,
+  cls: "card-y"
+},
+];
   const lineData = { labels: (charts.monthlyPayments || []).map(x => x.month).reverse(), datasets: [ { label: "Payments", data: (charts.monthlyPayments || []).map(x => Number(x.total)).reverse(), borderColor: "#5b6cff", backgroundColor: "rgba(91,108,255,.15)", fill: true, tension: .35 }, { label: "Expenses", data: (charts.monthlyExpenses || []).map(x => Number(x.total)).reverse(), borderColor: "#fb7185", backgroundColor: "rgba(251,113,133,.12)", fill: true, tension: .35 } ] };
   const tripBar = { labels: ["Fixed", "Floating"], datasets: [{ label: "Trips", data: [summary.fixedTrips, summary.floatingTrips], backgroundColor: ["#5b6cff", "#34c3ff"] }] };
   const donutData = { labels: (charts.paymentModes || []).map(x => x.label), datasets: [{ data: (charts.paymentModes || []).map(x => Number(x.total)), backgroundColor: ["#42d392", "#5b6cff", "#f97316", "#a855f7"] }] };
