@@ -12,7 +12,7 @@ const Payment = () => {
 
   const [payments, setPayments] = useState([]);
   const [drivers, setDrivers] = useState([]);
-const [saving, setSaving] = useState(false);
+
   const [search, setSearch] = useState("");
   const [showModal, setShowModal] = useState(false);
   const [isEdit, setIsEdit] = useState(false);
@@ -82,8 +82,6 @@ const emptyForm = {
   const handleSubmit = async (e) => {
   e.preventDefault();
 
-  if (saving) return;
-
   if (!form.payment_date || !form.driver_id || !form.amount) {
     setMessage("Please fill all required fields ❗");
     setMessageType("error");
@@ -92,8 +90,6 @@ const emptyForm = {
   }
 
   try {
-    setSaving(true);
-
     await fetch(API, {
       method: isEdit ? "PUT" : "POST",
       headers: { "Content-Type": "application/json" },
@@ -124,10 +120,17 @@ const emptyForm = {
     setMessage("Something went wrong ❌");
     setMessageType("error");
     autoHide();
-  } finally {
-    setSaving(false);
   }
 };
+useEffect(() => {
+  if (!isEdit) {
+    if (form.driver_id) {
+      loadBalance(form.driver_id);
+    } else {
+      setBalance(0);
+    }
+  }
+}, [form.driver_id]);
 
 
 
@@ -471,17 +474,9 @@ setForm({
     borderRadius: "8px"
   }}
 />
-              <button
-  type="submit"
-  className="save-btn"
-  disabled={saving}
->
-  {saving
-    ? "Saving..."
-    : isEdit
-      ? "✏️ UPDATE"
-      : "💾 SAVE"}
-</button>
+              <button className="save-btn">
+                {isEdit ? "✏️ UPDATE" : "💾 SAVE"}
+              </button>
 
             </form>
           </div>
