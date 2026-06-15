@@ -11,11 +11,12 @@ const CHARTS_API = "https://zyntaweb.com/demoalafiya/api/dashboard_charts.php";
 const RECENT_API = "https://zyntaweb.com/demoalafiya/api/dashboard_recent.php";
 const Dashboard = () => {
   const navigate = useNavigate();
-  const PaymentRow = ({ date, driver, amount }) => (
+const PaymentRow = ({ date, driver, amount, balance }) => (
   <div className="payment-row">
     <div>{date}</div>
     <div>{driver}</div>
     <div>₹{amount}</div>
+    <div>₹{Number(balance || 0).toFixed(2)}</div>
   </div>
 );
  const [summary, setSummary] = useState({
@@ -232,21 +233,21 @@ const Row = ({ date, driver, company, route }) => (
 </Panel>
 
 <Panel title="Recent Payments">
-
-  <div className="payment-header">
-    <div>Date</div>
-    <div>Driver</div>
-    <div>Amount</div>
-  </div>
-
-  {(recent.payments || []).map((r, i) => (
-    <PaymentRow
-      key={i}
-      date={r.payment_date}
-      driver={r.driver_name}
-      amount={r.amount}
-    />
-  ))}
+<div className="payment-header">
+  <div>Date</div>
+  <div>Driver</div>
+  <div>Amount</div>
+  <div>Balance</div>
+</div>
+ {(recent.payments || []).map((r, i) => (
+  <PaymentRow
+    key={i}
+    date={r.payment_date}
+    driver={r.driver_name}
+    amount={r.amount}
+    balance={r.current_balance}
+  />
+))}
 </Panel>
 </div></div></div></>);
 };
