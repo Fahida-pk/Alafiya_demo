@@ -11,6 +11,13 @@ const CHARTS_API = "https://zyntaweb.com/demoalafiya/api/dashboard_charts.php";
 const RECENT_API = "https://zyntaweb.com/demoalafiya/api/dashboard_recent.php";
 const Dashboard = () => {
   const navigate = useNavigate();
+  const PaymentRow = ({ date, driver, amount }) => (
+  <div className="payment-row">
+    <div>{date}</div>
+    <div>{driver}</div>
+    <div>₹{amount}</div>
+  </div>
+);
  const [summary, setSummary] = useState({
   vehicles: 0,
   drivers: 0,
@@ -166,8 +173,14 @@ const cards = [
   const donutData = { labels: (charts.paymentModes || []).map(x => x.label), datasets: [{ data: (charts.paymentModes || []).map(x => Number(x.total)), backgroundColor: ["#42d392", "#5b6cff", "#f97316", "#a855f7"] }] };
   const options = { responsive: true, plugins: { legend: { labels: { color: "#1f2d3d" } } }, scales: { x: { ticks: { color: "#516173" }, grid: { color: "rgba(0,0,0,.06)" } }, y: { ticks: { color: "#516173" }, grid: { color: "rgba(0,0,0,.06)" } } } };
   const Panel = ({ title, children }) => <div className="panel"><h3>{title}</h3>{children}</div>;
-  const Row = ({ a, b }) => <div className="recent-row"><b>{a}</b><span>{b}</span></div>;
-  return (<><Topbar /><div className="dashboard-content">
+const Row = ({ date, driver, company, route }) => (
+  <div className="recent-row">
+    <div>{date}</div>
+    <div>{driver}</div>
+    <div>{company}</div>
+    <div>{route}</div>
+  </div>
+);  return (<><Topbar /><div className="dashboard-content">
     <div className="dashboard-inner"><div className="page-title">Dashboard Overview</div>
     <div className="cards-grid">{cards.map(c => <div key={c.label} className={`dash-card ${c.cls}`}>
       <div className="dash-card-top"><span className="dash-icon">{c.icon}</span>
@@ -178,33 +191,63 @@ const cards = [
       <div className="panel-grid"><Panel title="Payments vs Expenses"><Line data={lineData} options={options} /></Panel>
       <Panel title="Trips Summary"><Bar data={tripBar} options={options} /></Panel>
       <Panel title="Payment Mix"><Doughnut data={donutData} /></Panel></div><div className="panel-grid">
-        <Panel title="Recent Fixed Trips">
+<Panel title="Recent Fixed Trips">
+
+  <div className="recent-table-header">
+    <div>Date</div>
+    <div>Driver</div>
+    <div>Vehicle</div>
+    <div>Route</div>
+  </div>
+
   {(recent.fixedTrips || []).map((r, i) => (
     <Row
       key={i}
-      a={r.document_no || "-"}
-      b={r.trip_date || ""}
+      date={r.trip_date}
+      driver={r.driver_name}
+      company={r.name}
+      route={r.route_name}
     />
   ))}
 </Panel>
 
 <Panel title="Recent Floating Trips">
+
+  <div className="recent-table-header">
+    <div>Date</div>
+    <div>Driver</div>
+    <div>Vehicle</div>
+    <div>Area</div>
+  </div>
+
   {(recent.floatingTrips || []).map((r, i) => (
     <Row
       key={i}
-      a={r.document_no || "-"}
-      b={r.trip_date || ""}
+      date={r.trip_date}
+      driver={r.driver_name}
+      company={r.name}
+      route={r.area_name}
     />
   ))}
 </Panel>
-        <Panel title="Recent Payments">
+
+<Panel title="Recent Payments">
+
+  <div className="payment-header">
+    <div>Date</div>
+    <div>Driver</div>
+    <div>Amount</div>
+  </div>
+
   {(recent.payments || []).map((r, i) => (
-    <Row
+    <PaymentRow
       key={i}
-      a={r.document_no || "-"}
-      b={r.amount || 0}
+      date={r.payment_date}
+      driver={r.driver_name}
+      amount={r.amount}
     />
   ))}
-</Panel></div></div></div></>);
+</Panel>
+</div></div></div></>);
 };
 export default Dashboard;
