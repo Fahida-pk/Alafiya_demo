@@ -9,15 +9,17 @@
 
 html,
 body{
-  width:100%;
-  height:100%;
-  overflow:visible;
+   width:100%;
+  min-height:100%;
+  overflow-x:auto;
   background:linear-gradient(120deg,#f4f8ff,#ffffff);
 }
 
 #root{
   height:100vh;
   overflow:hidden;
+    width:100%;
+
 }
 
 .dashboard{
@@ -26,7 +28,13 @@ body{
   width:100%;
   overflow:hidden;
 }
+.dashboard{
+  width:100%;
+}
 
+.main-area{
+  overflow-x:auto;
+}
 /* ================= SIDEBAR ================= */
 
 .sidebar{
@@ -494,7 +502,9 @@ body{
 }
 
 .modern-table thead th{
-  background:#1f242c;
+  background:linear-gradient(135deg,    #6d42c1
+,    #8e63e0 
+);
   color:#fff;
 
   padding:14px 10px;
@@ -633,9 +643,31 @@ body{
 .trip-panels .panel{
   overflow-x:auto;
 }
+.table-responsive{
+  display:block;
+  overflow-x:auto;
+  white-space:nowrap;
+}
 
+.modern-table{
+  min-width:700px;
+}
 /* ================= TABLET ================= */
+@media (max-width:768px){
 
+  .table-responsive{
+    width:100%;
+    max-width:100%;
+    overflow-x:auto !important;
+    display:block;
+  }
+
+  .modern-table{
+    width:max-content !important;
+    min-width:700px !important;
+  }
+
+}
 @media (max-width:1024px){
 
   .cards-grid{
@@ -810,4 +842,68 @@ body{
     min-width:650px;
     width:650px;
   }
+}
+@media (max-width:768px){
+
+  .modern-table{
+    min-width:700px !important;
+    width:700px !important;
+  }
+
+}
+@media (max-width:768px){
+
+  .dashboard-content,
+  .dashboard-inner,
+  .dashboard-tables,
+  .table-card{
+    min-width:0 !important;
+    max-width:100% !important;
+    width:100% !important;
+  }
+
+  .table-responsive{
+    width:100% !important;
+    max-width:100% !important;
+    overflow-x:auto !important;
+  }
+
+  .modern-table{
+    min-width:700px !important;
+    width:max-content !important;
+  }
+
+}
+@media (max-width:768px){
+
+  .modern-table th,
+  .modern-table td{
+    white-space: nowrap;
+  }
+
+  /* Date column */
+  .modern-table th:first-child,
+  .modern-table td:first-child{
+    min-width: 130px;
+    width: 130px;
+  }
+
+  /* Driver column */
+  .modern-table th:nth-child(2),
+  .modern-table td:nth-child(2){
+    min-width: 180px;
+  }
+
+  /* Vehicle column */
+  .modern-table th:nth-child(3),
+  .modern-table td:nth-child(3){
+    min-width: 120px;
+  }
+
+  /* Route/Area column */
+  .modern-table th:nth-child(4),
+  .modern-table td:nth-child(4){
+    min-width: 180px;
+  }
+
 }

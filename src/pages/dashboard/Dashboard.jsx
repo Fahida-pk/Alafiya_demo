@@ -2,8 +2,28 @@ import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Topbar from "./TopNavbar";
 import "./dashboard.css";
-import { FaTruck, FaUserTie, FaRoute, FaReceipt, FaBoxes, FaMoneyBillWave, FaClipboardList, FaMapMarkedAlt, FaCalendarDay } from "react-icons/fa";
-import { Line, Bar, Doughnut } from "react-chartjs-2";
+import {
+  FaTruck,
+  FaUserTie,
+  FaRoute,
+  FaReceipt,
+  FaBoxes,
+  FaMoneyBillWave,
+  FaClipboardList,
+  FaMapMarkedAlt,
+  FaCalendarDay,
+  FaCreditCard,
+  FaBalanceScale,
+  FaShoppingCart,
+  FaFileInvoice,
+  FaWallet,
+  FaHandHoldingUsd,
+  FaCoins,
+  FaFileInvoiceDollar,
+  FaUniversity,
+  FaPiggyBank,
+  FaChartLine
+} from "react-icons/fa";import { Line, Bar, Doughnut } from "react-chartjs-2";
 import { Chart as ChartJS, CategoryScale, LinearScale, PointElement, LineElement, BarElement, ArcElement, Tooltip, Legend, Filler } from "chart.js";
 ChartJS.register(CategoryScale, LinearScale, PointElement, LineElement, BarElement, ArcElement, Tooltip, Legend, Filler);
 const SUMMARY_API = "https://zyntaweb.com/demoalafiya/api/dashboard_summary.php";
@@ -63,112 +83,45 @@ totalCashSettlement: 0,
     })();
   }, [navigate]);
 const cards = [
-  { label: "Vehicles", value: summary.vehicles, icon: <FaTruck />, cls: "card-a" },
-  { label: "Drivers", value: summary.drivers, icon: <FaUserTie />, cls: "card-b" },
-  { label: "Routes", value: summary.routes, icon: <FaRoute />, cls: "card-c" },
-  { label: "Fixed Trips", value: summary.fixedTrips, icon: <FaClipboardList />, cls: "card-d" },
+ { label: "Total Fixed Trip Amount", value: summary.fixedTripTotalAmount, icon: <FaRoute />, cls: "card-f" },
 
-  { label: "Floating Trips", value: summary.floatingTrips, icon: <FaMapMarkedAlt />, cls: "card-e" },
+{ label: "Last Month Fixed", value: summary.lastMonthFixedTripAmount, icon: <FaCalendarDay />, cls: "card-g" },
 
-  { label: "Total Fixed Trip Amount", value: summary.fixedTripTotalAmount, icon: <FaMoneyBillWave />, cls: "card-f" },
+{ label: "Floating Trip Amount", value: summary.floatingTripTotalAmount, icon: <FaMapMarkedAlt />, cls: "card-h" },
 
-  { label: "Last Month Fixed", value: summary.lastMonthFixedTripAmount, icon: <FaMoneyBillWave />, cls: "card-g" },
-
-  { label: "Floating Trip Amount", value: summary.floatingTripTotalAmount, icon: <FaMoneyBillWave />, cls: "card-h" },
-
-  { label: "Last Month Floating", value: summary.lastMonthFloatingTripAmount, icon: <FaMoneyBillWave />, cls: "card-i" },
+{ label: "Last Month Floating", value: summary.lastMonthFloatingTripAmount, icon: <FaCalendarDay />, cls: "card-i" },
 
 { label: "Total Payment Amount", value: summary.totalPaymentAmount, icon: <FaMoneyBillWave />, cls: "card-j" },
 
-{ label: "Last Month Payment", value: summary.lastMonthPaymentAmount, icon: <FaMoneyBillWave />, cls: "card-k" },
+{ label: "Last Month Payment", value: summary.lastMonthPaymentAmount, icon: <FaCreditCard />, cls: "card-k" },
 
-{ label: "Balance To Settlement", value: summary.totalBalanceToSettlement, icon: <FaMoneyBillWave />, cls: "card-l" },
-{
-  label: "Total GRN",
-  value: summary.totalGRN,
-  icon: <FaBoxes />,
-  cls: "card-m"
-},
+{ label: "Balance To Settlement", value: summary.totalBalanceToSettlement, icon: <FaBalanceScale />, cls: "card-l" },
 
-{
-  label: "Total Orders",
-  value: summary.totalOrders,
-  icon: <FaClipboardList />,
-  cls: "card-n"
-},
+{ label: "Total GRN", value: summary.totalGRN, icon: <FaBoxes />, cls: "card-m" },
 
-{
-  label: "Total OHA",
-  value: summary.totalOHA,
-  icon: <FaReceipt />,
-  cls: "card-o"
-},
-{
-  label: "Total Cash Settlement",
-  value: summary.totalCashSettlement,
-  icon: <FaMoneyBillWave />,
-  cls: "card-p"
-},
+{ label: "Total Orders", value: summary.totalOrders, icon: <FaShoppingCart />, cls: "card-n" },
 
-{
-  label: "Last Month Cash Settlement",
-  value: summary.lastMonthCashSettlement,
-  icon: <FaMoneyBillWave />,
-  cls: "card-q"
-},
+{ label: "Total OHA", value: summary.totalOHA, icon: <FaFileInvoice />, cls: "card-o" },
 
-{
-  label: "Today Cash Settlement",
-  value: summary.todayCashSettlement,
-  icon: <FaMoneyBillWave />,
-  cls: "card-r"
-},
-{
-  label: "Total Expense",
-  value: summary.totalExpense,
-  icon: <FaMoneyBillWave />,
-  cls: "card-s"
-},
+{ label: "Total Cash Settlement", value: summary.totalCashSettlement, icon: <FaWallet />, cls: "card-p" },
 
-{
-  label: "Last Month Expense",
-  value: summary.lastMonthExpense,
-  icon: <FaMoneyBillWave />,
-  cls: "card-t"
-},
+{ label: "Last Month Cash Settlement", value: summary.lastMonthCashSettlement, icon: <FaHandHoldingUsd />, cls: "card-q" },
 
-{
-  label: "Today Expense",
-  value: summary.todayExpense,
-  icon: <FaMoneyBillWave />,
-  cls: "card-u"
-},
-{
-  label: "Total Bank Deposit",
-  value: summary.totalBankDeposit,
-  icon: <FaMoneyBillWave />,
-  cls: "card-v"
-},
+{ label: "Today Cash Settlement", value: summary.todayCashSettlement, icon: <FaCoins />, cls: "card-r" },
 
-{
-  label: "Last Month Deposit",
-  value: summary.lastMonthBankDeposit,
-  icon: <FaMoneyBillWave />,
-  cls: "card-w"
-},
+{ label: "Total Expense", value: summary.totalExpense, icon: <FaReceipt />, cls: "card-s" },
 
-{
-  label: "Today Deposit",
-  value: summary.todayBankDeposit,
-  icon: <FaMoneyBillWave />,
-  cls: "card-x"
-},
-{
-  label: "Net Cash Balance",
-  value: summary.netCashBalance,
-  icon: <FaMoneyBillWave />,
-  cls: "card-y"
-},
+{ label: "Last Month Expense", value: summary.lastMonthExpense, icon: <FaFileInvoiceDollar />, cls: "card-t" },
+
+{ label: "Today Expense", value: summary.todayExpense, icon: <FaReceipt />, cls: "card-u" },
+
+{ label: "Total Bank Deposit", value: summary.totalBankDeposit, icon: <FaUniversity />, cls: "card-v" },
+
+{ label: "Last Month Deposit", value: summary.lastMonthBankDeposit, icon: <FaPiggyBank />, cls: "card-w" },
+
+{ label: "Today Deposit", value: summary.todayBankDeposit, icon: <FaMoneyBillWave />, cls: "card-x" },
+
+{ label: "Net Cash Balance", value: summary.netCashBalance, icon: <FaChartLine />, cls: "card-y" },
 ];
   const lineData = { labels: (charts.monthlyPayments || []).map(x => x.month).reverse(), datasets: [ { label: "Payments", data: (charts.monthlyPayments || []).map(x => Number(x.total)).reverse(), borderColor: "#5b6cff", backgroundColor: "rgba(91,108,255,.15)", fill: true, tension: .35 }, { label: "Expenses", data: (charts.monthlyExpenses || []).map(x => Number(x.total)).reverse(), borderColor: "#fb7185", backgroundColor: "rgba(251,113,133,.12)", fill: true, tension: .35 } ] };
   const tripBar = { labels: ["Fixed", "Floating"], datasets: [{ label: "Trips", data: [summary.fixedTrips, summary.floatingTrips], backgroundColor: ["#5b6cff", "#34c3ff"] }] };
