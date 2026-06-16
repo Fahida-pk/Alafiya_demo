@@ -19,6 +19,7 @@ const PaymentRow = ({ date, driver, amount, balance }) => (
     <div>₹{Number(balance || 0).toFixed(2)}</div>
   </div>
 );
+
  const [summary, setSummary] = useState({
   vehicles: 0,
   drivers: 0,
@@ -192,83 +193,107 @@ const Row = ({ date, driver, company, route }) => (
       <div className="panel-grid"><Panel title="Payments vs Expenses"><Line data={lineData} options={options} /></Panel>
       <Panel title="Trips Summary"><Bar data={tripBar} options={options} /></Panel>
       <Panel title="Payment Mix"><Doughnut data={donutData} /></Panel></div><div className="panel-grid">
-<div className="bottom-section">
+<div className="dashboard-tables">
 
-<div className="trip-panels">
+  {/* Recent Fixed Trips */}
 
-  <Panel title="Recent Fixed Trips">
-    <div className="table-scroll">
-
-    <div className="recent-table-header">
-      <div>Date</div>
-      <div>Driver</div>
-      <div>Vehicle</div>
-      <div>Route</div>
+  <div className="table-card">
+    <div className="table-title">
+      <FaClipboardList /> Recent Fixed Trips
     </div>
 
-    {(recent.fixedTrips || []).map((r, i) => (
-      <Row
-        key={i}
-        date={r.trip_date}
-        driver={r.driver_name}
-        company={r.name}
-        route={r.route_name}
-      />
-    ))}
+    <div className="table-responsive">
+      <table className="modern-table">
+        <thead>
+          <tr>
+            <th>Date</th>
+            <th>Driver</th>
+            <th>Vehicle</th>
+            <th>Route</th>
+          </tr>
+        </thead>
+
+        <tbody>
+          {(recent.fixedTrips || []).map((r, i) => (
+            <tr key={i}>
+              <td>{r.trip_date}</td>
+              <td>{r.driver_name}</td>
+              <td>{r.name}</td>
+              <td>{r.route_name}</td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
     </div>
-  </Panel>
-
-<Panel title="Recent Floating Trips">
-  <div className="table-scroll">
-
-    <div className="recent-table-header">
-      <div>Date</div>
-      <div>Driver</div>
-      <div>Vehicle</div>
-      <div>Area</div>
-    </div>
-
-    {(recent.floatingTrips || []).map((r, i) => (
-      <Row
-        key={i}
-        date={r.trip_date}
-        driver={r.driver_name}
-        company={r.name}
-        route={r.area_name}
-      />
-    ))}
-
   </div>
-</Panel>
-</div>
 
-<div className="payment-panel">
-  <Panel title="Recent Payments">
+  {/* Recent Floating Trips */}
+  <div className="table-card">
 
-    <div className="payment-header">
-      <div>Date</div>
-      <div>Driver</div>
-      <div>Amount</div>
-      <div>Balance</div>
+    <div className="table-title">
+      <FaMapMarkedAlt /> Recent Floating Trips
+    </div>
+        <div className="table-responsive">
+
+      <table className="modern-table">
+        <thead>
+          <tr>
+            <th>Date</th>
+            <th>Driver</th>
+            <th>Vehicle</th>
+            <th>Area</th>
+          </tr>
+        </thead>
+
+        <tbody>
+          {(recent.floatingTrips || []).map((r, i) => (
+            <tr key={i}>
+              <td>{r.trip_date}</td>
+              <td>{r.driver_name}</td>
+              <td>{r.name}</td>
+              <td>{r.area_name}</td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+
+  {/* Recent Payments */}
+  <div className="table-card full-width">
+
+    <div className="table-title">
+      <FaMoneyBillWave /> Recent Payments
     </div>
 
-    {(recent.payments || []).map((r, i) => (
-      <PaymentRow
-        key={i}
-        date={r.payment_date}
-        driver={r.driver_name}
-        amount={r.amount}
-        balance={r.current_balance}
-      />
-    ))}
+    <div className="table-responsive">
+      <table className="modern-table">
+        <thead>
+          <tr>
+            <th>Date</th>
+            <th>Driver</th>
+            <th>Amount</th>
+            <th>Balance</th>
+          </tr>
+        </thead>
 
-  </Panel>
+        <tbody>
+          {(recent.payments || []).map((r, i) => (
+            <tr key={i}>
+              <td>{r.payment_date}</td>
+              <td>{r.driver_name}</td>
+              <td>₹{r.amount}</td>
+              <td>₹{Number(r.current_balance || 0).toFixed(2)}</td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
+  </div>
 </div>
-
-</div> {/* bottom-section */}
-
-</div> {/* dashboard-inner */}
-</div> {/* dashboard-content */}
+</div>
+</div>
 </div>
 </>
 );
