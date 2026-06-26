@@ -1,0 +1,357 @@
+/* ================= PAGE ================= */
+
+.dpl-page{
+  padding:20px;
+  background:#f4f7fb;
+  min-height:100vh;
+}
+/* ===== VIEW MODAL ===== */
+
+.dpl-view-modal{
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,.45);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 9999;
+}
+
+.dpl-view-modal-content{
+    width: 80%;
+    max-width: 900px;      /* width കുറച്ചു */
+    max-height: 85vh;
+    background: #fff;
+    border-radius: 12px;
+    padding: 20px;
+    overflow-y: auto;
+}
+
+.dpl-view-title{
+    margin-bottom: 15px;
+    font-size: 24px;
+    font-weight: 700;
+}
+
+.dpl-view-table-wrap{
+    overflow-x: auto;
+}
+
+.dpl-view-close{
+    float: right;
+    border: none;
+  background:linear-gradient(to right,#6f42c1,#4e73df);
+    color: #fff;
+    padding: 6px 12px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 18px;
+}
+/* ================= ADD BUTTON ================= */
+
+.dpl-add-wrap{
+  max-width:1200px;
+    margin:0 auto 35px;  
+
+}
+
+.dpl-add-btn{
+  background:linear-gradient(to right,#6f42c1,#4e73df);
+  color:#fff;
+  border:none;
+  padding:12px 22px;
+  border-radius:12px;
+  font-size:16px;
+  font-weight:600;
+  cursor:pointer;
+  box-shadow:0 10px 20px rgba(0,0,0,.12);
+}
+
+.dpl-add-btn:hover{
+  opacity:.9;
+}
+
+/* ================= CARD ================= */
+
+.dpl-card{
+  background:#fff;
+  padding:20px;
+  border-radius:12px;
+  box-shadow:0 8px 20px rgba(0,0,0,.08);
+  max-width:1200px;
+  margin:auto;
+}
+
+/* ================= TITLE ================= */
+
+.dpl-title{
+  font-size:24px;
+  font-weight:700;
+  margin-bottom:20px;
+}
+
+/* ================= TABLE ================= */
+
+.dpl-table-wrap{
+  overflow-x:auto;
+}
+
+.dpl-table{
+  width:100%;
+  border-collapse:collapse;
+}
+
+.dpl-table th,
+.dpl-table td{
+  border:1px solid #e5e7eb;
+  padding:12px;
+  text-align:center;
+}
+
+.dpl-table th{
+  background:#f3f4f6;
+  font-weight:600;
+}
+
+.dpl-no-data{
+  padding:40px;
+  color:#777;
+  font-weight:600;
+}
+
+/* ================= ACTION ================= */
+
+.dpl-action{
+  display:flex;
+  justify-content:center;
+  gap:10px;
+}
+
+.dpl-view-btn{
+  background:#2563eb;
+  color:#fff;
+  border:none;
+  padding:8px 14px;
+  border-radius:8px;
+  cursor:pointer;
+}
+
+.dpl-delete-btn{
+  background:#ef4444;
+  color:#fff;
+  border:none;
+  padding:8px 14px;
+  border-radius:8px;
+  cursor:pointer;
+}
+
+.dpl-view-btn:hover{
+  background:#1d4ed8;
+}
+
+.dpl-delete-btn:hover{
+  background:#dc2626;
+}
+.dpl-print-btn{
+  background: linear-gradient(to right,#6f42c1,#4e73df);
+  color: #fff;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 600;
+  margin-left: 8px;
+  transition: all .3s ease;
+  box-shadow: 0 4px 10px rgba(79,70,229,.25);
+}
+
+.dpl-print-btn:hover{
+  opacity: .95;
+  transform: translateY(-1px);
+}
+
+.dpl-print-btn:active{
+  transform: scale(.98);
+}
+
+.dpl-print-btn:disabled{
+  opacity: .6;
+  cursor: not-allowed;
+  box-shadow: none;
+}
+/* ================= ACTION BUTTONS ================= */
+
+.dpl-view-btn,
+.dpl-print-btn,
+.dsp-process-btn{
+  width: 95px;
+  height: 42px;
+
+  background: linear-gradient(135deg,#4e73df,#6f42c1);
+  color: #fff;
+
+  border: none;
+  border-radius: 10px;
+
+  font-size: 15px;
+  font-weight: 600;
+
+  cursor: pointer;
+
+  transition: all .25s ease;
+  box-shadow: 0 5px 12px rgba(78,115,223,.25);
+
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  margin: 0 4px;
+}
+
+.dpl-view-btn:hover,
+.dpl-print-btn:hover,
+.dsp-process-btn:hover{
+  transform: translateY(-2px);
+  box-shadow: 0 8px 18px rgba(78,115,223,.35);
+  opacity: .95;
+    color: #1d1c1c;
+
+}
+
+.dpl-view-btn:active,
+.dpl-print-btn:active,
+.dsp-process-btn:active{
+  transform: scale(.97);
+}
+/* ================= MOBILE ================= */
+/* ================= MOBILE TABLE ================= */
+
+@media (max-width:768px){
+
+  .dsp-page{
+    padding:10px;
+    overflow-x:hidden;
+  }
+
+  .dsp-card{
+    padding:12px;
+    border-radius:12px;
+    overflow:hidden;
+  }
+
+  .dsp-table-wrap{
+    width:100%;
+    overflow-x:auto;
+    overflow-y:hidden;
+    -webkit-overflow-scrolling:touch;
+  }
+
+  .dsp-table{
+    min-width:650px;   /* scroll വരാൻ */
+    width:650px;
+    border-collapse:collapse;
+  }
+
+  .dsp-table thead{
+    display:table-header-group;
+  }
+
+  .dsp-table tbody{
+    display:table-row-group;
+  }
+
+  .dsp-table tr{
+    display:table-row;
+  }
+
+  .dsp-table th,
+  .dsp-table td{
+    display:table-cell;
+    white-space:nowrap;
+    padding:10px;
+    font-size:13px;
+    text-align:center;
+  }
+
+  .dpl-view-btn,
+  .dpl-print-btn,
+  .dsp-process-btn{
+    width:80px;
+    height:36px;
+    font-size:13px;
+    margin:2px;
+  }
+
+}
+@media(max-width:768px){
+
+  .dpl-page{
+    padding:10px;
+  }
+
+  .dpl-card{
+    padding:15px;
+  }
+
+  .dpl-title{
+    font-size:20px;
+  }
+
+  .dpl-table{
+    min-width:600px;
+  }
+
+  .dpl-add-btn{
+    width:60%;
+  }
+
+  .dpl-action{
+    flex-direction:column;
+  }
+}
+.print-area{
+    display:none;
+}
+
+@media print{
+
+    @page{
+        size:A4 portrait;
+        margin:4mm;
+    }
+
+    /* മുഴുവൻ list page hide */
+    .top-navbar,
+    .dpl-add-wrap,
+    .dsp-card,
+    .dpl-view-modal,
+    .dsp-title{
+        display:none !important;
+    }
+
+    /* page padding remove */
+    .dsp-page{
+        padding:0 !important;
+        margin:0 !important;
+        background:#fff !important;
+    }
+
+    /* print report മാത്രം show */
+    .print-area{
+        display:block !important;
+    }
+}
+@media print {
+
+  .top-navbar,
+  .dashboard-topbar,
+  .dashboard-navbar,
+  .navbar,
+  .sidebar,
+  aside,
+  nav{
+    display: none !important;
+  }
+
+}

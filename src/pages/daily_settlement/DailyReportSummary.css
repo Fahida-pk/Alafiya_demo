@@ -501,3 +501,102 @@
     font-weight: bold !important;
   }
 }
+/* ================= DAILY REPORT PRINT ================= */
+
+@media print {
+
+  @page {
+    size: A4 portrait;
+    margin: 5mm;
+  }
+
+  .dailyreport-print-only{
+    display:block !important;
+    text-align:center;
+    margin-bottom:8px !important;
+  }
+
+  .dailyreport-print-only h2{
+    font-size:16px !important;
+    margin:0;
+  }
+
+  .dailyreport-print-only h3{
+    font-size:12px !important;
+    margin:2px 0;
+  }
+
+  .dailyreport-print-only p{
+    font-size:9px !important;
+    margin:0;
+  }
+
+  .dailyreportsummary-table{
+    width:100% !important;
+    border-collapse:collapse !important;
+    table-layout:fixed !important;
+  }
+
+  .dailyreportsummary-table tr{
+    page-break-inside:avoid !important;
+    height:18px !important;
+  }
+
+  .dailyreportsummary-table th,
+  .dailyreportsummary-table td{
+    border:1px solid #000 !important;
+    padding:2px !important;
+    font-size:8px !important;
+    line-height:1 !important;
+    text-align:center !important;
+    vertical-align:middle !important;
+
+    white-space:nowrap !important;
+    overflow:hidden !important;
+    text-overflow:ellipsis !important;
+  }
+
+  .dailyreportsummary-table th{
+    background:#f3f4f6 !important;
+    font-weight:bold !important;
+  }
+
+  .dailyreportsummary-table td::before{
+    display:none !important;
+    content:none !important;
+  }
+
+  /* Column Width */
+
+  .dailyreportsummary-table th:nth-child(1),
+  .dailyreportsummary-table td:nth-child(1){width:8% !important;}
+
+  .dailyreportsummary-table th:nth-child(2),
+  .dailyreportsummary-table td:nth-child(2){width:18% !important;}
+
+  .dailyreportsummary-table th:nth-child(3),
+  .dailyreportsummary-table td:nth-child(3){width:14% !important;}
+
+  .dailyreportsummary-table th:nth-child(4),
+  .dailyreportsummary-table td:nth-child(4){width:14% !important;}
+
+  .dailyreportsummary-table th:nth-child(5),
+  .dailyreportsummary-table td:nth-child(5){width:14% !important;}
+
+  .dailyreportsummary-table th:nth-child(6),
+  .dailyreportsummary-table td:nth-child(6){width:14% !important;}
+
+  .dailyreportsummary-table th:nth-child(7),
+  .dailyreportsummary-table td:nth-child(7){width:18% !important;}
+
+  .dailyreport-total-row td{
+    font-size:9px !important;
+    font-weight:bold !important;
+    background:#fafafa !important;
+  }
+
+  .dailyreport-total-single{
+    font-size:11px !important;
+    padding-right:8px !important;
+  }
+}

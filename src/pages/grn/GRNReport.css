@@ -329,7 +329,23 @@ html, body {
   .grn-title {
     display: none !important;
   }
+/* Supplier column */
+.grn-table td:nth-child(2){
+    max-width: 140px !important;
+    width: 140px !important;
+    white-space: nowrap !important;
+    overflow: hidden !important;
+    text-overflow: ellipsis !important;
+}
 
+/* Item column */
+.grn-table td:nth-child(3){
+    max-width: 160px !important;
+    width: 160px !important;
+    white-space: nowrap !important;
+    overflow: hidden !important;
+    text-overflow: ellipsis !important;
+}
   /* REMOVE CARD STYLE */
 
   .grn-page-wrapper,
@@ -484,4 +500,50 @@ html, body {
     width: 15% !important;
   }
 
+}
+@media print {
+
+  @page{
+    size:A4 portrait;
+    margin:5mm;      /* 8mm → 5mm */
+  }
+
+  .grn-table{
+    width:100%;
+    border-collapse:collapse;
+    table-layout:fixed;
+  }
+
+  .grn-table th,
+  .grn-table td{
+    border:1px solid #000;
+    padding:1px 2px !important;   /* 2px → 1px */
+    font-size:8px !important;     /* 9px → 8px */
+    line-height:1 !important;
+    text-align:center;
+    vertical-align:middle;
+    white-space:nowrap;
+    overflow:hidden;
+    text-overflow:ellipsis;
+  }
+
+  .grn-table tr{
+    height:18px !important;       /* 22px → 18px */
+    page-break-inside:avoid;
+  }
+
+  .grn-print-header h2{
+    font-size:16px !important;
+    margin:0;
+  }
+
+  .grn-print-header h3{
+    font-size:12px !important;
+    margin:1px 0;
+  }
+
+  .grn-print-header p{
+    font-size:9px !important;
+    margin:0;
+  }
 }

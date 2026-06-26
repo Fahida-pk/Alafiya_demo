@@ -8,6 +8,7 @@ import TripMaster from "./pages/trip/TripMaster";
 import MainLayout from "./layouts/MainLayout";
 import Users from "./pages/user/Users";
 import FixedTrip from "./pages/fixedtrip/FixedTrip";
+import DailySavePicking from "./pages/order/DailySavePicking";
 import FloatingTrips from "./pages/floatingtrip/FloatingTrips";
 import Payment from "./pages/payment/payment";
 import CompanySettings from "./pages/CompanySettings/CompanySettings";
@@ -22,6 +23,7 @@ import Brand from "./pages/brand/Brands";
 import GrnForm from "./pages/grn/GrnForm";
 import GrnList from "./pages/grn/GrnList";
 import DailyPicking from "./pages/order/DailyPicking";
+import DailyPickingList from "./pages/order/DailyPickingList";
 import OhaForm from "./pages/oha/OhaForm";
 import OhaList from "./pages/oha/OhaList";
 import GRNReport from "./pages/grn/GRNReport";
@@ -37,8 +39,7 @@ import BankDeposit from "./pages/BankDeposit/BankDeposit";
 
 function App() {
   return (
-    <BrowserRouter>
-      <Routes>
+<BrowserRouter basename="/demo_alafiya_react">      <Routes>
         <Route path="/" element={<Login />} />
 
         <Route
@@ -70,6 +71,8 @@ function App() {
           <Route path="/grn-form" element={<GrnForm />} />
           <Route path="/grn-list" element={<GrnList />} />
           <Route path="/daily-picking" element={<DailyPicking />} />
+          <Route path="/daily-save-picking" element={<DailySavePicking />} />
+          <Route path="/daily-picking-list" element={<DailyPickingList />} />
           <Route path="/daily-settlement" element={<DailySettlement />} />
           <Route path="/expense" element={<Expense />} />
           <Route path="/bank-deposit" element={<BankDeposit />} />

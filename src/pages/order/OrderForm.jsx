@@ -355,13 +355,17 @@ const updatedBatches = batches.map(batch => {
     return;
   }
 
- if (
+if (
   row.item_id == details[i].item_id &&
   row.batch === batch.batch &&
-  row.expiry === (batch.expiry_date || batch.expiry)
+  (
+    row.expiry === (batch.expiry_date || batch.expiry) ||
+    !row.expiry ||
+    !(batch.expiry_date || batch.expiry)
+  )
 ) {
-    usedQty += parseInt(row.qty || 0);
-  }
+  usedQty += parseInt(row.qty || 0);
+}
 });
 
   return {
@@ -923,10 +927,14 @@ const updatedBatches = batches.map(batch => {
     if (
   row.item_id == details[i].item_id &&
   row.batch === batch.batch &&
-  row.expiry === (batch.expiry_date || batch.expiry)
+  (
+    row.expiry === (batch.expiry_date || batch.expiry) ||
+    !row.expiry ||
+    !(batch.expiry_date || batch.expiry)
+  )
 ) {
-      usedQty += parseInt(row.qty || 0);
-    }
+  usedQty += parseInt(row.qty || 0);
+}
   });
 
   return {
@@ -950,9 +958,12 @@ console.log(filteredBatches);
 
 setBatchList(filteredBatches);
 
-setSelectedRowIndex(i);
+setBatchList(filteredBatches);
 
-setShowBatchModal(true);
+if (filteredBatches.length > 0) {
+  setSelectedRowIndex(i);
+  setShowBatchModal(true);
+}
 }}
 />
 </td>

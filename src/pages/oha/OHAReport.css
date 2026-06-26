@@ -503,3 +503,144 @@ html, body {
   }
 
 }
+/* ================= OHA PRINT ================= */
+
+@media print {
+
+  @page {
+    size: A4 portrait;
+    margin: 5mm;
+  }
+
+  html,
+  body {
+    margin: 0 !important;
+    padding: 0 !important;
+    background: #fff !important;
+    overflow: visible !important;
+  }
+
+  * {
+    box-shadow: none !important;
+  }
+
+  /* Hide screen content */
+  .no-print,
+  .oha-filter-section,
+  .oha-title {
+    display: none !important;
+  }
+
+  /* Remove card style */
+  .oha-page-wrapper,
+  .oha-card-container {
+    width: 100% !important;
+    max-width: 100% !important;
+    margin: 0 auto !important;
+    padding: 0 !important;
+    background: #fff !important;
+    border: none !important;
+    border-radius: 0 !important;
+    box-shadow: none !important;
+  }
+
+  /* Print Header */
+  .print-only {
+    display: block !important;
+  }
+
+  .oha-print-header {
+    text-align: center;
+    margin-bottom: 8px;
+  }
+
+  .oha-print-header h2 {
+    font-size: 16px !important;
+    margin: 0;
+    font-weight: bold;
+  }
+
+  .oha-print-header h3 {
+    font-size: 12px !important;
+    margin: 2px 0;
+    font-weight: bold;
+  }
+
+  .oha-print-header p {
+    font-size: 9px !important;
+    margin: 0;
+  }
+
+  /* Table */
+
+  .oha-table {
+    width: 100% !important;
+    border-collapse: collapse !important;
+    table-layout: fixed !important;
+  }
+
+  .oha-table thead {
+    display: table-header-group;
+  }
+
+  .oha-table tbody {
+    display: table-row-group;
+  }
+
+  .oha-table tr {
+    page-break-inside: avoid !important;
+    height: 18px !important;
+  }
+
+  .oha-table th,
+  .oha-table td {
+    border: 1px solid #000 !important;
+    padding: 2px !important;
+    font-size: 8px !important;
+    line-height: 1 !important;
+    text-align: center !important;
+    vertical-align: middle !important;
+    white-space: nowrap !important;
+    overflow: hidden !important;
+    text-overflow: ellipsis !important;
+  }
+
+  .oha-table th {
+    font-weight: bold;
+    background: #f2f2f2 !important;
+  }
+
+  /* Hide mobile labels */
+
+  .oha-table td::before {
+    display: none !important;
+    content: none !important;
+  }
+
+  /* Column Width */
+
+  .oha-table th:nth-child(1),
+  .oha-table td:nth-child(1) {
+    width: 24%;
+  }
+
+  .oha-table th:nth-child(2),
+  .oha-table td:nth-child(2) {
+    width: 14%;
+  }
+
+  .oha-table th:nth-child(3),
+  .oha-table td:nth-child(3) {
+    width: 18%;
+  }
+
+  .oha-table th:nth-child(4),
+  .oha-table td:nth-child(4) {
+    width: 18%;
+  }
+
+  .oha-table th:nth-child(5),
+  .oha-table td:nth-child(5) {
+    width: 26%;
+  }
+}

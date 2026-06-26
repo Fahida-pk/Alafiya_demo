@@ -83,7 +83,13 @@ totalCashSettlement: 0,
     })();
   }, [navigate]);
 const cards = [
- { label: "Total Fixed Trip Amount", value: summary.fixedTripTotalAmount, icon: <FaRoute />, cls: "card-f" },
+  { label: "Vehicles", value: summary.vehicles, icon: <FaTruck />, cls: "card-a" },
+  { label: "Drivers", value: summary.drivers, icon: <FaUserTie />, cls: "card-b" },
+  { label: "Routes", value: summary.routes, icon: <FaRoute />, cls: "card-c" },
+  { label: "Fixed Trips", value: summary.fixedTrips, icon: <FaClipboardList />, cls: "card-d" },
+
+  { label: "Floating Trips", value: summary.floatingTrips, icon: <FaMapMarkedAlt />, cls: "card-e" },
+{ label: "Total Fixed Trip Amount", value: summary.fixedTripTotalAmount, icon: <FaRoute />, cls: "card-f" },
 
 { label: "Last Month Fixed", value: summary.lastMonthFixedTripAmount, icon: <FaCalendarDay />, cls: "card-g" },
 

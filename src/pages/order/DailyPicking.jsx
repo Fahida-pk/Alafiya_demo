@@ -1,17 +1,24 @@
 import { useState, useEffect } from "react";
 import TopNavbar from "../dashboard/TopNavbar";
+import { useLocation, useNavigate } from "react-router-dom";
+
 import "./DailyPicking.css";
 
-const API = "https://zyntaweb.com/demoalafiya/api/daily_picking.php";
+const API = "https://zyntaweb.com/demoalafiya/api/daily_save_picking.php";
 const UPDATE_API = "https://zyntaweb.com/demoalafiya/api/order_details.php";
 const COMPANY_API = "https://zyntaweb.com/demoalafiya/api/company.php";
 
+ const LIST_API =
+  "https://zyntaweb.com/demoalafiya/api/daily_save_picking.php";
 const DailyPicking = () => {
-
-  const [date, setDate] = useState("");
-  const [data, setData] = useState([]);
-
+const navigate = useNavigate();
+  const location = useLocation();
+  const [saving, setSaving] = useState(false);
+  const [printDate, setPrintDate] = useState("");
+  
+  const selectedOrders = location.state?.orders || [];
   // 🔥 COMPANY STATE
+  const [data, setData] = useState([]);
   const [company, setCompany] = useState({
     company_name: "",
     address: "",
@@ -19,40 +26,57 @@ const DailyPicking = () => {
   });
 
   // 🔥 LOAD COMPANY
-  useEffect(() => {
-    fetch(COMPANY_API)
-      .then(res => res.json())
-      .then(data => {
-        if (data) {
-          setCompany({
-            company_name: data.company_name || "",
-            address: data.address || "",
-            phone: data.phone || ""
-          });
-        }
+ useEffect(() => {
+  fetch(COMPANY_API)
+    .then(res => res.json())
+    .then(data => {
+      console.log("Company Response:", data);
+
+      setCompany({
+        company_name: data.company_name || "",
+        address: data.address || "",
+        phone: data.phone || ""
       });
-  }, []);
+    })
+    .catch(err => console.log(err));
+}, []);
 
-  // ✅ FETCH DATA
-  useEffect(() => {
-    if (date) {
-      fetch(`${API}?date=${date}`)
-        .then(res => res.json())
-        .then(res => {
-          const updated = res.map(d => {
-            let qty = Number(d.qty);
-            let picked = Number(d.picking_qty || 0);
-            let back = qty - picked;
+useEffect(() => {
 
-            let status = back === 0 ? "Completed" : "Pending";
+  console.log("selectedOrders =", selectedOrders);
 
-            return { ...d, status };
-          });
-          setData(updated);
-        });
-    }
-  }, [date]);
+  if (selectedOrders.length === 0) return;
 
+  fetch(`${LIST_API}?type=details`, {
+  method: "POST",
+  headers: {
+    "Content-Type": "application/json",
+  },
+  body: JSON.stringify({
+    orders: selectedOrders,
+  }),
+})
+.then((res) => res.json())
+.then((res) => {
+  console.log(res);
+
+  const rows = Array.isArray(res) ? res : [];
+
+  if (rows.length > 0) {
+    setPrintDate(rows[0].date);
+  }
+
+  const updated = rows.map((d) => ({
+    ...d,
+    status:
+      Number(d.picking_qty || 0) >= Number(d.qty)
+        ? "Completed"
+        : "Pending",
+  }));
+
+  setData(updated);
+});
+}, [selectedOrders]);
   // ✅ PICK CHANGE
   const handlePickChange = (index, value) => {
     let newData = [...data];
@@ -86,32 +110,56 @@ const DailyPicking = () => {
 
   // ✅ SAVE
  const handleSave = async () => {
+  if (saving) return;
 
-  const payload = {
-    order_id: data[0]?.order_id,
-    items: data.map(d => ({
-      id: d.id,
-      picking_qty: Number(d.picking_qty || 0)
-    }))
-  };
+  setSaving(true);
 
-  console.log("PAYLOAD:", payload); // 🔥 debug
+  try {
+    const payload = {
+      order_ids: [...new Set(data.map((d) => d.order_id))],
+      picking_date: printDate,
+      items: data.map((d) => ({
+        id: d.id,
+        order_id: d.order_id,
+        picking_qty: Number(d.picking_qty || 0),
+      })),
+    };
 
-  const res = await fetch(API, { // ✅ daily_picking.php
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json"
-    },
-    body: JSON.stringify(payload)
-  });
+    const res = await fetch(API, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(payload),
+    });
 
-  const result = await res.json();
-  console.log("RESULT:", result);
+    const result = await res.json();
 
-  if (result.status === "saved") {
-    alert("Daily picking saved successfully ✅");
+    if (result.status === "saved") {
+
+  const isPrint = window.confirm(
+    "Daily Picking Saved Successfully.\n\nDo you want to Print?"
+  );
+
+  if (isPrint) {
+    setTimeout(() => {
+      window.print();
+
+      setTimeout(() => {
+        navigate("/daily-picking-list");
+      }, 500);
+    }, 200);
   } else {
-    alert("Error ❌");
+    navigate("/daily-picking-list");
+  }
+
+} else {
+      alert(result.message || "Save Failed");
+      setSaving(false);
+    }
+  } catch (err) {
+    console.log(err);
+    setSaving(false);
   }
 };
   const handlePrint = () => window.print();
@@ -127,19 +175,16 @@ const DailyPicking = () => {
 
       <div className="dp-pro-card">
 
-        {/* TITLE */}
-        <h3 className="dp-pro-title no-print">Daily Picking</h3>
+    <div className="dp-header no-print">
+  <h3 className="dp-pro-title">Daily Picking</h3>
 
-        {/* FILTER */}
-        <div className="dp-filter-section no-print">
-          <input
-            type="date"
-            value={date}
-            onChange={(e) => setDate(e.target.value)}
-            className="dp-pro-input"
-          />
-         
-        </div>
+  <button
+    className="dp-back-btn"
+    onClick={() => navigate(-1)}
+  >
+    ← Back
+  </button>
+</div>
 
         {/* 🔥 PRINT HEADER */}
         <div className="dp-print-header dp-print-only">
@@ -148,13 +193,12 @@ const DailyPicking = () => {
           <p>Phone: {company.phone}</p>
 
           <h3>DAILY PICKING REPORT</h3>
-          <p>Date: {date}</p>
+          <p>Date: {printDate}</p>
           
         </div>
 
         {/* TABLE */}
         <div className="dp-pro-table-container">
-          <div className="dp-pro-table-body">
             <table className="dp-pro-table">
       <thead>
         <tr>
@@ -232,17 +276,18 @@ const DailyPicking = () => {
        <div className="dp-btn-group no-print">
   
   {data.length > 0 && (
-    <button className="dp-pro-btn" onClick={handleSave}>
-      Save Picking
-    </button>
+<button
+  className="dp-pro-btn"
+  onClick={handleSave}
+  disabled={saving}
+>
+  {saving ? "Saving..." : "Save Picking"}
+</button>
   )}
 
-  <button className="dp-pro-btn" onClick={handlePrint}>
-    Print
-  </button>
+
 
 </div>
-      </div>
       </div>
   );
 };

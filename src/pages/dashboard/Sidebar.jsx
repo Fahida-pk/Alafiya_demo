@@ -195,7 +195,7 @@ const [inventoryOpen, setInventoryOpen] = useState(false);
       <span>Orders</span>
     </Link>
 
-    <Link to="/daily-picking" onClick={() => setMobileOpen(false)}>
+<Link to="/daily-picking-list" onClick={() => setMobileOpen(false)}>
       <FaClipboardList />
       <span>Daily Picking</span>
     </Link>
